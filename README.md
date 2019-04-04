@@ -6,9 +6,9 @@
 
 ## Compute clusters specificities
 
-### Conda envirronement
+### Conda environement
 
-### Singularity envirronement
+### Singularity environement
 
 ### Slurm workload manager
 
