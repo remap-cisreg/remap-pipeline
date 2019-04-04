@@ -1,0 +1,20 @@
+rule samtools_sort:
+	input:
+			os.path.join( PREPROCESSING_DIR, "rm_mismatch_bam", "{replicat_name}.bam")
+	output:
+			temp( os.path.join( PREPROCESSING_DIR, "sort_bam", "{replicat_name}.bam"))
+	singularity:
+			config[ "singularity"][ "samtools"]
+	conda:
+			config[ "conda"][ "samtools"]
+	benchmark:
+				os.path.join( PREPROCESSING_DIR, "sort_bam", "bench", "{replicat_name}.bench")
+	resources:
+			res=1
+	log:
+			os.path.join( PREPROCESSING_DIR, "sort_bam", "log", "{replicat_name}.log")
+	params:
+			outname = os.path.join( PREPROCESSING_DIR, "sort_bam", "{replicat_name}"),
+			samtools = config[ "samtools_sort"][ "other"]
+	shell: "samtools sort -T {params.outname} {input} > {output}"
+	# shell : """touch {output}"""
