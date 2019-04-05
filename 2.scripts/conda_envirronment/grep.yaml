@@ -1,0 +1,9 @@
+---
+name: grep
+channels:
+  - conda-forge
+  - defaults
+  - bioconda
+dependencies:
+  - grep=2.14
+...

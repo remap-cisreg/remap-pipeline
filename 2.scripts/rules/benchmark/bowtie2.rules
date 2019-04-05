@@ -1,0 +1,35 @@
+rule bowtie2:
+	input:
+			# lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_filename}.fq.gz"), zip, trim_filename = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_forward"]),
+			# lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_filename}.fq.gz"), zip, trim_filename = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_list"]),
+			forward = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_filename_forward}.fq.gz"), zip, trim_filename_forward = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_forward"]),
+			# reverse = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_filename_reverse}.fq.gz"), zip, trim_filename_reverse = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_reverse"]),
+			# check = os.path.join( PREPROCESSING_DIR, "trim_fastq", "check_files", "{replicat_name}.ok")
+	output:
+			temp( os.path.join( PREPROCESSING_DIR, "sam", "{replicat_name}.sam"))
+	singularity:
+			config[ "singularity"][ "bowtie2"]
+	conda:
+			config[ "conda"][ "bowtie2"]
+	benchmark:
+				os.path.join( PREPROCESSING_DIR, "sam", "bench", "{replicat_name}.bench")
+	resources:
+			res=1
+	log:
+			os.path.join( PREPROCESSING_DIR, "sam", "log", "{replicat_name}.log")
+	params:
+			forward_trim_name = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_basename}"), zip, trim_basename = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_forward"]),
+			reverse_trim_name = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_basename}"), zip, trim_basename = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_reverse"]),
+			bowtie2 = config[ "bowtie2"][ "other"],
+			nb_thread = config[ "bowtie2"][ "nb_thread"],
+			index = config[ "genome"][ "index"],
+			library_type = lambda wildcards : dict_replicat_trim_filename[wildcards.replicat_name][ 'run_type']
+	shell: """
+if [ {params.library_type} == SE ]
+then
+	bowtie2 {params.bowtie2} --threads {params.nb_thread} -U {input[0]} -x {params.index} 2>> {log}  > {output}
+else
+	bowtie2 {params.bowtie2} --threads {params.nb_thread} -1 {params.forward_trim_name}.fq.gz -2 {params.reverse_trim_name}.fq.gz -x {params.index} 2>> {log} > {output}
+fi
+"""
+	# shell : """touch {output}"""

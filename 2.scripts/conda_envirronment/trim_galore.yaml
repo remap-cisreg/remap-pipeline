@@ -1,0 +1,9 @@
+---
+name: trim-galore
+channels:
+  - conda-forge
+  - defaults
+  - bioconda
+dependencies:
+  - trim-galore=0.4.3
+...

@@ -1,0 +1,21 @@
+rule delete_trim_paired:
+	input:
+			bam = os.path.join( PREPROCESSING_DIR, "sam", "{replicat_name_paired}.sam"),
+			# trim_forward = os.path.join( PREPROCESSING_DIR, "trim_fastq", "{replicat_name_paired}", "{trim_filename_forward}.fq.gz")
+			# trim_2 = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_basename}"), zip, trim_basename = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_basename"][ 1])
+	output:
+			os.path.join( PREPROCESSING_DIR, "trim_fastq", "{replicat_name_paired}", "{replicat_name_paired}_del.ok")
+	# benchmark:
+	# 			os.path.join( PREPROCESSING_DIR, "raw_bam", "bench", "{replicat_name}.bench")
+	resources:
+			res=1
+	priority:
+			1
+	log:
+			os.path.join( PREPROCESSING_DIR, "trim_fastq", "log", "{replicat_name_paired}_del.log")
+	params:
+			trim_filename_reverse = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name_paired, "{trim_basename}.fq.gz"), zip, trim_basename = dict_replicat_trim_filename[ wildcards.replicat_name_paired][ "trim_filename_reverse"]),
+			other = ""
+	shell: """	rm {params.trim_filename_reverse}
+				touch {output}"""
+	# shell : """touch {output}"""

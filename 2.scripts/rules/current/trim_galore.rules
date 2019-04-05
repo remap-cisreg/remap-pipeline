@@ -1,0 +1,36 @@
+rule trim_galore:
+	input:
+			# lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "raw_fastq", "{fastq_name}.fastq.gz"), fastq_name = dict_replicat_trim_filename[ wildcards.replicat_name][ 'fastq_filename'])
+			forward = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "raw_fastq", "{fastq_name_forward}.fastq.gz"), fastq_name_forward = dict_replicat_trim_filename[ wildcards.replicat_name][ 'fastq_filename_forward']),
+			reverse = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "raw_fastq", "{fastq_name_reverse}.fastq.gz"), fastq_name_reverse = dict_replicat_trim_filename[ wildcards.replicat_name][ 'fastq_filename_reverse'])
+	output:
+			temp( os.path.join( PREPROCESSING_DIR, "trim_fastq", "{replicat_name}", "{trim_filename}.fq.gz"))
+			# forward = temp( os.path.join( PREPROCESSING_DIR, "trim_fastq", "{replicat_name}", "{trim_filename_forward}.fq.gz")),
+			# reverse = temp( os.path.join( PREPROCESSING_DIR, "trim_fastq", "{{replicat_name}}", "{trim_filename_reverse}.fq.gz"))
+	singularity:
+			config[ "singularity"][ "trim_galore"]
+	conda:
+			config[ "conda"][ "trim_galore"]
+	# benchmark:
+	# 			os.path.join( PREPROCESSING_DIR, "trim_fastq", "bench", "{replicat_name}_{trim_filename}.bench")
+	resources:
+			res=1
+	log:
+			os.path.join( PREPROCESSING_DIR, "trim_fastq", "log", "{replicat_name}_{trim_filename}.log")
+	params:
+			true_fastq_name = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "raw_fastq", "{trim_basename}.fastq.gz"), zip, trim_basename = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_basename"]),
+			library_type = lambda wildcards : dict_replicat_trim_filename[wildcards.replicat_name]["run_type"],
+			outdir = os.path.join( PREPROCESSING_DIR, "trim_fastq", "{replicat_name}"),
+			quality = config[ "trim_galore"][ "quality"],
+			stringency = config[ "trim_galore"][ "stringency"],
+			min_length = config[ "trim_galore"][ "min_length"],
+			other = config[ "trim_galore"][ "other"]
+	shell: """
+if [ {params.library_type} == SE ]
+then
+	trim_galore --output_dir {params.outdir} --quality {params.quality} --stringency {params.stringency} --length {params.min_length} {params.other} {input} --no_report_file 2> {log}
+else
+	trim_galore --output_dir {params.outdir} --paired --quality {params.quality} --stringency {params.stringency} --length {params.min_length} {params.other} {params.true_fastq_name[0]} {params.true_fastq_name[1]} --no_report_file 2> {log}
+fi
+"""
+	# shell : """touch {output}"""
