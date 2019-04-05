@@ -14,3 +14,5 @@ Use the script `toto` in 2.scripts/bla.bla/ to parse your annotated file and thi
 python3 ../2.scripts/utils/python3 blab.py option option 
 
 
+python3 ../2.scripts/utils/python3/extract_info_download_v2.py -wd /gpfs/tagc/home/simler/remap-pipeline/  -f /gpfs/tagc/home/simler/remap-pipeline/1.metadata/remap3_.tsv  2> .err 
+
