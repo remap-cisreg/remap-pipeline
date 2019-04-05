@@ -15,9 +15,10 @@ rm -rf Annotation/
 #-- Remove unnecessary Indexes
 cd Sequence/
 rm -rf BowtieIndex/ BWAIndex/ Chromosomes/
+cd ../../../../
 
 #-- Remove TAR.GZ file
 cd /scratch/bballester/projects/tagc-remap3/src/jeanne/3.genome/
 # rm -f Homo_sapiens_UCSC_hg38.tar.gz
-
+# rm README.txt  #-- Ilumina README
 
