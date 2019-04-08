@@ -1,0 +1,89 @@
+{
+    "working_dir" :
+    {
+        "base_dir" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne",
+        "tab_dir" : "1.metadata/tab",
+        "preprocessing" : "4.preprocessing",
+        "bam_dir" : "5.bam",
+        "outdir" : "6.peakcalling",
+        "rule_dir" : "2.scripts/rules"
+    },
+
+    "header" :
+    {
+        "control" : "isControl",
+        "filename" : "filename",
+        "library" : "library_type",
+        "url" : "url",
+        "md5" : "md5"
+    },
+
+    "genome" :
+    {
+        "index" : "/gpfs/tagc/home/cheneby/ReMap2/human/data_int/genome/hg38",
+        "fasta" : "/gpfs/tagc/home/cheneby/ReMap2/human/data_int/genome/hg38.fa"
+    },
+
+    "aria2" :
+    {
+        "other" : ""
+
+    },
+
+    "trim_galore" :
+    {
+        "quality" : "20",
+        "stringency" : "1 -e 0.1",
+        "min_length" : "30",
+        "other" : "--phred33 --illumina"
+    },
+
+    "bowtie2" :
+    {
+        "nb_thread" : "16",
+        "other" : "--end-to-end --sensitive --time --sam-no-hd -q --mm"
+    },
+
+    "sam_to_bam" :
+    {
+        "other" : "-b -S"
+    },
+
+    "remove_mismatch" :
+    {
+        "other" : ""
+    },
+
+    "samtools_sort" :
+    {
+        "other" : ""
+    },
+
+    "samtools_remove_pcr_duplicate" :
+    {
+        "other" : ""
+    },
+
+    "macs2" :
+    {
+        "other" : ""
+    },
+
+    "singularity" :
+    {
+        "aria2" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_aria2.img",
+        "trim_galore" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_trimgalore.img",
+        "bowtie2" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_bowtie2.img",
+        "samtools" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_samtools.img",
+        "macs2" : "/scratch/bballester/projects/tagc-remap3/remap_macs2.img"
+    },
+
+		"conda" :
+		{
+			"aria2" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/2.scripts/envs/aria2.yaml",
+			"trim_galore" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/2.scripts/envs/trim_galore.yaml",
+			"bowtie2" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/2.scripts/envs/bowtie2.yaml",
+			"samtools" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/2.scripts/envs/samtools.yaml",
+			"macs2" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/2.scripts/envs/macs2.yaml"
+		}
+}
