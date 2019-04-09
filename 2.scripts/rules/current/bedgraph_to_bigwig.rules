@@ -1,0 +1,13 @@
+rule bedgraph_to_bigwig:
+	input:
+	 		os.path.join( PEAKCALLING_DIR, "{experiment_name}", "clip_bedgraph", "{experiment_name}.bedgraph")
+	output:
+			os.path.join( BIGWIG_DIR, "{experiment_name}", "{experiment_name}.bigwig")
+	conda:
+			config[ "conda"][ "bedgraphtobigwig"]
+	log:
+			os.path.join( BIGWIG_DIR, "{experiment_name}", "log", "{experiment_name}.bedgraph")
+	params:
+			chrom_size = config["genome"]["chromosome_size"],
+			other =  config["bedgraph_to_bigwig"][ "other"]
+	shell: """bedGraphToBigWig {input} {params.chrom_size} {output} 2>{log}"""

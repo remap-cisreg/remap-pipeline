@@ -1,0 +1,11 @@
+rule clipping_bedgraph:
+	input:
+			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "sort_bedgraph", "{experiment_name}.bedgraph")
+	output:
+	 		temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "clip_bedgraph", "{experiment_name}.bedgraph"))
+	log:
+			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "clip_bedgraph", "log", "{experiment_name}")
+	params:
+			chrom_size = config["genome"]["chromosome_size"],
+			other = config["clipping_bedgraph"][ "other"]
+	shell: """bedClip {input} {params.chrom_size} {output}"""

@@ -1,0 +1,36 @@
+rule macs2_bigwig:
+	input:
+			lambda wildcards : expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["all"])
+	output:
+			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_treat_pileup.bdg")
+	singularity:
+			config[ "singularity"][ "macs2"]
+	conda:
+			config[ "conda"][ "macs2"]
+	resources:
+			res=1
+	log:
+			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}.log")
+	params:
+			outdir = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2"),
+			outfile_name = "{experiment_name}",
+			length_file = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "predictd"),
+			chip = lambda wildcards : expand( os.path.join( BAM_DIR, wildcards.experiment_name, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"]),
+			control = lambda wildcards : expand( os.path.join( BAM_DIR, wildcards.experiment_name, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["control"]),
+			macs2 = config["macs2_bigwig"][ "other"]
+
+	shell: 	"""
+macs2 predictd -i {input} -g hs -m 5 50 --outdir {params.outdir}
+
+fragment_length=$(grep "altd  <- c(" {params.length_file} | cut -d"(" -f2 | cut -d")" -f1 | awk -F", " '{{print $NF}}')
+
+echo $fragment_length
+
+
+if [ -n "{params.control}" ]
+then
+	macs2 callpeak  --gsize hs --SPMR  --bdg --extsize $fragment_length --buffer-size 100000 --outdir {params.outdir} --name {params.outfile_name} -t {params.chip}  -c {params.control} 2> {log}
+else
+	macs2 callpeak  --gsize hs --SPMR  --bdg --extsize $fragment_length --buffer-size 100000 --outdir {params.outdir} --name {params.outfile_name} -t {params.chip} 2> {log}
+fi
+"""
