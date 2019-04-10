@@ -1,7 +1,7 @@
 {
 	"__default__":
 	{
-		"queue" : "remap",
+		"queue" : "tagc",
 		"node" : "1",
 		"thread" : "1",
 		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.replicat_name}_qsub.out",
@@ -10,7 +10,7 @@
 
 	"aria2":
 	{
-		"queue" : "remap",
+		"queue" : "tagc",
 		"node" : "1",
 		"thread" : "1",
 		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.fastq_name}_qsub.out",
@@ -19,14 +19,14 @@
 
 	"trim_galore" :
     {
-		"queue" : "remap",
+		"queue" : "tagc",
 		"node" : "1",
 		"thread" : "1"
     },
 
     "bowtie2" :
     {
-		"queue" : "remap",
+		"queue" : "tagc",
 		"node" : "1",
 		"thread" : "16"
     },
@@ -34,7 +34,7 @@
 
 		"sam_to_bam:" :
 		{
-		"queue" : "remap",
+		"queue" : "tagc",
 		"node" : "1",
 		"thread" : "1"
 		},
@@ -42,31 +42,69 @@
 
     "remove_mismatch" :
     {
-		"queue" : "remap",
+		"queue" : "tagc",
 		"node" : "1",
 		"thread" : "1"
     },
 
     "samtools_sort" :
     {
-		"queue" : "remap",
+		"queue" : "tagc",
 		"node" : "1",
 		"thread" : "1"
     },
 
     "samtools_remove_pcr_duplicate" :
     {
-		"queue" : "remap",
+		"queue" : "tagc",
 		"node" : "1",
 		"thread" : "1"
     },
 
     "macs2_bigwig" :
     {
-		"queue" : "remap",
+		"queue" : "tagc",
 		"node" : "1",
 		"thread" : "1",
-		"stdout" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/6.peakcalling/{wildcards.experiment_name}/macs2/log/{wildcards.experiment_name}_qsub.out",
-		"stderr" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/6.peakcalling/{wildcards.experiment_name}/macs2/log/{wildcards.experiment_name}_qsub.err"
-    }
+		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	},
+
+    "removing_weird_chromosome" :
+    {
+		"queue" : "tagc",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	},
+
+    "sort_bedgraph" :
+    {
+		"queue" : "tagc",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	},
+
+    "clipping_bedgraph" :
+    {
+		"queue" : "tagc",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	},
+
+    "bedgraph_to_bigwig" :
+    {
+		"queue" : "tagc",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	}
+
+
 }
