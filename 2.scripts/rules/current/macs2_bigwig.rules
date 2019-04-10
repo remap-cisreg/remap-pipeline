@@ -15,8 +15,8 @@ rule macs2_bigwig:
 			outdir = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2"),
 			outfile_name = "{experiment_name}",
 			length_file = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "predictd"),
-			chip = lambda wildcards : expand( os.path.join( BAM_DIR, wildcards.experiment_name, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"]),
-			control = lambda wildcards : expand( os.path.join( BAM_DIR, wildcards.experiment_name, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["control"]),
+			chip = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"]),
+			control = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["control"]),
 			macs2 = config["macs2_bigwig"][ "other"]
 
 	shell: 	"""
