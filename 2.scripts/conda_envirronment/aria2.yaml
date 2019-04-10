@@ -1,9 +1,9 @@
 ---
 name: aria2
 channels:
+  - bioconda
   - conda-forge
   - defaults
-  - bioconda
 dependencies:
-  - aria2=1.23.0
+  - aria2=1.34.0
 ...
