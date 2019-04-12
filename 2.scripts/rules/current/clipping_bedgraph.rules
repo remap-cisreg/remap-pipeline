@@ -3,6 +3,8 @@ rule clipping_bedgraph:
 			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "sort_bedgraph", "{experiment_name}.bedgraph")
 	output:
 	 		temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "clip_bedgraph", "{experiment_name}.bedgraph"))
+	conda:
+			config[ "conda"][ "bedClip"]
 	log:
 			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "clip_bedgraph", "log", "{experiment_name}")
 	params:

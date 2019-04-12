@@ -1,12 +1,12 @@
 {
     "working_dir" :
     {
-        "base_dir" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne",
+        "base_dir" : "/gpfs/tagc/home/cheneby/remap-pipeline",
         "tab_dir" : "1.metadata/tab",
         "preprocessing" : "4.preprocessing",
         "bam_dir" : "5.bam",
         "outdir" : "6.peakcalling",
-        "rule_dir" : "2.scripts/rules"
+        "rule_dir" : "2.scripts/rules/current"
     },
 
     "header" :
@@ -80,10 +80,11 @@
 
 		"conda" :
 		{
-			"aria2" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/2.scripts/envs/aria2.yaml",
-			"trim_galore" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/2.scripts/envs/trim_galore.yaml",
-			"bowtie2" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/2.scripts/envs/bowtie2.yaml",
-			"samtools" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/2.scripts/envs/samtools.yaml",
-			"macs2" : "/gpfs/tagc/home/cheneby/tagc-remap3/src/jeanne/2.scripts/envs/macs2.yaml"
+			"aria2" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/aria2.yaml",
+			"trim_galore" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/trim_galore.yaml",
+			"bowtie2" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bowtie2.yaml",
+			"samtools" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/samtools.yaml",
+			"macs2" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/macs2.yaml",
+			"bedClip" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bedClip.yaml"
 		}
 }
