@@ -466,7 +466,7 @@ if __name__ == "__main__":
 			# parse line
 			for line_ena_resp in iter_line_ena_resp:
 
-				list_info_ena = line_ena_resp.split( '\t')
+				list_info_ena = str( line_ena_resp).split( '\t')
 
 				try:
 					# add only relevant line
