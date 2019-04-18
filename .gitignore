@@ -1,4 +1,6 @@
 .snakemake
+1.metadata
+3.genome
 4.prepocessing
 5.bam
 6.peakcalling
