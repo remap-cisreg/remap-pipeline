@@ -1,7 +1,7 @@
 .snakemake
 1.metadata
 3.genome
-4.prepocessing
+4.preprocessing
 5.bam
 6.peakcalling
 7.bigwig
