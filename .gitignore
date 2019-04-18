@@ -1,1 +1,6 @@
 .snakemake
+4.prepocessing
+5.bam
+6.peakcalling
+7.bigwig
+8.quality
