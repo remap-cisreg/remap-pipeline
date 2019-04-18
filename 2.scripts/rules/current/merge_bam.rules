@@ -1,0 +1,17 @@
+rule merge_bam:
+    input:
+            bam = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"])
+    output:
+            temp( os.path.join( PREPROCESSING_DIR,  "merge_bam", "{experiment_name}.bam"))
+    singularity:
+            config[ "singularity"][ "samtools"]
+    conda:
+            config[ "conda"][ "samtools"]
+    resources:
+            res=1
+    log:
+            os.path.join( PREPROCESSING_DIR,  "merge_bam", "log", "{experiment_name}_merge.log")
+    params:
+            other = ""
+
+    shell:"""samtools merge {output} {input.bam}"""

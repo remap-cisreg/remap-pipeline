@@ -1,0 +1,20 @@
+rule quality_all:
+    input:
+            nsc_rsc = os.path.join( PREPROCESSING_DIR, "NSC_RSC", "{experiment_name}.NSC_RSC"),
+            frip = os.path.join( PREPROCESSING_DIR, "FRiP", "macs2_{experiment_name}.FRiP")
+    output:
+            os.path.join( QUALITY_DIR, "macs2_{experiment_name}.FRiP_NSC_RSC")
+    resources:
+            res=1
+    log:
+            os.path.join( QUALITY_DIR, "log", "{experiment_name}_quality_all.log")
+    params:
+            outdir = os.path.join( PREPROCESSING_DIR, "NSC_RSC"),
+            exp_name = "{experiment_name}"
+    shell:"""
+        FRiP=$(cat {input.frip})
+        NSC=$(cut -f9 {input.nsc_rsc})
+        RSC=$(cut -f10 {input.nsc_rsc})
+
+        echo "experiment_name\tFRiP\tNSC\tRSC\n{params.exp_name}\t$FRiP\t$NSC\t$RSC\n" > {output}
+    """

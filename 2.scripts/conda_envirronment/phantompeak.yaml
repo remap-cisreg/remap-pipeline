@@ -1,0 +1,7 @@
+---
+name: phantompeakqualtools
+channels:
+  - bioconda
+dependencies:
+  - phantompeakqualtools=1.2
+...

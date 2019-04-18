@@ -6,6 +6,7 @@
         "preprocessing" : "4.preprocessing",
         "bam_dir" : "5.bam",
         "outdir" : "6.peakcalling",
+        "quality" : "8.quality",
         "rule_dir" : "2.scripts/rules/current"
     },
 
@@ -85,6 +86,9 @@
 			"bowtie2" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bowtie2.yaml",
 			"samtools" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/samtools.yaml",
 			"macs2" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/macs2.yaml",
-			"bedClip" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bedClip.yaml"
+			"bedClip" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bedClip.yaml",
+      "quality_FRiP" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/quality_FRiP.yaml",
+      "bedtools" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bedtools.yaml",
+      "phantompeak" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/phantompeak.yaml"
 		}
 }
