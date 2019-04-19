@@ -1,5 +1,5 @@
 #!/usr/bin/env
-# encoding: utf-8
+
 
 '''
 From TF annoation file to necessary files to run the workflow
