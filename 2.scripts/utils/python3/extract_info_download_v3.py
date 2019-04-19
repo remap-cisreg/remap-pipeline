@@ -1,4 +1,5 @@
 #!/usr/bin/env
+# -*- coding: utf-8 -*-
 
 
 '''
@@ -451,9 +452,11 @@ if __name__ == "__main__":
 			# getting info from ena
 			ena_resp = requests.get( url_ena)
 			# Forcing encoding as utf-8
-
+			# ena_resp.encode('utf-8')
 			ena_resp.encoding = ena_resp.apparent_encoding
-			# ena_resp.encoding='utf-8'
+			# print( ena_resp.content.encode( "ascii"))
+
+			# ena_resp.encoding='ascii'
 			if ena_resp.status_code != 200:
 			    # This means something went wrong.
 			    raise ApiError('GET /tasks/ {}'.format( ena_resp.status_code))
