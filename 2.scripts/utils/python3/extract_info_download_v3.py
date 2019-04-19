@@ -576,7 +576,7 @@ if __name__ == "__main__":
 						        print "unicode string"
 						    else:
 						        print "not a string"
-							print( type( "\t".join( sample))))
+							print( type( "\t".join( sample)))
 							print( "\t".join( sample))
 
 							outfile_experiment.write( "\t".join( sample) + "\n")
