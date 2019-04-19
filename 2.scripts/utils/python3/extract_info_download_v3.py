@@ -111,6 +111,7 @@ def process_list_experiment( list_exp, name_experiment):
 
 		# Adding experiment title
 		final_exp_title = sample[ 10]
+		print( final_exp_title)
 		list_sample_info.append( final_exp_title)
 
 
