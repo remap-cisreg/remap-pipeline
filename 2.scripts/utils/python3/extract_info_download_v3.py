@@ -450,6 +450,8 @@ if __name__ == "__main__":
 
 			# getting info from ena
 			ena_resp = requests.get( url_ena)
+			# Forcing encoding as utf-8
+			ena_resp.encoding='utf-8'
 			if ena_resp.status_code != 200:
 			    # This means something went wrong.
 			    raise ApiError('GET /tasks/ {}'.format( ena_resp.status_code))
@@ -570,15 +572,6 @@ if __name__ == "__main__":
 						outfile_experiment.write( line_header)
 
 						for sample in list_all_sample:
-							if isinstance("\t".join( sample), str):
-						        print "ordinary string"
-						    elif isinstance("\t".join( sample), unicode):
-						        print "unicode string"
-						    else:
-						        print "not a string"
-							print( type( "\t".join( sample)))
-							print( "\t".join( sample))
-
 							outfile_experiment.write( "\t".join( sample) + "\n")
 						outfile_experiment.close()
 
