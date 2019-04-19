@@ -111,7 +111,6 @@ def process_list_experiment( list_exp, name_experiment):
 
 		# Adding experiment title
 		final_exp_title = sample[ 10]
-		print( final_exp_title)
 		list_sample_info.append( final_exp_title)
 
 
@@ -452,7 +451,9 @@ if __name__ == "__main__":
 			# getting info from ena
 			ena_resp = requests.get( url_ena)
 			# Forcing encoding as utf-8
-			ena_resp.encoding='utf-8'
+
+			ena_resp.encoding = ena_resp.apparent_encoding
+			# ena_resp.encoding='utf-8'
 			if ena_resp.status_code != 200:
 			    # This means something went wrong.
 			    raise ApiError('GET /tasks/ {}'.format( ena_resp.status_code))
