@@ -570,6 +570,15 @@ if __name__ == "__main__":
 						outfile_experiment.write( line_header)
 
 						for sample in list_all_sample:
+							if isinstance("\t".join( sample), str):
+						        print "ordinary string"
+						    elif isinstance("\t".join( sample), unicode):
+						        print "unicode string"
+						    else:
+						        print "not a string"
+							print( type( "\t".join( sample))))
+							print( "\t".join( sample))
+
 							outfile_experiment.write( "\t".join( sample) + "\n")
 						outfile_experiment.close()
 
