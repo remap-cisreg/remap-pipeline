@@ -1,27 +1,18 @@
-rule quality_FRiP:
+rule quality_NSC_RSC:
     input:
-            # bam = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"]),
-            bam = os.path.join( PREPROCESSING_DIR, "merge_bam", "{experiment_name}.bam"),
-            peaks = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak"),
-            nsc_rsc = os.path.join( PREPROCESSING_DIR, "NSC_RSC", "{experiment_name}.NSC_RSC")
+            bam = os.path.join( PREPROCESSING_DIR, "merge_bam", "{experiment_name}.bam")
     output:
-            temp( os.path.join( PREPROCESSING_DIR, "FRiP", "macs2_{experiment_name}.FRiP"))
+            temp( os.path.join( PREPROCESSING_DIR, "NSC_RSC", "{experiment_name}.NSC_RSC"))
     singularity:
-            config[ "singularity"][ "bedtools"]
+            config[ "singularity"][ "phantompeak"]
     conda:
-            config[ "conda"][ "bedtools"]
+            config[ "conda"][ "phantompeak"]
     resources:
             res=1
     log:
-            os.path.join( PREPROCESSING_DIR, "FRiP", "log", "{experiment_name}_FRiP.log")
+            os.path.join( PREPROCESSING_DIR, "NSC_RSC", "log", "{experiment_name}_NSC_RSC.log")
     params:
-            other = ""
-
+            outdir = os.path.join( PREPROCESSING_DIR)
     shell:"""
-        total_reads=$(cut -f2 {input.nsc_rsc})
-
-        total_peaks_in_read=$(bedtools intersect -abam -bed -u -a {input.bam} -b {input.peaks} | wc -l)
-
-        FRiP=$(awk -v nr="$total_reads" -v ni="$total_peaks_in_read" 'BEGIN{{print ni/nr * 100}}')
-        echo $FRiP > {output}
+    run_spp.R -c={input.bam} -savp -out={output} -p=2 -odir={params.outdir} -rf
     """
