@@ -1,7 +1,7 @@
 {
     "working_dir" :
     {
-			"base_dir" : "/scratch/bballester/projects/tagc-remap3/src/jeanne",
+			"base_dir" : "/scratch/bballester/jcheneby/remap-pipeline",
 			"tab_dir" : "1.metadata/tab",
 			"preprocessing" : "4.preprocessing",
 			"bam_dir" : "5.bam",
