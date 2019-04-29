@@ -5,6 +5,8 @@ rule bedgraph_to_bigwig:
 			os.path.join( BIGWIG_DIR, "{experiment_name}", "{experiment_name}.bigwig")
 	conda:
 			config[ "conda"][ "bedgraphtobigwig"]
+	singularity:
+			config[ "singularity"][ "ucsc_apps"]
 	log:
 			os.path.join( BIGWIG_DIR, "{experiment_name}", "log", "{experiment_name}.bedgraph")
 	params:

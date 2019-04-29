@@ -5,6 +5,8 @@ rule clipping_bedgraph:
 	 		temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "clip_bedgraph", "{experiment_name}.bedgraph"))
 	conda:
 			config[ "conda"][ "bedClip"]
+	singularity:
+			config[ "singularity"][ "ucsc_apps"]
 	log:
 			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "clip_bedgraph", "log", "{experiment_name}")
 	params:

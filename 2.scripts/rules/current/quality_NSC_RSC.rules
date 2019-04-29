@@ -7,7 +7,7 @@ rule quality_FRiP:
     output:
             temp( os.path.join( PREPROCESSING_DIR, "FRiP", "macs2_{experiment_name}.FRiP"))
     singularity:
-            config[ "singularity"][ "samtools"]
+            config[ "singularity"][ "bedtools"]
     conda:
             config[ "conda"][ "bedtools"]
     resources:

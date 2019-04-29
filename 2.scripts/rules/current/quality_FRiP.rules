@@ -4,7 +4,7 @@ rule quality_NSC_RSC:
     output:
             temp( os.path.join( PREPROCESSING_DIR, "NSC_RSC", "{experiment_name}.NSC_RSC"))
     singularity:
-            config[ "singularity"][ "samtools"]
+            config[ "singularity"][ "phantompeak"]
     conda:
             config[ "conda"][ "phantompeak"]
     resources:
