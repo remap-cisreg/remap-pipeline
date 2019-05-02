@@ -1,5 +1,4 @@
 .snakemake
-1.metadata
 1.metadata/tab
 3.genome
 4.preprocessing
