@@ -1,7 +1,7 @@
 {
     "working_dir" :
     {
-	"base_dir" : "/scratch/bballester/thaliana/remap-thaliana/",
+	"base_dir" : "/scratch/bballester/thaliana/remap-thaliana",
 	"tab_dir" : "1.metadata/tab",
 	"preprocessing" : "4.preprocessing",
 	"bam_dir" : "5.bam",
