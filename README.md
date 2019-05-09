@@ -37,7 +37,7 @@ cd 6.peakcalling/
 ls -1  > ./list_experiments.txt 
 
 #-- Exec script
-2.scripts/utils/bash/coloring_tf_bed.sh  > bedfilename.bed 
+2.scripts/utils/bash/coloring_tf_bed.sh  |  sort -k1,1n -k2,2n  > at_2nd_macs_chen.bed
 ```
 
 
