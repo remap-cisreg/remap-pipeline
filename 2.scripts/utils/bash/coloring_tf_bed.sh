@@ -1,8 +1,8 @@
 #!/bin/bash
 
-PATH_REMAP="/gpfs/tagc/home/cheneby/remappol2"
-PATH_COLOR_FILE="/gpfs/tagc/home/cheneby/ReMap2/human/data_int/color_tfs.txt"
-PATH_LIST_EXP="/gpfs/tagc/home/cheneby/remappol2/1.metadata/list_exp.txt"
+PATH_REMAP="/scratch/bballester/thaliana/remap-thaliana"
+PATH_COLOR_FILE="scratch/bballester/thaliana/remap-plants/analyses/A.thaliana_RGB.tsv"
+PATH_LIST_EXP="/scratch/bballester/thaliana/remap-thaliana/list_exp.txt"
 
 
 while read EXPERIEMENT; do
@@ -19,7 +19,8 @@ while read EXPERIEMENT; do
   		CURRENT_TF=$(echo "$COLORS" | awk -F"\t" '{print $1}')
 
   		if [ "$TF" == "$CURRENT_TF" ]; then
-  			COLOR_TF=$(echo "$COLORS" | awk -F"\t" '{print $2","$3","$4}')
+  			#COLOR_TF=$(echo "$COLORS" | awk -F"\t" '{print $2","$3","$4}')
+        COLOR_TF=$(echo "$COLORS" | awk -F"\t" '{print $2}')
   		fi
 
 	done <$PATH_COLOR_FILE
