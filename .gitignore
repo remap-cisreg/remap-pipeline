@@ -1,8 +1,18 @@
 .snakemake
-1.metadata
+1.metadata/tab
 3.genome
 4.preprocessing
 5.bam
 6.peakcalling
 7.bigwig
 8.quality
+# Don't ignore those files
+!1.metadata/*.md
+!1.metadata/*.tsv
+!1.metadata/*.csv
+!3.genome/*.md
+!4.preprocessing/*.md
+!5.bam/*.md
+!6.peakcalling/*.md
+!7.bigwig/*.md
+!8.quality/*.md
