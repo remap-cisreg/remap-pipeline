@@ -37,7 +37,7 @@ cd 6.peakcalling/
 ls -1  > ./list_experiments.txt 
 
 #-- Exec script
-2.scripts/utils/bash/coloring_tf_bed.sh 
+2.scripts/utils/bash/coloring_tf_bed.sh  > bedfilename.bed 
 ```
 
 
