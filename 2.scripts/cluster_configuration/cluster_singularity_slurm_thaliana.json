@@ -9,8 +9,8 @@
 	"ntasks" : "1",
 	"time" : "2:30:00",
 	"memory" : "5G",
-	"stdout" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.replicat_name}_slurm.out",
-	"stderr" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.replicat_name}_slurm.err",
+	"stdout" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.replicat_name}_slurm.out",
+	"stderr" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.replicat_name}_slurm.err",
 	"mail-type":"BEGIN,END",
 	"mail-user":"benoit.ballester@inserm.fr"
 	},
@@ -22,8 +22,8 @@
 	    "thread" : "1",
 	    "ntasks" : "1",
 	    "time" : "12:00:00",
-			"stdout" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
-			"stderr" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
+			"stdout" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
+			"stderr" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
 	},
 
 	"trim_galore" :
@@ -51,8 +51,8 @@
 	"thread" : "1",
 	"ntasks" : "1",
 	"time" : "0:05:00",
-	"stdout" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}.{wildcards.replicat_name_paired}_slurm.out",
-	"stderr" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}.{wildcards.replicat_name_paired}_slurm.err"
+	"stdout" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}.{wildcards.replicat_name_paired}_slurm.out",
+	"stderr" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}.{wildcards.replicat_name_paired}_slurm.err"
     },
 
     "samtools_remove_unmapped" :
@@ -101,8 +101,8 @@
 	"ntasks" : "1",
 	"time" : "18:00:00",
 	"memory" : "11G",
-        "stdout" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}.{wildcards.experiment_name}_slurm.out",
-        "stderr" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}.{wildcards.experiment_name}_slurm.err"
+        "stdout" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}.{wildcards.experiment_name}_slurm.out",
+        "stderr" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}.{wildcards.experiment_name}_slurm.err"
     },
 
 	  "merge_bam" :
@@ -111,8 +111,8 @@
 			"node" : "1",
 			"thread" : "1",
 			"ntasks" : "1",
-		"stdout" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
-		"stderr" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+		"stdout" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
 	},
 
 	  "quality_FRiP" :
@@ -120,8 +120,8 @@
 		"queue" : "remap",
 		"node" : "1",
 		"thread" : "1",
-		"stdout" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
-		"stderr" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+		"stdout" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
 	},
 
 	  "quality_NSC_RSC" :
@@ -130,8 +130,8 @@
 			"node" : "1",
 			"thread" : "1",
 			"ntasks" : "2",
-		"stdout" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
-		"stderr" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+		"stdout" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
 	},
 
 	  "quality_all" :
@@ -140,7 +140,7 @@
 			"node" : "1",
 			"thread" : "1",
 			"ntasks" : "1",
-		"stdout" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
-		"stderr" : "/scratch/bballester/thaliana/remap-thaliana/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+		"stdout" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/scratch/bballester/thaliana/remap-dap-at/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
 	}
 }
