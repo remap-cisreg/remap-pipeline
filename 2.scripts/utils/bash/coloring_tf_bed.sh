@@ -2,7 +2,7 @@
 
 PATH_REMAP="/scratch/bballester/thaliana/remap-thaliana"
 PATH_COLOR_FILE="scratch/bballester/thaliana/remap-plants/analyses/A.thaliana_RGB.tsv"
-PATH_LIST_EXP="/scratch/bballester/thaliana/remap-thaliana/list_exp.txt"
+PATH_LIST_EXP="/scratch/bballester/thaliana/remap-thaliana/list_experiments.txt"
 
 
 while read EXPERIEMENT; do
