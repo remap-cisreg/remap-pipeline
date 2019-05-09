@@ -31,6 +31,17 @@
 
 ### PBS (Torque) workload manager 
 
+#### Make a BED file from all narrowpeaks
+```
+cd 6.peakcalling/
+ls -1  > ./list_experiments.txt 
+
+#-- Exec script
+2.scripts/utils/bash/coloring_tf_bed.sh 
+```
+
+
+
 ## People involved
 - Jeanne Cheneby
 - Lionel Spinelli
