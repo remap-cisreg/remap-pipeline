@@ -67,7 +67,7 @@
 
     "macs2" :
     {
-        "other" : "-g 119146348 --call-summits -mfold 2 20 -keep-dup=1"
+        "other" : "-g 119146348 --call-summits --mfold 2 20 -keep-dup=1"
     },
 
     "singularity" :
