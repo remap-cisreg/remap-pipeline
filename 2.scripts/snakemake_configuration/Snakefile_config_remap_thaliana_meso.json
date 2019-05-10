@@ -21,8 +21,8 @@
 
     "genome" :
     {
-        "index" : "/scratch/bballester/thaliana/remap-thaliana/3.genome/Arabidopsis_thaliana/NCBI/TAIR10/Sequence/Bowtie2Index/genome",
-        "fasta" : "/scratch/bballester/thaliana/remap-thaliana/3.genome/Arabidopsis_thaliana/NCBI/TAIR10/Sequence/Bowtie2Index/genome.fa"
+        "index" : "/scratch/bballester/thaliana/remap-thaliana/3.genome/Arabidopsis_thaliana/Ensembl/TAIR10/Sequence/Bowtie2Index/genome",
+        "fasta" : "/scratch/bballester/thaliana/remap-thaliana/3.genome/Arabidopsis_thaliana/Ensembl/TAIR10/Sequence/Bowtie2Index/genome.fa"
     },
 
     "aria2" :
@@ -67,7 +67,7 @@
 
     "macs2" :
     {
-        "other" : "-g 119146348 --call-summits --mfold 2 20 --keep-dup 1"
+        "other" : "-g 119146348 "
     },
 
     "singularity" :
