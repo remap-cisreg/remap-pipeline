@@ -23,9 +23,9 @@ rule macs2:
 	shell: 	"""
 if [ -n "{params.control}" ]
 then
-	macs2 callpeak -t {params.chip} -c {params.control} --outdir {params.outdir} --name {params.outfile_name} 2> {log}
+	macs2 callpeak -t {params.chip} -c {params.control} --outdir {params.outdir} --name {params.outfile_name} {params.macs2} 2> {log}
 else
-	macs2 callpeak -t {params.chip} --outdir {params.outdir} --name {params.outfile_name} 2> {log}
+	macs2 callpeak -t {params.chip} --outdir {params.outdir} --name {params.outfile_name} {params.macs2} 2> {log}
 fi
 """
 	# shell : """touch {output}"""
