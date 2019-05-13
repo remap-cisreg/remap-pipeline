@@ -67,7 +67,7 @@
 
     "macs2" :
     {
-        "other" : "-g 119146348 "
+        "other" : "-g 119146348 --nomodel "
     },
 
     "singularity" :
