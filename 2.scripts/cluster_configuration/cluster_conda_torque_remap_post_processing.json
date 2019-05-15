@@ -1,0 +1,49 @@
+{
+	"__default__":
+	{
+		"queue" : "remap",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.replicat_name}_qsub.out",
+		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.replicat_name}_qsub.err"
+	},
+
+
+    "merge_bam" :
+    {
+		"queue" : "remap",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	},
+
+    "quality_FRiP" :
+    {
+		"queue" : "remap",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	},
+
+    "quality_NSC_RSC" :
+    {
+		"queue" : "remap",
+		"node" : "1",
+		"thread" : "2",
+		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	},
+
+    "quality_all" :
+    {
+		"queue" : "remap",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	}
+
+
+}
