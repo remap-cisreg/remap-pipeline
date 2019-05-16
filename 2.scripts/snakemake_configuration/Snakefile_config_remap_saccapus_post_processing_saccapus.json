@@ -39,11 +39,7 @@
 
     "singularity" :
     {
-      "aria2" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_aria2.img",
-      "trim_galore" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_trimgalore.img",
-      "bowtie2" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_bowtie2.img",
       "samtools" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_samtools.img",
-      "macs2" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_macs2.img",
       "ucsc_apps" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_ucsc_apps.img",
       "bedtools" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_bedtools225.img",
       "phantompeak" : "/scratch/bballester/projects/tagc-remap3/singularity/phantompeakqualtools.img"
@@ -51,11 +47,7 @@
 
 		"conda" :
 		{
-			"aria2" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/aria2.yaml",
-			"trim_galore" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/trim_galore.yaml",
-			"bowtie2" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bowtie2.yaml",
 			"samtools" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/samtools.yaml",
-			"macs2" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/macs2.yaml",
 			"bedClip" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bedClip.yaml",
       "quality_FRiP" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/quality_FRiP.yaml",
       "bedtools" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bedtools.yaml",

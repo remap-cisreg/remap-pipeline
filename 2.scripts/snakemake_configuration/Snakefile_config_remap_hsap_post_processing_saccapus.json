@@ -1,0 +1,55 @@
+{
+    "working_dir" :
+    {
+        "base_dir" : "/gpfs/tagc/home/cheneby/remap-pipeline",
+        "tab_dir" : "1.metadata/tab",
+        "preprocessing" : "4.preprocessing",
+        "bam_dir" : "5.bam",
+        "outdir" : "6.peakcalling",
+        "quality" : "8.quality",
+        "rule_dir" : "2.scripts/rules/current"
+    },
+
+    "header" :
+    {
+        "control" : "isControl",
+        "filename" : "filename",
+        "library" : "library_type",
+        "url" : "url",
+        "md5" : "md5"
+    },
+
+
+    "merge_bam" :
+    {
+        "samtools-merge" : ""
+    },
+
+    "quality_NSC_RSC" :
+    {
+        "run_spp" : ""
+    },
+
+    "quality_FRiP" :
+    {
+        "bedtools-intersect" : ""
+    },
+
+
+
+    "singularity" :
+    {
+        "samtools" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_samtools.img",
+        "ucsc_apps" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_ucsc_apps.img",
+        "bedtools" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_bedtools225.img",
+        "phantompeak" : "/scratch/bballester/projects/tagc-remap3/singularity/phantompeakqualtools.img"
+    },
+	"conda" :
+	{
+        "samtools" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/samtools.img",
+        "bedClip" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/bedClip.yaml",
+        "quality_FRiP" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/quality_FRiP.yaml",
+        "bedtools" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/bedtools.yaml",
+        "phantompeak" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/phantompeak.yaml"
+	}
+}

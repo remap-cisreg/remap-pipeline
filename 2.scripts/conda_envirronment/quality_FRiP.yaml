@@ -1,0 +1,10 @@
+---
+name: quality_FRiP
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - samtools=1.9
+  - bedtools=2.17.0
+...

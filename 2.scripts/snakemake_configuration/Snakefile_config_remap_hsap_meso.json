@@ -88,9 +88,9 @@
 		"bowtie2" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/bowtie2.img",
 		"samtools" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/samtools.img",
 		"macs2" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/macs2.img",
-		"bedClip" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bedClip.yaml",
-		"quality_FRiP" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/quality_FRiP.yaml",
-		"bedtools" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bedtools.yaml",
-		"phantompeak" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/phantompeak.yaml"
+		"bedClip" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/bedClip.yaml",
+		"quality_FRiP" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/quality_FRiP.yaml",
+		"bedtools" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/bedtools.yaml",
+		"phantompeak" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/phantompeak.yaml"
 	}
 }

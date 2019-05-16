@@ -1,0 +1,56 @@
+{
+	"__default__":
+	{
+  "project-name":"b097",
+	"job-name" : "{rule}",
+	"partition" : "skylake",
+	"node" : "1",
+	"thread" : "1",
+	"ntasks" : "1",
+	"time" : "2:30:00",
+	"memory" : "5G",
+	"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.replicat_name}_slurm.out",
+	"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.replicat_name}_slurm.err",
+	"mail-type":"BEGIN,END",
+	"mail-user":"benoit.ballester@inserm.fr"
+	},
+
+
+    "merge_bam" :
+    {
+		"queue" : "remap",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	},
+
+    "quality_FRiP" :
+    {
+		"queue" : "remap",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	},
+
+    "quality_NSC_RSC" :
+    {
+		"queue" : "remap",
+		"node" : "1",
+		"thread" : "2",
+		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	},
+
+    "quality_all" :
+    {
+		"queue" : "remap",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	}
+
+
+}
