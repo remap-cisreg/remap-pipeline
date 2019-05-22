@@ -4,7 +4,7 @@ Affiliation: TAGC
 Aim: Workflow ReMap human
 Date: 01-12-16
 last update: 13-09-2018
-Run:snakemake --snakefile 2.scripts/snakefiles_workflow/Snakefile_remap_chip_exo.py --printshellcmds --cores 10 --cluster-config .scripts/cluster_configuration/cluster_conda_toque.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --use-conda
+Run:snakemake --snakefile 2.scripts/snakefiles_workflow/Snakefile_remap_chip_exo.py --printshellcmds --cores 10 --cluster-config .scripts/cluster_configuration/cluster_conda_toque.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile 2.snakemake_configuration/Snakefile_config_remap_saccapus.json --use-conda
 
 dag: snakemake --snakefile .scripts/snakefiles_workflow/Snakefile_remap_chip_exo.py --printshellcmds --cores 10 --cluster-config config/sacapus.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --dag 2> /dev/null | dot -T svg > dag.svg
 rulegraph: snakemake --snakefile.scripts/snakefiles_workflow/Snakefile_remap_chip_exo.py --printshellcmds --cores 10 --cluster-config config/sacapus.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --rulegraph 2> /dev/null | dot -T svg > rulegraph.svg
@@ -65,10 +65,6 @@ include: os.path.join(BASE_DIR, RULE_DIR, "remove_mismatch.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "samtools_sort.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "samtools_remove_pcr_duplicate.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "macs2.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "merge_bam.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "quality_NSC_RSC.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "quality_FRiP.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "quality_all.rules")
 
 include: os.path.join(BASE_DIR, RULE_DIR, "delete_trim.rules")
 
@@ -272,6 +268,7 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
             else:
                 dict_experiment_chip_filename_alt[ experiment_name][ 'control'] = [ uniq_input_name_temp]
                 dict_experiment_chip_filename_alt[ 'all'][ uniq_input_name_temp] = dict_type[ 'control']
+
 
 
 

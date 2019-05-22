@@ -1,7 +1,7 @@
 {
   "working_dir" :
     {
-      "base_dir" : "/scratch/bballester/jcheneby/remap-pipeline",
+      "base_dir" : "/home/jcheneby/remap-pipeline",
       "tab_dir" : "1.metadata/tab",
       "preprocessing" : "4.preprocessing",
       "bam_dir" : "5.bam",
@@ -22,7 +22,7 @@
 
   "workflow_step":
     {
-      "remove_duplicate" : "True"
+      "remove_duplicate" : "False"
     },
 
   "genome" :
@@ -47,7 +47,7 @@
   "bowtie2" :
     {
       "nb_thread" : "16",
-      "other" : "--end-to-end --sensitive --time --sam-no-hd -q --mm"
+      "other" : "--local --very-sensitive-local --time --sam-no-hd -q --mm"
     },
 
   "sam_to_bam" :
