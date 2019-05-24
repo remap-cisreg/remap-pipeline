@@ -26,3 +26,8 @@ python3 ../2.scripts/utils/python3/extract_info_download_v3.py -wd /gpfs/tagc/ho
 python3 ../2.scripts/utils/python3/extract_info_download_v3.py -wd /scratch/bballester/thaliana/remap-thaliana/ -f /scratch/bballester/thaliana/remap-thaliana/1.metadata/remap3_prod_genome_occupancy_ArabidopsisThaliana.tsv  2> remap3_prod_genome_occupancy_ArabidopsisThaliana.err 
 
 
+
+ python3 ../2.scripts/utils/python3/extract_info_download_v3.py -wd /scratch/bballester/thaliana/remap-histones-at/  -f /scratch/bballester/thaliana/remap-histones-at/1.metadata/remap3_prod_genome_occupancy_ArabidopsisThaliana_histone.tsv  2>  remap3_prod_genome_occupancy_ArabidopsisThaliana_histone.err 
+
+
+
