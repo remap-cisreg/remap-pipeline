@@ -27,7 +27,7 @@ python3 ../2.scripts/utils/python3/extract_info_download_v3.py -wd /scratch/bbal
 
 
 
-python3 ../2.scripts/utils/python3/extract_info_download_v3.py -wd /scratch/bballester/thaliana/remap-dap-at/ -f /scratch/bballester/thaliana/remap-dap-at/1.metadata/remap3_prod_all_exp_type_ArabidopsisThaliana_DAP_only.csv  2> remap3_prod_all_exp_type_ArabidopsisThaliana_DAP_only.err
-python3 ../2.scripts/utils/python3/extract_info_download_v3.py -wd /scratch/bballester/thaliana/remap-dap-at/ -f /scratch/bballester/thaliana/remap-dap-at/1.metadata/remap3_prod_all_exp_type_Arabi
-dopsisThaliana_DAP_only.csv  2> remap3_prod_all_exp_type_ArabidopsisThaliana_DAP_only.err
+ python3 ../2.scripts/utils/python3/extract_info_download_v3.py -wd /scratch/bballester/thaliana/remap-histones-at/  -f /scratch/bballester/thaliana/remap-histones-at/1.metadata/remap3_prod_genome_occupancy_ArabidopsisThaliana_histone.tsv  2>  remap3_prod_genome_occupancy_ArabidopsisThaliana_histone.err 
+
+
 

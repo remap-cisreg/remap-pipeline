@@ -1,8 +1,10 @@
 .snakemake
 1.metadata/tab
 3.genome
-4.preprocessing
-5.bam
+4.preprocessing/*
+!4.preprocessing/log
+4.preprocessing/log/*
+5.bam/*
 6.peakcalling
 7.bigwig
 8.quality
