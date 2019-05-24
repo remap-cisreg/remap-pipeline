@@ -1,0 +1,10 @@
+---
+name: R-quality
+channels:
+  - conda-forge
+  - defaults
+  - r
+dependencies:
+  - r-rcolorbrewer
+  - r-optparse
+...
