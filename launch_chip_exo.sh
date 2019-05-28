@@ -3,7 +3,7 @@
 # python3 and snakemake correctly installed in your compute environment
 
 ############################################
-# Snakemake command for 
+# Snakemake command for
 # CONDA environment
 # TORQUE as job manager
 ############################################
@@ -11,7 +11,7 @@
 
 
 ############################################
-# Snakemake command for 
+# Snakemake command for
 # SINGULARITY environment
 # SLURM as job manager
 ############################################
@@ -21,6 +21,5 @@ module purge
 module load userspace/all
 module load python3/3.6.3
 
-# Thaliana DAP-seq example using Singularity
-snakemake   --use-singularity --singularity-args "-B /scratch/bballester:/scratch/bballester" --snakefile 2.scripts/snakefiles_workflow/Snakefile_remap_v4.py --cores 100  --printshellcmds --cluster-config 2.scripts/cluster_configuration/cluster_singularity_slurm_thaliana_dap.json --cluster "sbatch  -A {cluster.project-name}  --job-name {cluster.job-name} -p {cluster.partition}  --ntasks {cluster.ntasks} --cpus-per-task={cluster.thread}  -o {cluster.stdout} -e {cluster.stderr}  --time {cluster.time}  --mem-per-cpu={cluster.memory} " --keep-going --configfile 2.scripts/snakemake_configuration/Snakefile_config_remap_thaliana_dap_meso.json --rerun-incomplete --resources res=150  
-
+# Homo sapiens ChIP-seq example using Singularity
+snakemake --use-singularity --singularity-args "-B /scratch/bballester:/scratch/bballester" --snakefile 2.scripts/snakefiles_workflow/Snakefile_remap_chip_exo.py --cores 100  --printshellcmds --cluster-config 2.scripts/cluster_configuration/cluster_singularity_slurm_hsap.json --cluster "sbatch  -A {cluster.project-name}  --job-name {cluster.job-name} -p {cluster.partition}  --ntasks {cluster.ntasks} --cpus-per-task={cluster.thread}  -o {cluster.stdout} -e {cluster.stderr}  --time {cluster.time}  --mem-per-cpu={cluster.memory} " --keep-going --configfile 2.scripts/snakemake_configuration/Snakefile_config_remap_hsap_meso_chip_exo.json --rerun-incomplete --resources res=101
