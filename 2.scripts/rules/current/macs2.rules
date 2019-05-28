@@ -1,6 +1,7 @@
 rule macs2:
 	input:
-			lambda wildcards : expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["all"]) if config[ "workflow_step"][ "remove_duplicate"] == "True" else expand( os.path.join( PREPROCESSING_DIR, "sort_bam", "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["all"])
+			# lambda wildcards : expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["all"]) if config[ "workflow_step"][ "remove_duplicate"] == "True" else expand( os.path.join( PREPROCESSING_DIR, "sort_bam", "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["all"])
+			lambda wildcards : expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["all"])
 	output:
 			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak")
 	singularity:
