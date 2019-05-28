@@ -1,0 +1,101 @@
+{
+  "working_dir" :
+    {
+      "base_dir" : "/home/jcheneby/remap-pipeline",
+      "tab_dir" : "1.metadata/tab",
+      "preprocessing" : "4.preprocessing",
+      "bam_dir" : "5.bam",
+      "outdir" : "6.peakcalling",
+      "quality" : "8.quality",
+      "rule_dir" : "2.scripts/rules/current"
+    },
+
+  "header" :
+    {
+      "control" : "isControl",
+      "filename" : "filename",
+      "library" : "library_type",
+      "url" : "url",
+      "md5" : "md5"
+    },
+
+
+  "workflow_step":
+    {
+      "remove_duplicate" : "False"
+    },
+
+  "genome" :
+    {
+      "index" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/3.genome/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome",
+      "fasta" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/3.genome/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome.fa"
+    },
+
+  "aria2" :
+    {
+      "other" : ""
+    },
+
+  "trim_galore" :
+    {
+      "quality" : "20",
+      "stringency" : "1 -e 0.1",
+      "min_length" : "30",
+      "other" : "--phred33 --illumina"
+    },
+
+  "bowtie2" :
+    {
+      "nb_thread" : "16",
+      "other" : "--local --very-sensitive-local --time --sam-no-hd -q --mm"
+    },
+
+  "sam_to_bam" :
+    {
+      "other" : "-b -S"
+    },
+
+  "remove_mismatch" :
+    {
+      "other" : ""
+    },
+
+  "samtools_sort" :
+    {
+      "other" : ""
+    },
+
+  "samtools_remove_pcr_duplicate" :
+    {
+      "other" : ""
+    },
+
+  "macs2" :
+    {
+      "other" : ""
+    },
+
+  "singularity" :
+    {
+      "aria2" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_aria2.img",
+      "trim_galore" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_trimgalore.img",
+      "bowtie2" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_bowtie2.img",
+      "samtools" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_samtools.img",
+      "macs2" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_macs2.img",
+      "ucsc_apps" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_ucsc_apps.img",
+      "bedtools" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_bedtools225.img",
+      "phantompeak" : "/scratch/bballester/projects/tagc-remap3/singularity/phantompeakqualtools.img"
+    },
+	"conda" :
+	{
+		"aria2" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/aria2.img",
+		"trim_galore" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/trim_galore.img",
+		"bowtie2" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/bowtie2.img",
+		"samtools" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/samtools.img",
+		"macs2" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/macs2.img",
+		"bedClip" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/bedClip.yaml",
+		"quality_FRiP" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/quality_FRiP.yaml",
+		"bedtools" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/bedtools.yaml",
+		"phantompeak" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/phantompeak.yaml"
+	}
+}
