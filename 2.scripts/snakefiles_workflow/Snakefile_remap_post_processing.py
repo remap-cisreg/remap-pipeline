@@ -60,9 +60,9 @@ PEAKCALLER = config[ "info"][ "peakcaller"]
 #================================================================#
 
 
-# include: os.path.join(BASE_DIR, RULE_DIR, "merge_bam.rules")
-# include: os.path.join(BASE_DIR, RULE_DIR, "quality_NSC_RSC.rules")
-# include: os.path.join(BASE_DIR, RULE_DIR, "quality_FRiP.rules")
+include: os.path.join(BASE_DIR, RULE_DIR, "merge_bam.rules")
+include: os.path.join(BASE_DIR, RULE_DIR, "quality_NSC_RSC.rules")
+include: os.path.join(BASE_DIR, RULE_DIR, "quality_FRiP_nbPeaks.rules")
 # include: os.path.join(BASE_DIR, RULE_DIR, "quality_all.rules")
 
 #include: os.path.join(BASE_DIR, RULE_DIR, "delete_trim.rules")
@@ -121,81 +121,15 @@ rule all:
 
 
 
-rule merge_bam:
-    input:
-            bam = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name])
-    output:
-            # temp( os.path.join( PREPROCESSING_DIR,  "merge_bam", "{experiment_name}.bam"))
-            os.path.join( PREPROCESSING_DIR,  "merge_bam", "{experiment_name}.bam")
-    singularity:
-            config[ "singularity"][ "samtools"]
-    conda:
-            config[ "conda"][ "samtools"]
-    resources:
-            res=1
-    log:
-            os.path.join( PREPROCESSING_DIR,  "merge_bam", "log", "{experiment_name}_merge.log")
-    params:
-            samtools_merge = config[ "merge_bam"][ "samtools-merge"]
-
-    shell:"""samtools merge {params.samtools_merge} {output} {input.bam}"""
 
 
 
-rule quality_NSC_RSC:
-    input:
-            bam = os.path.join( PREPROCESSING_DIR, "merge_bam", "{experiment_name}.bam")
-    output:
-            # temp( os.path.join( PREPROCESSING_DIR, "NSC_RSC", "{experiment_name}.NSC_RSC"))
-            os.path.join( PREPROCESSING_DIR, "NSC_RSC", "{experiment_name}.NSC_RSC")
-    singularity:
-            config[ "singularity"][ "phantompeak"]
-    conda:
-            config[ "conda"][ "phantompeak"]
-    resources:
-            res=1
-    log:
-            os.path.join( PREPROCESSING_DIR, "NSC_RSC", "log", "{experiment_name}_NSC_RSC.log")
-    params:
-            outdir = os.path.join( PREPROCESSING_DIR, "NSC_RSC"),
-            run_spp = config[ "quality_NSC_RSC"][ "run_spp"]
-    shell:"""
-    run_spp.R -c={input.bam} -savp -out={output} -p=2 -odir={params.outdir} -rf {params.run_spp}
-    """
 
 
 
-rule quality_FRiP_nbPeaks:
-    input:
-            # bam = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"]),
-            bam = os.path.join( PREPROCESSING_DIR, "merge_bam", "{experiment_name}.bam"),
-            peaks = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak"),
-            nsc_rsc = os.path.join( PREPROCESSING_DIR, "NSC_RSC", "{experiment_name}.NSC_RSC")
-    output:
-            # temp( os.path.join( PREPROCESSING_DIR, "FRiP", "macs2_{experiment_name}.FRiP"))
-            os.path.join( PREPROCESSING_DIR, "FRiP", "macs2_{experiment_name}.FRiP")
-    singularity:
-            config[ "singularity"][ "bedtools"]
-    conda:
-            config[ "conda"][ "bedtools"]
-    resources:
-            res=2
-    log:
-            os.path.join( PREPROCESSING_DIR, "FRiP", "log", "{experiment_name}_FRiP.log")
-    params:
-            bedtools_intersect = config[ "quality_FRiP"][ "bedtools-intersect"]
 
-    shell:"""
-        total_reads=$(cut -f2 {input.nsc_rsc})
 
-        total_peaks_in_read=$(bedtools intersect {params.bedtools_intersect} -bed -u -a {input.bam} -b {input.peaks} | wc -l)
 
-        FRiP=$(awk -v nr="$total_reads" -v ni="$total_peaks_in_read" "BEGIN{{print ni/nr * 100}}")
-
-        total_peaks=$(wc -l < {input.peaks} )
-
-        echo $FRiP\t$total_peaks > {output}
-    """
 
 
 rule quality_all_experiment:

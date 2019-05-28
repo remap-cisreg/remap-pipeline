@@ -7,7 +7,7 @@
         "bam_dir" : "5.bam",
         "outdir" : "6.peakcalling",
         "quality" : "8.quality",
-        "rule_dir" : "2.scripts/rules/current"
+        "rule_dir" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/rules/current"
     },
 
     "info" :
