@@ -18,7 +18,11 @@ rule macs2:
 			outdir = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2"),
 			outfile_name = "{experiment_name}",
 			chip = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"]),
+<<<<<<< HEAD
 			control = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["control"]),
+=======
+			control = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["control"])
+>>>>>>> 223fa8f75e52a07bc1ea0181d19e275a3fcf5f3e
 			macs2 = config["macs2"][ "other"]
 
 	shell: 	"""
