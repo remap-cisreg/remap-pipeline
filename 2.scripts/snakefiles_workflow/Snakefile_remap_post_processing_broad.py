@@ -117,7 +117,7 @@ rule all:
             # os.path.join( QUALITY_DIR, "results", "macs2_passed.quality_all"),
             # os.path.join( "remap2020_unsorted.bed"),
             os.path.join( "remap2020.bed"),
-            # os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf")
+            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf")
 
 
 
@@ -200,19 +200,19 @@ rule filtering_quality_all:
     """
 
 
-# rule graph_quality_all:
-#     input:
-#             os.path.join( QUALITY_DIR,  "results", "macs2.quality_all")
-#     output:
-#             os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf")
-#     conda:
-#             config[ "conda"][ "R_quality"]
-#     resources:
-#             res=1
-#     log:
-#             os.path.join( QUALITY_DIR, "log", "graph_quality_all.log")
-#
-#     shell:"Rscript 2.scripts/utils/r/graph_quality_all.R --file {input} --outfile {output}"
+ rule graph_quality_all:
+     input:
+             os.path.join( QUALITY_DIR,  "results", "macs2.quality_all")
+     output:
+             os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf")
+     conda:
+             config[ "conda"][ "R_quality"]
+     resources:
+             res=1
+     log:
+             os.path.join( QUALITY_DIR, "log", "graph_quality_all.log")
+
+     shell:"Rscript 2.scripts/utils/r/graph_quality_all.R --file {input} --outfile {output}"
 
 
 
@@ -261,7 +261,7 @@ rule creating_remap_catalogue_bed:
             color_tf = dict_tf_color[ tf]
 
             # formating narrowPeak ReMap style
-            path_file_experiment_peak =  os.path.join( params.path_to_peaks, experiment, params.peakcaller, experiment + "_peaks.narrowPeak")
+            path_file_experiment_peak =  os.path.join( params.path_to_peaks, experiment, params.peakcaller, experiment + "_peaks.broadPeak")
 
             file_experiment_peak = open( path_file_experiment_peak, 'r')
 
