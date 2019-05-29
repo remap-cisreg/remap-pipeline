@@ -26,6 +26,12 @@
     },
 
 
+		"extention":
+		{
+			"peak" : "_peaks.narrowPeak"
+		},
+
+
     "merge_bam" :
     {
         "samtools-merge" : ""

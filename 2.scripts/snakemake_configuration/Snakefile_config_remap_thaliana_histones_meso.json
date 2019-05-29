@@ -19,6 +19,16 @@
         "md5" : "md5"
     },
 
+		"workflow_step":
+	    {
+	      "remove_duplicate" : "True"
+	    },
+
+			"extention":
+			{
+				"peak" : "_peaks.broadPeak"
+			},
+
     "genome" :
     {
         "index" : "/scratch/bballester/thaliana/remap-thaliana/3.genome/Arabidopsis_thaliana/NCBI/TAIR10/Sequence/Bowtie2Index/genome",

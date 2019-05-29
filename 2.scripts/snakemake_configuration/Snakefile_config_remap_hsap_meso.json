@@ -19,6 +19,16 @@
         "md5" : "md5"
     },
 
+  "workflow_step":
+    {
+      "remove_duplicate" : "True"
+    },
+
+		"extention":
+		{
+			"peak" : "_peaks.narrowPeak"
+		},
+
     "genome" :
     {
         "index" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/3.genome/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome",

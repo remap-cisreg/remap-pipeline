@@ -19,6 +19,16 @@
         "md5" : "md5"
     },
 
+  "workflow_step":
+    {
+      "remove_duplicate" : "True"
+    },
+
+		"extention":
+		{
+			"peak" : "_peaks.narrowPeak"
+		},
+
     "genome" :
     {
         "index" : "/gpfs/tagc/home/cheneby/ReMap2/human/data_int/genome/hg38",

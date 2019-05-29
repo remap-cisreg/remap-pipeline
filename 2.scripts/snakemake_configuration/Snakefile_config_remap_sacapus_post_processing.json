@@ -25,6 +25,11 @@
         "md5" : "md5"
     },
 
+		"extention":
+		{
+			"peak" : "_peaks.narrowPeak"
+		},
+
 
     "merge_bam" :
     {

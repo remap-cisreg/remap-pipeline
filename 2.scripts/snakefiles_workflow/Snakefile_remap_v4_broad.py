@@ -49,8 +49,8 @@ LIBRARY_HEADER = config["header"]["library"]
 LIBRARY_URL = config["header"]["url"]
 LIBRARY_MD5 = config["header"]["md5"]
 
-# cluster info
-# nb_thread_quality_NSC_RSC = cluster_config[ 'quality_NSC_RSC'][ 'thread']
+# Extension peakcaller
+EXTENSION_PEAK = config[ "extention"][ "peak"]
 
 
 #================================================================#
@@ -283,5 +283,5 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
 rule all:
     # input:  expand( os.path.join( QUALITY_DIR, "macs2_{experiment_name}.FRiP_NSC_RSC"), experiment_name = list_exp),
-	input:	expand( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.broadPeak"), experiment_name = list_exp),
+	input:	expand( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + EXTENSION_PEAK), experiment_name = list_exp),
             expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", "{replicat_name_paired}", "{replicat_name_paired}_del.ok"), zip, replicat_name_paired = list_paired_trim_file)

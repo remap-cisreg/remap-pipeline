@@ -15,6 +15,11 @@
       "peakcaller" : "macs2"
     },
 
+			"extention":
+			{
+				"peak" : "_peaks.broadPeak"
+			},
+
 
     "header" :
     {
