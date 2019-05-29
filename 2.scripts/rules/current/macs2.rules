@@ -1,10 +1,6 @@
 rule macs2:
 	input:
-<<<<<<< HEAD
 			# lambda wildcards : expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["all"]) if config[ "workflow_step"][ "remove_duplicate"] == "True" else expand( os.path.join( PREPROCESSING_DIR, "sort_bam", "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["all"])
-=======
-			#lambda wildcards : expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["all"]) if config[ "workflow_step"][ "remove_duplicate"] == "True" else expand( os.path.join( PREPROCESSING_DIR, "sort_bam", "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["all"])
->>>>>>> dcc81f5984150796940c598cb4ab96db817ce7ee
 			lambda wildcards : expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["all"])
 	output:
 			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak")
@@ -21,11 +17,10 @@ rule macs2:
 	params:
 			outdir = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2"),
 			outfile_name = "{experiment_name}",
-<<<<<<< HEAD
-=======
+
 			# chip = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"]) if config[ "workflow_step"][ "remove_duplicate"] == "True" else expand( os.path.join( PREPROCESSING_DIR, "sort_bam", "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"]),
 			# control = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["control"]) if config[ "workflow_step"][ "remove_duplicate"] == "True" else expand( os.path.join( PREPROCESSING_DIR, "sort_bam", "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["control"]),
->>>>>>> dcc81f5984150796940c598cb4ab96db817ce7ee
+
 			chip = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"]),
 			control = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["control"]),
 			macs2 = config["macs2"][ "other"]
