@@ -67,7 +67,7 @@
 
     "macs2" :
     {
-        "other" : "-g 119146348  --broad  --broad-cutoff 0.1"
+        "other" : "-g 119146348 --broad --broad-cutoff 0.1 --nomodel --extsize 147 "
     },
 
     "singularity" :
