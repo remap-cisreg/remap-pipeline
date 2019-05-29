@@ -18,39 +18,112 @@
 
     "merge_bam" :
     {
-		"queue" : "remap",
-		"node" : "1",
-		"thread" : "1",
-		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
-		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+			"partition" : "skylake",
+	    "node" : "1",
+	    "thread" : "1",
+	    "ntasks" : "1",
+	    "time" : "02:00:00",
+			"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
+			"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
 	},
 
     "quality_FRiP" :
     {
-		"queue" : "remap",
-		"node" : "1",
-		"thread" : "1",
-		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
-		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+			"partition" : "skylake",
+	    "node" : "1",
+	    "thread" : "1",
+	    "ntasks" : "1",
+	    "time" : "12:00:00",
+			"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
+			"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
 	},
 
     "quality_NSC_RSC" :
     {
-		"queue" : "remap",
-		"node" : "1",
-		"thread" : "2",
-		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
-		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+			"partition" : "skylake",
+	    "node" : "1",
+	    "thread" : "2",
+	    "ntasks" : "1",
+	    "time" : "12:00:00",
+			"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
+			"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
 	},
 
-    "quality_all" :
+  "quality_all" :
     {
-		"queue" : "remap",
+			"partition" : "skylake",
+	    "node" : "1",
+	    "thread" : "1",
+	    "ntasks" : "1",
+	    "time" : "12:00:00",
+			"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
+			"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
+	},
+
+	"quality_all_experiments" :
+	{
+		"partition" : "skylake",
 		"node" : "1",
 		"thread" : "1",
-		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
-		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
-	}
+		"ntasks" : "1",
+		"time" : "12:00:00",
+		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
+		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
+	},
 
+	"quality_all" :
+	{
+		"partition" : "skylake",
+		"node" : "1",
+		"thread" : "1",
+		"ntasks" : "1",
+		"time" : "12:00:00",
+		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
+		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
+},
+
+	"filtering_quality_all" :
+	{
+		"partition" : "skylake",
+		"node" : "1",
+		"thread" : "1",
+		"ntasks" : "1",
+		"time" : "12:00:00",
+		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
+		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
+},
+
+	"graph_quality_all" :
+	{
+		"partition" : "skylake",
+		"node" : "1",
+		"thread" : "1",
+		"ntasks" : "1",
+		"time" : "12:00:00",
+		"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
+		"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
+},
+
+"creating_remap_catalogue_bed" :
+{
+	"partition" : "skylake",
+	"node" : "1",
+	"thread" : "1",
+	"ntasks" : "1",
+	"time" : "12:00:00",
+	"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
+	"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
+},
+
+	"sort_remap_bed" :
+{
+	"partition" : "skylake",
+	"node" : "1",
+	"thread" : "1",
+	"ntasks" : "1",
+	"time" : "12:00:00",
+	"stdout" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.out",
+	"stderr" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/4.preprocessing/log/{rule}_{wildcards.fastq_name}_slurm.err"
+}
 
 }

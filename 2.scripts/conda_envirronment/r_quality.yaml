@@ -1,9 +1,10 @@
 ---
-name: bedtools
+name: R-quality
 channels:
-  - bioconda
   - conda-forge
   - defaults
+  - r
 dependencies:
-  - bedtools=2.25.0
+  - r-rcolorbrewer
+  - r-optparse
 ...
