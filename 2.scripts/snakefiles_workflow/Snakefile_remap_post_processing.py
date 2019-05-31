@@ -51,8 +51,8 @@ LIBRARY_MD5 = config["header"]["md5"]
 
 PEAKCALLER = config[ "info"][ "peakcaller"]
 
-# cluster info
-# nb_thread_quality_NSC_RSC = cluster_config[ 'quality_NSC_RSC'][ 'thread']
+# Extension peakcaller
+EXTENSION_PEAK = config[ "extention"][ "peak"]
 
 
 #================================================================#
@@ -63,7 +63,12 @@ PEAKCALLER = config[ "info"][ "peakcaller"]
 include: os.path.join(BASE_DIR, RULE_DIR, "merge_bam.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "quality_NSC_RSC.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "quality_FRiP_nbPeaks.rules")
-# include: os.path.join(BASE_DIR, RULE_DIR, "quality_all.rules")
+include: os.path.join(BASE_DIR, RULE_DIR, "quality_all_experiment.rules")
+include: os.path.join(BASE_DIR, RULE_DIR, "quality_all.rules")
+include: os.path.join(BASE_DIR, RULE_DIR, "filtering_quality_all.rules")
+include: os.path.join(BASE_DIR, RULE_DIR, "graph_quality_all.rules")
+include: os.path.join(BASE_DIR, RULE_DIR, "creating_remap_catalogue_bed.rules")
+include: os.path.join(BASE_DIR, RULE_DIR, "sort_remap_bed.rules")
 
 #include: os.path.join(BASE_DIR, RULE_DIR, "delete_trim.rules")
 
@@ -117,175 +122,4 @@ rule all:
             # os.path.join( QUALITY_DIR, "results", "macs2_passed.quality_all"),
             # os.path.join( "remap2020_unsorted.bed"),
             os.path.join( "remap2020.bed"),
-            # os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-rule quality_all_experiment:
-    input:
-            nsc_rsc = os.path.join( PREPROCESSING_DIR, "NSC_RSC", "{experiment_name}.NSC_RSC"),
-            frip = os.path.join( PREPROCESSING_DIR, "FRiP", "macs2_{experiment_name}.FRiP")
-    output:
-            os.path.join( QUALITY_DIR, "macs2_{experiment_name}.quality_all")
-    resources:
-            res=1
-    log:
-            os.path.join( QUALITY_DIR, "log", "{experiment_name}quality_all_experiment.log")
-    params:
-            outdir = os.path.join( PREPROCESSING_DIR, "NSC_RSC"),
-            exp_name = "{experiment_name}"
-    shell:"""
-        FRiP=$(cat {input.frip})
-        NSC=$(cut -f9 {input.nsc_rsc})
-        RSC=$(cut -f10 {input.nsc_rsc})
-
-        echo "experiment_name\tNSC\tRSC\tFRiP\tnb_peaks\n{params.exp_name}\t$NSC\t$RSC\t$FRiP" > {output}
-    """
-
-
-rule quality_all:
-    input:
-            expand( os.path.join( QUALITY_DIR, "macs2_{experiment_name}.quality_all"), experiment_name = list_exp)
-    output:
-            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all")
-    resources:
-            res=1
-    log:
-            os.path.join( QUALITY_DIR, "log", "quality_all.log")
-    params:
-               indir = QUALITY_DIR,
-               outdir = os.path.join( QUALITY_DIR, "results")
-    shell:"""
-        mkdir -p {params.outdir}
-
-        cat {input} | awk "NR%2==0" | awk -F" " 'BEGIN {{print "experiment_name\tNSC\tRSC\tFRiP\tnb_peaks\tscore_NSC\tscore_RSC\tscore_FRiP\tscore_total" }}
-                                                  {{
-                                                    if( $2>=1.10) nsc=2; else if( $2>=1.05) nsc=1; else nsc=0;
-                                                    if( $3>=1) rsc=2; else if( $3>=0.8) rsc=1; else rsc=0;
-                                                    if( $4>=1) frip=1; else frip=0; score=nsc+rsc+frip; print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"nsc"\t"rsc"\t"frip"\t"score
-                                                  }}' >> {output}
-    """
-
-
-rule filtering_quality_all:
-    input:
-            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all")
-    output:
-            passed = os.path.join( QUALITY_DIR,  "results", "macs2_passed.quality_all"),
-            failed = os.path.join( QUALITY_DIR,  "results", "macs2_failed.quality_all")
-    resources:
-            res=1
-    log:
-            os.path.join( QUALITY_DIR, "log", "filtering_quality_all.log")
-    shell:"""
-
-         awk '{{
-                if( $5<100 || $9<2) {{ print > "{output.failed}"}}
-
-                else {{ print > "{output.passed}"}}
-
-              }}'  {input}
-
-    """
-
-
-# rule graph_quality_all:
-#     input:
-#             os.path.join( QUALITY_DIR,  "results", "macs2.quality_all")
-#     output:
-#             os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf")
-#     conda:
-#             config[ "conda"][ "R_quality"]
-#     resources:
-#             res=1
-#     log:
-#             os.path.join( QUALITY_DIR, "log", "graph_quality_all.log")
-#
-#     shell:"Rscript 2.scripts/utils/r/graph_quality_all.R --file {input} --outfile {output}"
-
-
-
-rule creating_remap_catalogue_bed:
-    input:
-            os.path.join( QUALITY_DIR,  "results", "macs2_passed.quality_all")
-    output:
-            os.path.join( "remap2020_unsorted.bed")
-    resources:
-            res=1
-    log:
-            os.path.join( QUALITY_DIR, "log", "creating_remap_catalogue_bed.log")
-    params:
-               path_to_peaks = PEAKCALLING_DIR,
-               peakcaller = PEAKCALLER,
-               path_file_color_tf = config[ "creating_remap_catalogue_bed"][ "color_file"]
-    run:
-
-        # create dicrionary with color by tf
-        dict_tf_color = {}
-        file_color_tf = open(  params.path_file_color_tf, 'r')
-
-        for line in file_color_tf:
-            split_line = line.strip().split( "\t")
-            if split_line[ 0] not in dict_tf_color:
-                dict_tf_color[ split_line[ 0]] = str( split_line[ 1]) + "," + str( split_line[ 2]) + "," + str( split_line[ 3])
-        file_color_tf.close()
-
-
-        # Puting in a list all experiement passing filtering
-        list_experiment_pass = []
-        file_experiment_pass = open(  input[ 0], 'r')
-
-        for line in file_experiment_pass:
-            if not line.startswith( "experiment_name"):
-                list_experiment_pass.append( line.split( "\t")[ 0].strip())
-        file_experiment_pass.close()
-
-        # writing results
-        file_outfile = open( output[ 0], 'w')
-
-        for experiment in list_experiment_pass:
-
-            # getting correct color for tf
-            tf = experiment.split( ".")[ 1]
-            color_tf = dict_tf_color[ tf]
-
-            # formating narrowPeak ReMap style
-            path_file_experiment_peak =  os.path.join( params.path_to_peaks, experiment, params.peakcaller, experiment + "_peaks.narrowPeak")
-
-            file_experiment_peak = open( path_file_experiment_peak, 'r')
-
-            for line in file_experiment_peak:
-                split_line = line.strip().split( "\t")
-                summit_position = int( split_line[ -1]) + int( split_line[ 1])
-                correct_line = split_line[ 0:4] + split_line[ 8:9] + split_line[ 5:6] + [  str( summit_position)] + [ str( summit_position + 1)] + [ color_tf]
-                file_outfile.write( "\t".join(correct_line) + "\n")
-
-        file_outfile.close()
-
-
-
-rule sort_remap_bed:
-    input:
-            os.path.join( "remap2020_unsorted.bed")
-    output:
-            # temp( os.path.join( PREPROCESSING_DIR,  "merge_bam", "{experiment_name}.bam"))
-            os.path.join( "remap2020.bed")
-    resources:
-            res=1
-    log:
-            os.path.join( QUALITY_DIR, "log", "sort_remap_bed.log")
-    params:
-            other = ""
-
-    shell:"""sort -k1,1 -k2,2n {input} > {output}"""
+            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf")

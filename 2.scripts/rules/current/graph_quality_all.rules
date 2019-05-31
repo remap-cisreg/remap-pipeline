@@ -1,0 +1,13 @@
+rule graph_quality_all:
+    input:
+            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all")
+    output:
+            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf")
+    conda:
+            config[ "conda"][ "R_quality"]
+    resources:
+            res=1
+    log:
+            os.path.join( QUALITY_DIR, "log", "graph_quality_all.log")
+
+    shell:"Rscript 2.scripts/utils/r/graph_quality_all.R --file {input} --outfile {output}"

@@ -1,0 +1,57 @@
+rule creating_remap_catalogue_bed:
+    input:
+            os.path.join( QUALITY_DIR,  "results", "macs2_passed.quality_all")
+    output:
+            os.path.join( "remap2020_unsorted.bed")
+    resources:
+            res=1
+    log:
+            os.path.join( QUALITY_DIR, "log", "creating_remap_catalogue_bed.log")
+    params:
+               path_to_peaks = PEAKCALLING_DIR,
+               peakcaller = PEAKCALLER,
+               path_file_color_tf = config[ "creating_remap_catalogue_bed"][ "color_file"],
+               extension_peak = EXTENSION_PEAK
+    run:
+
+        # create dicrionary with color by tf
+        dict_tf_color = {}
+        file_color_tf = open(  params.path_file_color_tf, 'r')
+
+        for line in file_color_tf:
+            split_line = line.strip().split( "\t")
+            if split_line[ 0] not in dict_tf_color:
+                dict_tf_color[ split_line[ 0]] = str( split_line[ 1]) + "," + str( split_line[ 2]) + "," + str( split_line[ 3])
+        file_color_tf.close()
+
+
+        # Puting in a list all experiement passing filtering
+        list_experiment_pass = []
+        file_experiment_pass = open(  input[ 0], 'r')
+
+        for line in file_experiment_pass:
+            if not line.startswith( "experiment_name"):
+                list_experiment_pass.append( line.split( "\t")[ 0].strip())
+        file_experiment_pass.close()
+
+        # writing results
+        file_outfile = open( output[ 0], 'w')
+
+        for experiment in list_experiment_pass:
+
+            # getting correct color for tf
+            tf = experiment.split( ".")[ 1]
+            color_tf = dict_tf_color[ tf]
+
+            # formating narrowPeak ReMap style
+            path_file_experiment_peak =  os.path.join( params.path_to_peaks, experiment, params.peakcaller, experiment + params.extention_peak)
+
+            file_experiment_peak = open( path_file_experiment_peak, 'r')
+
+            for line in file_experiment_peak:
+                split_line = line.strip().split( "\t")
+                summit_position = int( split_line[ -1]) + int( split_line[ 1])
+                correct_line = split_line[ 0:4] + split_line[ 8:9] + split_line[ 5:6] + [  str( summit_position)] + [ str( summit_position + 1)] + [ color_tf]
+                file_outfile.write( "\t".join(correct_line) + "\n")
+
+        file_outfile.close()

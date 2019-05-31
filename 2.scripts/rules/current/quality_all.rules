@@ -1,20 +1,22 @@
 rule quality_all:
     input:
-            nsc_rsc = os.path.join( PREPROCESSING_DIR, "NSC_RSC", "{experiment_name}.NSC_RSC"),
-            frip = os.path.join( PREPROCESSING_DIR, "FRiP", "macs2_{experiment_name}.FRiP")
+            expand( os.path.join( QUALITY_DIR, "macs2_{experiment_name}.quality_all"), experiment_name = list_exp)
     output:
-            os.path.join( QUALITY_DIR, "macs2_{experiment_name}.FRiP_NSC_RSC")
+            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all")
     resources:
             res=1
     log:
-            os.path.join( QUALITY_DIR, "log", "{experiment_name}_quality_all.log")
+            os.path.join( QUALITY_DIR, "log", "quality_all.log")
     params:
-            outdir = os.path.join( PREPROCESSING_DIR, "NSC_RSC"),
-            exp_name = "{experiment_name}"
+               indir = QUALITY_DIR,
+               outdir = os.path.join( QUALITY_DIR, "results")
     shell:"""
-        FRiP=$(cat {input.frip})
-        NSC=$(cut -f9 {input.nsc_rsc})
-        RSC=$(cut -f10 {input.nsc_rsc})
+        mkdir -p {params.outdir}
 
-        echo "experiment_name\tFRiP\tNSC\tRSC\n{params.exp_name}\t$FRiP\t$NSC\t$RSC\n" > {output}
+        cat {input} | awk "NR%2==0" | awk -F" " 'BEGIN {{print "experiment_name\tNSC\tRSC\tFRiP\tnb_peaks\tscore_NSC\tscore_RSC\tscore_FRiP\tscore_total" }}
+                                                  {{
+                                                    if( $2>=1.10) nsc=2; else if( $2>=1.05) nsc=1; else nsc=0;
+                                                    if( $3>=1) rsc=2; else if( $3>=0.8) rsc=1; else rsc=0;
+                                                    if( $4>=1) frip=1; else frip=0; score=nsc+rsc+frip; print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"nsc"\t"rsc"\t"frip"\t"score
+                                                  }}' >> {output}
     """

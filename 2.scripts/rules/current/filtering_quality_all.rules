@@ -1,0 +1,20 @@
+rule filtering_quality_all:
+    input:
+            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all")
+    output:
+            passed = os.path.join( QUALITY_DIR,  "results", "macs2_passed.quality_all"),
+            failed = os.path.join( QUALITY_DIR,  "results", "macs2_failed.quality_all")
+    resources:
+            res=1
+    log:
+            os.path.join( QUALITY_DIR, "log", "filtering_quality_all.log")
+    shell:"""
+
+         awk '{{
+                if( $5<100 || $9<2) {{ print > "{output.failed}"}}
+
+                else {{ print > "{output.passed}"}}
+
+              }}'  {input}
+
+    """
