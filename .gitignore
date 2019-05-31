@@ -1,5 +1,5 @@
 .snakemake
-1.metadata/tab
+1.metadata/*
 3.genome
 4.preprocessing/*
 !4.preprocessing/log
