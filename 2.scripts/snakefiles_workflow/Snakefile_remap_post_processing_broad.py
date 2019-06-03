@@ -200,7 +200,7 @@ rule filtering_quality_all:
     """
 
 
- rule graph_quality_all:
+rule graph_quality_all:
      input:
              os.path.join( QUALITY_DIR,  "results", "macs2.quality_all")
      output:

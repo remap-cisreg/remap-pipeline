@@ -49,7 +49,7 @@
     "creating_remap_catalogue_bed" :
 
     {
-      "color_file" : "1.metadata/A.thaliana_RGB.tsv"
+      "color_file" : "1.metadata/at_histones_rgb.tsv"
     },
 
 
