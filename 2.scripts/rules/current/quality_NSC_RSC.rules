@@ -15,9 +15,9 @@ rule quality_NSC_RSC:
     params:
             outdir = os.path.join( PREPROCESSING_DIR, "NSC_RSC"),
             run_spp = config[ "quality_NSC_RSC"][ "run_spp"]
-    shell:"""
-    run_spp.R -c={input.bam} -savp -out={output} -p=2 -odir={params.outdir} -rf {params.run_spp}
-    """
     # shell:"""
-    # Rscript /usr/bin/phantompeakqualtools-1.2/run_spp.R -c={input.bam} -savp -out={output} -p=2 -odir={params.outdir} -rf
+    # run_spp.R -c={input.bam} -savp -out={output} -p=2 -odir={params.outdir} -rf {params.run_spp}
     # """
+    shell:"""
+    Rscript /usr/bin/phantompeakqualtools-1.2/run_spp.R -c={input.bam} -savp -out={output} -p=2 -odir={params.outdir} -rf
+    """
