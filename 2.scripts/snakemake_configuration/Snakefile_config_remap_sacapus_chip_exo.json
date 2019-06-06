@@ -1,7 +1,7 @@
 {
   "working_dir" :
     {
-      "base_dir" : "/home/jcheneby/remap-pipeline",
+      "base_dir" : "/gpfs/tagc/home/cheneby/remap-pipeline",
       "tab_dir" : "1.metadata/tab",
       "preprocessing" : "4.preprocessing",
       "bam_dir" : "5.bam",
@@ -25,15 +25,15 @@
       "remove_duplicate" : "False"
     },
 
-		"extention":
-		{
-			"peak" : "_peaks.narrowPeak"
-		},
+    "extention":
+    {
+      "peak" : "_peaks.narrowPeak"
+    },
 
   "genome" :
     {
-      "index" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/3.genome/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome",
-      "fasta" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/3.genome/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome.fa"
+      "index" : "/gpfs/tagc/home/cheneby/ReMap2/human/data_int/genome/hg38",
+      "fasta" : "/gpfs/tagc/home/cheneby/ReMap2/human/data_int/genome/hg38.fa"
     },
 
   "aria2" :
@@ -93,14 +93,11 @@
     },
 	"conda" :
 	{
-		"aria2" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/aria2.img",
-		"trim_galore" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/trim_galore.img",
-		"bowtie2" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/bowtie2.img",
-		"samtools" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/samtools.img",
-		"macs2" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scritps/envs/macs2.img",
-		"bedClip" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/bedClip.yaml",
-		"quality_FRiP" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/quality_FRiP.yaml",
-		"bedtools" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/bedtools.yaml",
-		"phantompeak" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/2.scripts/conda_envirronment/phantompeak.yaml"
+    "aria2" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/aria2.yaml",
+    "trim_galore" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/trim_galore.yaml",
+    "bowtie2" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bowtie2.yaml",
+    "samtools" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/samtools.yaml",
+    "macs2" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/macs2.yaml",
+    "bedtools" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bedtools.yaml"
 	}
 }

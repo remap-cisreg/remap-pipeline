@@ -4,7 +4,7 @@ Affiliation: TAGC
 Aim: Workflow ReMap human
 Date: 01-12-16
 last update: 13-09-2018
-Run:snakemake --snakefile 2.scripts/snakefiles_workflow/Snakefile_remap_chip_exo.py --printshellcmds --cores 10 --cluster-config .scripts/cluster_configuration/cluster_conda_toque.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile 2.snakemake_configuration/Snakefile_config_remap_saccapus.json --use-conda
+Run:snakemake --snakefile 2.scripts/snakefiles_workflow/Snakefile_remap_chip_exo.py --printshellcmds --cores 10 --cluster-config .scripts/cluster_configuration/cluster_conda_toque.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile 2.snakemake_configuration/Snakefile_config_remap_torque_saccapus_chip_exo.json --use-conda
 
 dag: snakemake --snakefile .scripts/snakefiles_workflow/Snakefile_remap_chip_exo.py --printshellcmds --cores 10 --cluster-config config/sacapus.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --dag 2> /dev/null | dot -T svg > dag.svg
 rulegraph: snakemake --snakefile.scripts/snakefiles_workflow/Snakefile_remap_chip_exo.py --printshellcmds --cores 10 --cluster-config config/sacapus.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --rulegraph 2> /dev/null | dot -T svg > rulegraph.svg
@@ -280,5 +280,95 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
 rule all:
     # input:  expand( os.path.join( QUALITY_DIR, "macs2_{experiment_name}.FRiP_NSC_RSC"), experiment_name = list_exp),
-	input:	expand( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak"), experiment_name = list_exp),
+    input:
+            # expand( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak"), experiment_name = list_exp),
+            expand( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_filtered_imbalance.narrowPeak" ), experiment_name = list_exp),
             expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", "{replicat_name_paired}", "{replicat_name_paired}_del.ok"), zip, replicat_name_paired = list_paired_trim_file)
+
+
+
+rule intersect_reads_bed:
+    input:
+            peak = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + config[ "extention"][ "peak"]),
+            bam = lambda wildcards : expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"])
+    output:
+            temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_intersect_bam.bed" ))
+    singularity:
+            config[ "singularity"][ "bedtools"]
+    conda:
+            config[ "conda"][ "bedtools"]
+    resources:
+            res=1
+    log:
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}_intersect.log")
+    params:
+            other = ""
+    shell: 	"""
+    bedtools intersect -bed -wo -abam {input.bam} -b {input.peak} > {output}
+    """
+
+
+rule filtering_imbalance_reads:
+    input:
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_intersect_bam.bed" )
+    output:
+            temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_kept_peaks.txt" ))
+    resources:
+            res=1
+    log:
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}_filtered_imbalance.log")
+    params:
+            outdir = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2"),
+            outfile_name = "{experiment_name}",
+            macs2 = config["macs2"][ "other"]
+
+    run:
+        file_intersect = open( input[ 0], 'r')
+        dict_peak_read_direction = {}
+
+        for line in file_intersect:
+            split_line = line.strip().split( "\t")
+            peak_name = split_line[ 15]
+            read_direction = split_line[ 5]
+
+            if peak_name not in dict_peak_read_direction:
+                dict_peak_read_direction[ peak_name] = {}
+                dict_peak_read_direction[ peak_name][ "+"] = 0
+                dict_peak_read_direction[ peak_name][ "-"] = 0
+
+            if read_direction == "+":
+                dict_peak_read_direction[ peak_name][ "+"] +=1
+            elif read_direction == "-":
+                dict_peak_read_direction[ peak_name][ "-"] +=1
+
+        file_intersect.close()
+
+
+        file_output = open( output[ 0], "w")
+
+        for current_key in dict_peak_read_direction:
+            try:
+                if dict_peak_read_direction[ current_key][ "+"] / dict_peak_read_direction[ current_key][ "-"] <= 4:
+                    file_output.write( current_key + "\n")
+            except ZeroDivisionError:
+                if dict_peak_read_direction[ current_key][ "+"] / 1 <= 4:
+                    file_output.write( current_key + "\n")
+
+        file_output.close()
+
+
+rule getting_kept_blanced_peaks:
+    input:
+            peak = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + config[ "extention"][ "peak"]),
+            kept_peaks = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_kept_peaks.txt" )
+    output:
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_filtered_imbalance.narrowPeak" )
+    resources:
+            res=1
+    log:
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}_getting_kept_blanced_peaks.log")
+    params:
+            other = ""
+    shell: 	"""
+            grep -f {input.kept_peaks} {input.peak} > {output}
+    """
