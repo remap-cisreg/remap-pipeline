@@ -311,7 +311,8 @@ rule nb_reads_bam:
     input:
             bam = lambda wildcards : expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"])
     output:
-            temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_nb_reads.txt" ))
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_nb_reads.txt" )
+            # temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_nb_reads.txt" ))
     singularity:
             config[ "singularity"][ "samtools"]
     conda:
@@ -319,13 +320,13 @@ rule nb_reads_bam:
     resources:
             res=1
     log:
-            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}nb_reads_bam.log")
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}_nb_reads_bam.log")
     params:
             other = ""
     shell: 	"""
     nb_peak_tot=0
 
-    IFS=' ' read -ra ARRAY_BAM <<< "{input}"
+    IFS=' ' read -ra ARRAY_BAM <<< "{input}'
     for i in "${{ARRAY_BAM[@]}}"
     do
         nb_peak=$(samtools view -c "$i")
@@ -418,5 +419,11 @@ rule getting_kept_blanced_peaks:
     params:
             other = ""
     shell: 	"""
-            grep -f {input.kept_peaks} {input.peak} > {output}
+        if [ -s {input.kept_peaks} ] || [ -s {input.peak} ]
+        then
+                grep -f {input.kept_peaks} {input.peak} > {output}
+        else
+                touch {output}
+        fi
+
     """
