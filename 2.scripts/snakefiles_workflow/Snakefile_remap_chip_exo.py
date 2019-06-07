@@ -326,7 +326,7 @@ rule nb_reads_bam:
     shell: 	"""
     nb_peak_tot=0
 
-    IFS=' ' read -ra ARRAY_BAM <<< "{input}'
+    IFS=" " read -ra ARRAY_BAM <<< "{input}'
     for i in "${{ARRAY_BAM[@]}}"
     do
         nb_peak=$(samtools view -c "$i")
