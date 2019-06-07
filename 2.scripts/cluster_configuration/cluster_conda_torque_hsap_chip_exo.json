@@ -87,6 +87,16 @@
 		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
 		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
 	},
+
+    "nb_reads_bam" :
+    {
+		"queue" : "remap",
+		"node" : "1",
+		"thread" : "1",
+		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
+		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
+	},
+
     "filtering_imbalance_reads" :
     {
 		"queue" : "remap",
@@ -95,7 +105,7 @@
 		"stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.out",
 		"stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_qsub.err"
 	},
-	
+
     "getting_kept_blanced_peaks" :
     {
 		"queue" : "remap",
