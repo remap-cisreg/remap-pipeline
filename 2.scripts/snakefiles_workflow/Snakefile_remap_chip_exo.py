@@ -307,10 +307,30 @@ rule intersect_reads_bed:
     bedtools intersect -bed -wo -abam {input.bam} -b {input.peak} > {output}
     """
 
+rule nb_reads_bam:
+    input:
+            bam = lambda wildcards : expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"])
+    output:
+            temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_nb_reads.txt" ))
+    singularity:
+            config[ "singularity"][ "samtools"]
+    conda:
+            config[ "conda"][ "samtools"]
+    resources:
+            res=1
+    log:
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}nb_reads_bam.log")
+    params:
+            other = ""
+    shell: 	"""
+    samtools view -c {input} > {output}
+    """
+
 
 rule filtering_imbalance_reads:
     input:
-            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_intersect_bam.bed" )
+            intersect = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_intersect_bam.bed" ),
+            reads = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_nb_reads.txt" )
     output:
             temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_kept_peaks.txt" ))
     resources:
@@ -321,40 +341,60 @@ rule filtering_imbalance_reads:
             outdir = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2"),
             outfile_name = "{experiment_name}",
             macs2 = config["macs2"][ "other"]
-
     run:
-        file_intersect = open( input[ 0], 'r')
+        file_intersect = open( input.intersect, 'r')
         dict_peak_read_direction = {}
 
         for line in file_intersect:
             split_line = line.strip().split( "\t")
             peak_name = split_line[ 15]
             read_direction = split_line[ 5]
+            peak_size = int( split_line[ 14]) - int( split_line[ 13])
 
             if peak_name not in dict_peak_read_direction:
                 dict_peak_read_direction[ peak_name] = {}
                 dict_peak_read_direction[ peak_name][ "+"] = 0
                 dict_peak_read_direction[ peak_name][ "-"] = 0
+                dict_peak_read_direction[ peak_name][ "peak_size"] = 0
 
             if read_direction == "+":
                 dict_peak_read_direction[ peak_name][ "+"] +=1
             elif read_direction == "-":
                 dict_peak_read_direction[ peak_name][ "-"] +=1
 
+            dict_peak_read_direction[ peak_name][ "peak_size"] = peak_size
+
         file_intersect.close()
 
+        file_nb_reads = open( input.reads, 'r')
+        nb_read_total = file_nb_reads.readline().strip()
+        file_nb_reads.close()
 
         file_output = open( output[ 0], "w")
 
         for current_key in dict_peak_read_direction:
             try:
-                if dict_peak_read_direction[ current_key][ "+"] / dict_peak_read_direction[ current_key][ "-"] <= 4:
-                    file_output.write( current_key + "\n")
+                ratio_forward_reverse = dict_peak_read_direction[ current_key][ "+"] / dict_peak_read_direction[ current_key][ "-"]
             except ZeroDivisionError:
-                if dict_peak_read_direction[ current_key][ "+"] / 1 <= 4:
+                ratio_forward_reverse = dict_peak_read_direction[ current_key][ "+"] / 0.01
+
+            # ratio forward reverse
+            if ratio_forward_reverse <= 4:
+
+                # calculating threshold for this experiment
+                threshold = (20 / 15000000) * int( nb_read_total)
+
+                # calculating ratio read per peaks
+                nb_reads_in_peak = dict_peak_read_direction[ current_key][ "-"] + dict_peak_read_direction[ current_key][ "+"]
+                nb_reads_per_500bp = (nb_reads_in_peak / dict_peak_read_direction[ current_key][ "peak_size"]) * 500
+
+                # enough reads in peaks
+                if nb_reads_per_500bp > threshold:
                     file_output.write( current_key + "\n")
 
         file_output.close()
+
+
 
 
 rule getting_kept_blanced_peaks:
