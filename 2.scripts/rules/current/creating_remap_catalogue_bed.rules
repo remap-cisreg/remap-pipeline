@@ -2,7 +2,7 @@ rule creating_remap_catalogue_bed:
     input:
             os.path.join( QUALITY_DIR,  "results", "macs2_passed.quality_all")
     output:
-            os.path.join( "remap2020_unsorted.bed")
+            temp( os.path.join( REMAP_FULLANME + "_unsort.bed"))
     resources:
             res=1
     log:
@@ -11,7 +11,7 @@ rule creating_remap_catalogue_bed:
                path_to_peaks = PEAKCALLING_DIR,
                peakcaller = PEAKCALLER,
                path_file_color_tf = config[ "creating_remap_catalogue_bed"][ "color_file"],
-               extension_peak = EXTENSION_PEAK
+               extension_peak = config["extention"]["peak_output"]
     run:
 
         # create dicrionary with color by tf
@@ -21,7 +21,7 @@ rule creating_remap_catalogue_bed:
         for line in file_color_tf:
             split_line = line.strip().split( "\t")
             if split_line[ 0] not in dict_tf_color:
-                dict_tf_color[ split_line[ 0]] = str( split_line[ 1]) + "," + str( split_line[ 2]) + "," + str( split_line[ 3])
+                dict_tf_color[ split_line[ 0]] = str( split_line[ 1])
         file_color_tf.close()
 
 
@@ -44,7 +44,7 @@ rule creating_remap_catalogue_bed:
             color_tf = dict_tf_color[ tf]
 
             # formating narrowPeak ReMap style
-            path_file_experiment_peak =  os.path.join( params.path_to_peaks, experiment, params.peakcaller, experiment + params.extention_peak)
+            path_file_experiment_peak =  os.path.join( params.path_to_peaks, experiment, params.peakcaller, experiment + params.extension_peak)
 
             file_experiment_peak = open( path_file_experiment_peak, 'r')
 

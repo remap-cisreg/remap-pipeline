@@ -1,9 +1,9 @@
 rule sort_remap_bed:
     input:
-            os.path.join( "remap2020_unsorted.bed")
+            os.path.join( REMAP_FULLANME + "_unsort.bed")
     output:
             # temp( os.path.join( PREPROCESSING_DIR,  "merge_bam", "{experiment_name}.bam"))
-            os.path.join( "remap2020.bed")
+            os.path.join( REMAP_FULLANME + ".bed")
     resources:
             res=1
     log:

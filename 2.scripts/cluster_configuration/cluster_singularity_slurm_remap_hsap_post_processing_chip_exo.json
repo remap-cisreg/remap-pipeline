@@ -1,0 +1,64 @@
+{
+	"__default__":
+	{
+  "project-name":"b097",
+	"job-name" : "{rule}",
+	"partition" : "skylake",
+	"node" : "1",
+	"thread" : "1",
+	"ntasks" : "1",
+	"time" : "2:30:00",
+	"memory" : "5G",
+	"stdout" : "/scratch/bballester/projects/chip-exo/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.out",
+	"stderr" : "/scratch/bballester/projects/chip-exo/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.err",
+	"mail-type":"BEGIN,END",
+	"mail-user":"benoit.ballester@inserm.fr"
+	},
+
+
+
+	"quality_all_chip_exo_nb_peak" :
+	{
+		"partition" : "skylake",
+		"node" : "1",
+		"thread" : "1",
+		"ntasks" : "1",
+		"time" : "02:00:00",
+		"stdout" : "/scratch/bballester/projects/chip-exo/4.preprocessing/log/{rule}_slurm.out",
+		"stderr" : "/scratch/bballester/projects/chip-exo/4.preprocessing/log/{rule}_slurm.err"
+},
+
+	"graph_quality_all" :
+	{
+		"partition" : "skylake",
+		"node" : "1",
+		"thread" : "1",
+		"ntasks" : "1",
+		"time" : "02:00:00",
+		"stdout" : "/scratch/bballester/projects/chip-exo/4.preprocessing/log/{rule}_slurm.out",
+		"stderr" : "/scratch/bballester/projects/chip-exo/4.preprocessing/log/{rule}_slurm.err"
+},
+
+"creating_remap_catalogue_bed" :
+{
+	"partition" : "skylake",
+	"node" : "1",
+	"thread" : "1",
+	"ntasks" : "1",
+	"time" : "02:00:00",
+	"stdout" : "/scratch/bballester/projects/chip-exo/4.preprocessing/log/{rule}_slurm.out",
+	"stderr" : "/scratch/bballester/projects/chip-exo/4.preprocessing/log/{rule}_slurm.err"
+},
+
+	"sort_remap_bed" :
+{
+	"partition" : "skylake",
+	"node" : "1",
+	"thread" : "1",
+	"ntasks" : "1",
+	"time" : "05:00:00",
+	"stdout" : "/scratch/bballester/projects/chip-exo/4.preprocessing/log/{rule}_slurm.out",
+	"stderr" : "/scratch/bballester/projects/chip-exo/4.preprocessing/log/{rule}_slurm.err"
+}
+
+}

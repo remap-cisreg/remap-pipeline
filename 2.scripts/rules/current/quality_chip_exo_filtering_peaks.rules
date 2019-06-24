@@ -1,0 +1,65 @@
+rule filtering_peaks:
+    input:
+            intersect = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_intersect_bam.bed" ),
+            reads = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_nb_reads.txt" )
+    output:
+            temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_kept_peaks.txt" ))
+    resources:
+            res=1
+    log:
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}_filtered_imbalance.log")
+    params:
+            outdir = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2"),
+            outfile_name = "{experiment_name}"
+    run:
+        file_intersect = open( input.intersect, 'r')
+        dict_peak_read_direction = {}
+
+        for line in file_intersect:
+            split_line = line.strip().split( "\t")
+            peak_name = split_line[ 15]
+            read_direction = split_line[ 5]
+            peak_size = int( split_line[ 14]) - int( split_line[ 13])
+
+            if peak_name not in dict_peak_read_direction:
+                dict_peak_read_direction[ peak_name] = {}
+                dict_peak_read_direction[ peak_name][ "+"] = 0
+                dict_peak_read_direction[ peak_name][ "-"] = 0
+                dict_peak_read_direction[ peak_name][ "peak_size"] = 0
+
+            if read_direction == "+":
+                dict_peak_read_direction[ peak_name][ "+"] +=1
+            elif read_direction == "-":
+                dict_peak_read_direction[ peak_name][ "-"] +=1
+
+            dict_peak_read_direction[ peak_name][ "peak_size"] = peak_size
+
+        file_intersect.close()
+
+        file_nb_reads = open( input.reads, 'r')
+        nb_read_total = file_nb_reads.readline().strip()
+        file_nb_reads.close()
+
+        file_output = open( output[ 0], "w")
+
+        for current_key in dict_peak_read_direction:
+            try:
+                ratio_forward_reverse = dict_peak_read_direction[ current_key][ "+"] / dict_peak_read_direction[ current_key][ "-"]
+            except ZeroDivisionError:
+                ratio_forward_reverse = dict_peak_read_direction[ current_key][ "+"] / 0.01
+
+            # ratio forward reverse
+            if ratio_forward_reverse <= 4:
+
+                # calculating threshold for this experiment
+                threshold = (20 / 15000000) * int( nb_read_total)
+
+                # calculating ratio read per peaks
+                nb_reads_in_peak = dict_peak_read_direction[ current_key][ "-"] + dict_peak_read_direction[ current_key][ "+"]
+                nb_reads_per_500bp = (nb_reads_in_peak / dict_peak_read_direction[ current_key][ "peak_size"]) * 500
+
+                # enough reads in peaks
+                if nb_reads_per_500bp > threshold:
+                    file_output.write( current_key + "\n")
+
+        file_output.close()

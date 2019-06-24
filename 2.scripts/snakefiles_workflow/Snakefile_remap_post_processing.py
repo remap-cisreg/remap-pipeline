@@ -64,7 +64,7 @@ include: os.path.join(BASE_DIR, RULE_DIR, "merge_bam.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "quality_NSC_RSC.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "quality_FRiP_nbPeaks.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "quality_all_experiment.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "quality_all.rules")
+#include: os.path.join(BASE_DIR, RULE_DIR, "quality_all.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "filtering_quality_all.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "graph_quality_all.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "creating_remap_catalogue_bed.rules")
@@ -111,15 +111,40 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 # pprint.pprint( dict_experiment_chip_filename)
 #print( expand( os.path.join( QUALITY_DIR, "macs2_{experiment_name}.quality_all"), experiment_name = list_exp))
 
+
 #================================================================#
 #                         Workflow                               #
 #================================================================#
 
 
 rule all:
-    input:  #expand( os.path.join( QUALITY_DIR, "macs2_{experiment_name}.quality_all"), experiment_name = list_exp),
+    input:  # expand( os.path.join( QUALITY_DIR, "macs2_{experiment_name}.quality_all"), experiment_name = list_exp),
             # os.path.join( QUALITY_DIR, "results", "macs2.quality_all")
             # os.path.join( QUALITY_DIR, "results", "macs2_passed.quality_all"),
             # os.path.join( "remap2020_unsorted.bed"),
             os.path.join( "remap2020.bed"),
             os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf")
+
+rule quality_all:
+    input:
+            expand( os.path.join( QUALITY_DIR, "macs2_{experiment_name}.quality_all"), experiment_name = list_exp)
+    output:
+            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all")
+    resources:
+            res=1
+    log:
+            os.path.join( QUALITY_DIR, "log", "quality_all.log")
+    params:
+               indir = QUALITY_DIR,
+               outdir = os.path.join( QUALITY_DIR, "results")
+    shell:"""
+        mkdir -p {params.outdir}
+
+        cat {input} | awk "NR%2==0" | awk -F" " 'BEGIN {{print "experiment_name\tNSC\tRSC\tFRiP\tnb_peaks\tscore_NSC\tscore_RSC\tscore_FRiP\tscore_total" }}
+                                                  {{
+                                                    if( $2>=1.10) nsc=2; else if( $2>=1.05) nsc=1; else nsc=0;
+                                                    if( $3>=1) rsc=2; else if( $3>=0.8) rsc=1; else rsc=0;
+                                                    if( $4>=1) frip=1; else frip=0; score=nsc+rsc+frip; print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"nsc"\t"rsc"\t"frip"\t"score
+                                                  }}' >> {output}
+    """
+

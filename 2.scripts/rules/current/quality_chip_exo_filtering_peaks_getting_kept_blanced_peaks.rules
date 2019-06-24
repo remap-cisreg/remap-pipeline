@@ -1,0 +1,21 @@
+rule quality_chip_exo_filtering_peaks_getting_kept_blanced_peaks:
+    input:
+            peak = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + EXTENSION_PEAK_INPUT),
+            kept_peaks = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_kept_peaks.txt" )
+    output:
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + EXTENSION_PEAK_OUTPUT )
+    resources:
+            res=1
+    log:
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}_getting_kept_blanced_peaks.log")
+    params:
+            other = ""
+    shell: 	"""
+        if [ -s {input.kept_peaks} ] || [ -s {input.peak} ]
+        then
+                grep -w -f {input.kept_peaks} {input.peak} > {output}
+        else
+                touch {output}
+        fi
+
+    """
