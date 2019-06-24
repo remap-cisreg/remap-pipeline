@@ -54,6 +54,15 @@ PEAKCALLER = config[ "info"][ "peakcaller"]
 # Extension peakcaller
 EXTENSION_PEAK = config[ "extention"][ "peak"]
 
+# File names
+REMAP_FILENAME_PREFIX = "remap" + \
+                        config["info"]["remap_version"]
+REMAP_FILENAME_SUFFIX = PEAKCALLER +\
+                        "_" + config["info"]["assembly"] + \
+                        "v" + config["info"]["update_version"] + \
+                        "_" + config["info"]["patch_version"]
+
+REMAP_FULLANME = REMAP_FILENAME_PREFIX + "_" + REMAP_FILENAME_SUFFIX
 
 #================================================================#
 #                         Includes                               #
@@ -122,7 +131,7 @@ rule all:
             # os.path.join( QUALITY_DIR, "results", "macs2.quality_all")
             # os.path.join( QUALITY_DIR, "results", "macs2_passed.quality_all"),
             # os.path.join( "remap2020_unsorted.bed"),
-            os.path.join( "remap2020.bed"),
+            os.path.join( REMAP_FULLANME + ".bed"),
             os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf")
 
 rule quality_all:
@@ -147,4 +156,3 @@ rule quality_all:
                                                     if( $4>=1) frip=1; else frip=0; score=nsc+rsc+frip; print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"nsc"\t"rsc"\t"frip"\t"score
                                                   }}' >> {output}
     """
-
