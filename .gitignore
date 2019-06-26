@@ -8,6 +8,7 @@
 6.peakcalling/*
 7.bigwig/*
 8.quality/*
+9.bed/*
 # Don't ignore those files
 !1.metadata/*.md
 !1.metadata/*.tsv
