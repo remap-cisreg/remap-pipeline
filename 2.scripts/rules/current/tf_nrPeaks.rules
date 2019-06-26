@@ -1,0 +1,50 @@
+rule tf_nrPeaks:
+    input:
+            os.path.join( BED_DIR, "TF", "{tf}", PREFIX + "_{tf}_nr_" + SUFFIX + "_part2.bed")
+    output:
+            os.path.join( BED_DIR, "TF", "{tf}", PREFIX + "_{tf}_nr_" + SUFFIX + ".bed")
+
+    run:
+        import statistics
+
+        file_merge = open( input[ 0], 'r')
+        file_output = open( output[ 0], 'w')
+
+
+        for line in file_merge:
+            # get all relevant info
+            split_line = line.strip(). split( "\t")
+            chromosome = split_line[ 0]
+            summit = int( split_line[ 4])
+            color = split_line[ 5]
+
+            # Spliting info column by peaks in nr
+            raw_peaks_in_nr =  split_line[ 3].split( ",")
+
+            set_cell_line = set()
+
+            list_peaks_start = []
+            list_peaks_end = []
+
+            for peaks in  raw_peaks_in_nr:
+
+                # Spliting info and position
+                split_peaks_in_nr = peaks.split( ":")
+
+                list_peaks_start.append ( int( split_peaks_in_nr[ 1].split( "-")[ 0]))
+                list_peaks_end.append ( int( split_peaks_in_nr[ 1].split( "-")[ 1]))
+
+                # get raw cell line
+                raw_cell_line = split_peaks_in_nr[ 0].split( ".", 3)[ -1].split( "_", 1)[ 0]
+                set_cell_line.add( raw_cell_line)
+
+
+            mean_start =  int( round( statistics.mean( list_peaks_start), 0))
+
+            mean_end =  int( round( statistics.mean( list_peaks_end), 0))
+
+            file_output.write( "\t".join([ chromosome, str( mean_start),  str( mean_end), wildcards.tf + ":" + ",".join( list( set_cell_line)), str( len( raw_peaks_in_nr)), ".", str( summit), str( summit + 1), color]) +"\n")
+
+
+        file_merge.close()
+        file_output.close()

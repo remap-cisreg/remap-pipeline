@@ -1,0 +1,8 @@
+rule cell_allPeaks:
+    input:
+            ALL_PEAKS
+    output:
+            os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_all_" + SUFFIX + ".bed")
+    params:
+            other = config["cell_allPeaks"]["other"]
+    shell: "grep -E '\.{wildcards.cell}(_[a-zA-Z0-9]+)*' {input} > {output}"

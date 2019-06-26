@@ -1,0 +1,13 @@
+rule tf_nrPeaks_median_size_peak:
+    input:
+            os.path.join( BED_DIR, "TF", "{tf}" , PREFIX + "_{tf}_all_" + SUFFIX + ".bed")
+    output:
+            temp( os.path.join( BED_DIR, "TF", "{tf}",  PREFIX + "_{tf}_nr_" + SUFFIX + "_part1.bed"))
+    shell: """
+    # Getting median peak size
+    MEDIAN_SIZE=$(awk -F"\t" '{{ print $3-$2}}' {input} | sort -n | awk ' {{ a[i++]=$1; }} END {{ print a[int(i/2)]; }}')
+
+
+    # creating temporary bed with peaks max size is the median size (adding from summit)
+    awk -v median=$MEDIAN_SIZE -F"\t" '{{ size=int(median/2); debut=$7-size; fin=$7+size; if(debut<$2) debut=$2; if(fin>$3) fin=$3; print $1"\t"debut"\t"fin"\t"$4":"$2"-"$3"\t0\t.\t"$7"\t"$7+1"\t"$9}}' {input}| sort -k1,1 -k2,2n > {output}
+    """
