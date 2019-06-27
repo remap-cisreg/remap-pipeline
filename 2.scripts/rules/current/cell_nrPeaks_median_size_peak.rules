@@ -2,14 +2,17 @@ rule cell_nrPeaks_median_size_peak:
     input:
             os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_all_" + SUFFIX + ".bed")
     output:
-            os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part1.bed")
+            part_1 = temp( os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part1.bed")),
+            nt_overlap = temp( os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_nb_nucleotide.txt"))
     params:
-            other = config["cell_allPeaks"]["other"]
+            other = config["cell_allPeaks"]["other"],
+            per_overlap = config["cell_nrPeaks"]["perc_overlap"]
     shell: """
     # Getting median peak size
     MEDIAN_SIZE=$(awk -F"\t" '{{ print $3-$2}}' {input} | sort -n | awk ' {{ a[i++]=$1; }} END {{ print a[int(i/2)]; }}')
 
 
     # creating temporary bed with peaks max size is the median size (adding from summit)
-    awk -v median=$MEDIAN_SIZE -F"\t" '{{ size=int(median/2); debut=$7-size; fin=$7+size; if(debut<$2) debut=$2; if(fin>$3) fin=$3; print $1"\t"debut"\t"fin"\t"$4":"$2"-"$3"\t0\t.\t"$7"\t"$7+1"\t"$9}}' {input}| sort -k1,1 -k2,2n > {output}
+    awk -v median=$MEDIAN_SIZE -F"\t" '{{ size=int(median/2); debut=$7-size; fin=$7+size; if(debut<$2) debut=$2; if(fin>$3) fin=$3; print $1"\t"debut"\t"fin"\t"$4":"$2"-"$3"\t0\t.\t"$7"\t"$7+1"\t"$9}}' {input}| sort -k1,1 -k2,2n > {output.part_1}
+    echo $MEDIAN_SIZE | awk -v percOverlap="{params.per_overlap}" '{{print int($1/100*percOverlap)}}' > {output.nt_overlap}
     """

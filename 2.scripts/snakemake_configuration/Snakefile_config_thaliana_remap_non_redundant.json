@@ -1,0 +1,58 @@
+{
+    "working_dir" :
+    {
+        "base_dir" : "/scratch/bballester/thaliana/remap-thaliana-tf",
+        "preprocessing" : "4.preprocessing",
+        "bed_dir" : "9.bed",
+        "rule_dir" : "/scratch/bballester/thaliana/remap-thaliana-tf/2.scripts/rules/current"
+    },
+
+    "file" :
+    {
+      "all_peaks" : "/scratch/bballester/thaliana/remap-thaliana-tf/remap2020_all_macs2_TAIR10_v1_0.bed"
+    },
+
+    "info" :
+    {
+    "species" : "thaliana",
+    "assembly" : "TAIR10",
+    "peakcaller" : "macs2",
+    "remap_version" : "2020",
+    "update_version" : "1",
+    "patch_version" : "0",
+    "nb_cell_info" : "2"
+  },
+
+  "tf_allPeaks" :
+  {
+    "other" : ""
+  },
+
+  "tf_nrPeaks" :
+  {
+    "perc_overlap" : "25"
+  },
+
+  "cell_allPeaks" :
+  {
+    "other" : ""
+  },
+
+  "cell_nrPeaks" :
+  {
+    "perc_overlap" : "25"
+  },
+
+
+  "singularity" :
+  {
+
+    "bedtools" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_bedtools225.img"
+
+  },
+
+	"conda" :
+	{
+    "bedtools" : "/gpfs/tagc/home/cheneby/remap-pipeline/2.scripts/conda_envirronment/bedtools.yaml"
+	}
+}

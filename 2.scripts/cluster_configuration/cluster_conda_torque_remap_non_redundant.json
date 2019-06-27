@@ -33,9 +33,9 @@
 	},
 
  "cell_tf_sort":
-        {
-                "stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{cell}_qsub.out",
-                "stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{cell}_qsub.err"
-        }
+  {
+    "stdout" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{cell}_qsub.out",
+    "stderr" : "/gpfs/tagc/home/cheneby/remap-pipeline/4.preprocessing/log/{rule}_{cell}_qsub.err"
+  }
 
 }
