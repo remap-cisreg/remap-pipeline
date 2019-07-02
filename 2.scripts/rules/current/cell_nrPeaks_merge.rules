@@ -19,7 +19,7 @@
 #     """
 rule cell_nrPeaks_merge:
     input:
-            part_1 = os.path.join( BED_DIR, "CELL", "{tf}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part1.bed"),
+            part_1 = os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part1.bed"),
             nt_overlap = os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_nb_nucleotide.txt")
     output:
             temp( os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part_1_merge.bed"))
