@@ -1,4 +1,5 @@
 .snakemake
+0.correction/*
 1.metadata/*
 3.genome
 4.preprocessing/*

@@ -1,0 +1,33 @@
+{
+    "working_dir" :
+    {
+        "base" : "/scratch/bballester/projects/tagc-remap3/src/jeanne",
+        "tab" : "1.metadata/tab_GOOD_MERGE",
+        "preprocessing" : "4.preprocessing_GOOD_MERGE",
+        "bam" : "5.bam_GOOD_MERGE",
+        "outdir" : "6.peakcalling_GOOD_MERGE",
+        "quality" : "8.quality_GOOD_MERGE",
+        "modif" : "0.correction",
+        "rule" : "/scratch/bballester/thaliana/remap-thaliana-tf"
+    },
+
+    "file" :
+    {
+        "tsv_all_metadata" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/1.metadata/remap3_prod_genome_occupancy_TR_run_GOOD_MERGE.tsv",
+        "tsv_modification" : "1.metadata/diff_name_hsap.csv",
+        "bed_all" : "remap2020_2018_exo_all_macs2_hg38_v1_0.bed_without_peak",
+        "list_exp_bed_all" : "1.metadata/list_exp_current.txt"
+    },
+
+    "info" :
+    {
+      "tsv_all_metadata_tf_column" : "1",
+      "tsv_all_metadata_cell_column" : "2"
+    },
+
+    "extention" :
+    {
+	   "peak" : "_peaks.narrowPeak"
+    }
+
+}

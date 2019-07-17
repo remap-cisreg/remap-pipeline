@@ -4,5 +4,9 @@ rule tf_allPeaks:
     output:
             os.path.join( BED_DIR, "TF", "{tf}" , PREFIX + "_{tf}_all_" + SUFFIX + ".bed")
     params:
-            other = config["tf_allPeaks"]["other"]
-    shell: "grep -E '\.{wildcards.tf}(_[a-zA-Z0-9]+)*\.' {input} > {output}"
+            other = config["tf_allPeaks"]["other"],
+            outdir = os.path.join( BED_DIR, "TF", "{tf}")
+    shell: """
+        mkdir -p {params.outdir}
+        grep -E '\.{wildcards.tf}(_[a-zA-Z0-9]+)*\.' {input} > {output}
+        """

@@ -1,35 +1,16 @@
-# rule cell_nrPeaks_merge:
-#     input:
-#             os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part1.bed")
-#     output:
-#             temp( os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part2.bed"))
-#     singularity:
-#             config[ "singularity"][ "bedtools"]
-#     conda:
-#             config[ "conda"][ "bedtools"]
-#     params:
-#             per_overlap = config["cell_nrPeaks"]["perc_overlap"]
-#     shell: """
-#
-#     # Getting number of nucleotide from median size to reprecent asked percentage overlap
-#     MEDIAN_SIZE=$(awk -F"\t" "{{print $3-$2}}" {input} | sort -n | awk "{{a[i++]=$1; }} END {{ print a[int(i/2)]; }}")
-#     NT_OVERLAP=$(echo $MEDIAN_SIZE | awk -v percOverlap="{params.per_overlap}" "{{print int($1/100*percOverlap)}}")
-#
-#     bedtools merge -d -$NT_OVERLAP -c 4,7,9 -o collapse,mean,distinct -i {input} | awk -F"\t" '{{print $1"\t"$2"\t"$3"\t"$4"\t"int($5)"\t"$6}}' > {output}
-#     """
 rule cell_nrPeaks_merge:
     input:
             part_1 = os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part1.bed"),
             nt_overlap = os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_nb_nucleotide.txt")
     output:
-            temp( os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part_1_merge.bed"))
+              temp( os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part_1_merge.bed"))
     singularity:
             config[ "singularity"][ "bedtools"]
     conda:
             config[ "conda"][ "bedtools"]
     shell: """
     NT_OVERLAP=$(cat {input.nt_overlap})
-    bedtools merge -d -$NT_OVERLAP -c 4,7,9 -o collapse,mean,distinct -i {input}  > {output}
+    bedtools merge -d -$NT_OVERLAP -c 4,7,9 -o collapse,mean,distinct -i {input.part_1}  > {output}
     """
 
 rule cell_nrPeaks_cleaning:
@@ -38,5 +19,5 @@ rule cell_nrPeaks_cleaning:
     output:
             temp( os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part2.bed"))
     shell: """
-    awk -F"\t"  '{{ gsub( $5, int($5)); print $0 }}' {input} > {output}
+    awk -F"\t"  '{{print $1"\t"$2"\t"$3"\t"$4"\t"int($5)"\t"$6}}' {input} > {output}
     """

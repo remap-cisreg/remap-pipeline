@@ -78,6 +78,8 @@ include: os.path.join(BASE_DIR, RULE_DIR, "filtering_quality_all.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "graph_quality_all.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "creating_remap_catalogue_bed.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "sort_remap_bed.rules")
+include: os.path.join(BASE_DIR, RULE_DIR, "quality_list_tab.rules")
+include: os.path.join(BASE_DIR, RULE_DIR, "quality_all_diff.rules")
 
 #include: os.path.join(BASE_DIR, RULE_DIR, "delete_trim.rules")
 
@@ -132,7 +134,8 @@ rule all:
             # os.path.join( QUALITY_DIR, "results", "macs2_passed.quality_all"),
             # os.path.join( "remap2020_unsorted.bed"),
             os.path.join( REMAP_FULLANME + ".bed"),
-            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf")
+            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all.pdf"),
+            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all_diff")
 
 rule quality_all:
     input:
@@ -149,7 +152,7 @@ rule quality_all:
     shell:"""
         mkdir -p {params.outdir}
 
-        cat {input} | awk "NR%2==0" | awk -F" " 'BEGIN {{print "experiment_name\tNSC\tRSC\tFRiP\tnb_peaks\tscore_NSC\tscore_RSC\tscore_FRiP\tscore_total" }}
+        find {params.indir} -type f -maxdepth 1 -name "*.quality_all" -exec cat {{}} \; | awk "NR%2==0" | awk -F" " 'BEGIN {{print "experiment_name\tNSC\tRSC\tFRiP\tnb_peaks\tscore_NSC\tscore_RSC\tscore_FRiP\tscore_total" }}
                                                   {{
                                                     if( $2>=1.10) nsc=2; else if( $2>=1.05) nsc=1; else nsc=0;
                                                     if( $3>=1) rsc=2; else if( $3>=0.8) rsc=1; else rsc=0;

@@ -1,7 +1,7 @@
 {
     "working_dir" :
     {
-        "base_dir" : "/scratch/bballester/thaliana/remap-thaliana-tf",
+        "base_dir" : "/scratch/bballester/projects/tagc-remap3/src/jeanne",
         "preprocessing" : "4.preprocessing",
         "bed_dir" : "9.bed",
         "rule_dir" : "/scratch/bballester/thaliana/remap-thaliana-tf/2.scripts/rules/current"
@@ -14,8 +14,8 @@
 
     "info" :
     {
-    "species" : "thaliana",
-    "assembly" : "TAIR10",
+    "species" : "hsap",
+    "assembly" : "hg38",
     "peakcaller" : "macs2",
     "remap_version" : "2020",
     "update_version" : "1",

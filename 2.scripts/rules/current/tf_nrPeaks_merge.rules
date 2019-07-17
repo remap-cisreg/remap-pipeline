@@ -1,16 +1,3 @@
-# rule tf_nrPeaks_merge:
-#     input:
-#             os.path.join( BED_DIR, "TF", "{tf}", PREFIX + "_{tf}_nr_" + SUFFIX + "_part1.bed")
-#     output:
-#             temp( os.path.join( BED_DIR, "TF", "{tf}", PREFIX + "_{tf}_nr_" + SUFFIX + "_part2.bed"))
-#     singularity:
-#             config[ "singularity"][ "bedtools"]
-#     params:
-#             per_overlap = config["tf_nrPeaks"]["perc_overlap"]
-#     run:
-#         file_
-
-
 rule tf_nrPeaks_merge:
     input:
             part_1 = os.path.join( BED_DIR, "TF", "{tf}", PREFIX + "_{tf}_nr_" + SUFFIX + "_part1.bed"),

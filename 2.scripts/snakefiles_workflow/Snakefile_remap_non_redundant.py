@@ -87,7 +87,8 @@ file_peaks = open( ALL_PEAKS, 'r')
 
 for line in file_peaks:
     info_column = line.strip().split( "\t")[ 3]
-    split_info_column = info_column.split( ".", 3)
+    split_info_column = info_column.split( ".", 2)
+    #print( split_info_column)
     tf = split_info_column[ 1].split( "_")[ 0]
     set_tf.add( tf)
 
@@ -121,8 +122,10 @@ rule all:
             # expand( os.path.join( BED_DIR, "{tf}" , PREFIX + "_{tf}_all_" + SUFFIX + ".bed"), tf = set_tf)
             # expand( os.path.join( BED_DIR, "{tf}" , PREFIX + "_{tf}_nr_" + SUFFIX + "_part2.bed"), tf = set_tf)
             expand( os.path.join( BED_DIR, "TF", "{tf}" , PREFIX + "_{tf}_nr_" + SUFFIX + ".bed"), tf = set_tf),
+            expand( os.path.join( BED_DIR, "TF", "{tf}" , PREFIX + "_{tf}_all_" + SUFFIX + ".bed"), tf = set_tf),
             # expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_all_" + SUFFIX + ".bed"), cell = set_cell)
-            expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_nr_" + SUFFIX + "_part1.bed"), cell = set_cell),
+            expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_nr_" + SUFFIX + ".bed"), cell = set_cell),
+            expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_all_" + SUFFIX + ".bed"), cell = set_cell),
             # expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_{tf}_" + SUFFIX + "_temp.bed"), zip, cell = list_cell, tf = list_tf)
             # expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_{tf}_" + SUFFIX + "_part2.bed"), zip, cell = list_cell, tf = list_tf)
             # expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_{tf}_" + SUFFIX + "_part3.bed"), zip, cell = list_cell, tf = list_tf),

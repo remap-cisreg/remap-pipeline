@@ -4,5 +4,9 @@ rule cell_allPeaks:
     output:
             os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_all_" + SUFFIX + ".bed")
     params:
-            other = config["cell_allPeaks"]["other"]
-    shell: "grep -E '\.{wildcards.cell}(_[a-zA-Z0-9]+)*' {input} > {output}"
+            other = config["cell_allPeaks"]["other"],
+            outdir = os.path.join( BED_DIR, "CELL", "{cell}")
+    shell: """
+        mkdir -p {params.outdir}
+        grep -E '\.{wildcards.cell}(_[a-zA-Z0-9]+)*' {input} > {output}
+        """

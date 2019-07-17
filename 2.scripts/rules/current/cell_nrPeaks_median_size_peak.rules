@@ -2,7 +2,7 @@ rule cell_nrPeaks_median_size_peak:
     input:
             os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_all_" + SUFFIX + ".bed")
     output:
-            part_1 = temp( os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part1.bed")),
+            part_1 =  temp( os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_part1.bed")),
             nt_overlap = temp( os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_nr_" + SUFFIX + "_nb_nucleotide.txt"))
     params:
             other = config["cell_allPeaks"]["other"],
