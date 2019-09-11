@@ -1,18 +1,24 @@
 rule bowtie2:
+    """
+    This rule maps fq.gz to reference genome.
+	NOTE : For paired-end data it only check if forward file is here !
+
+    Required parameters:
+        bowtie2 : parameters of bowtie2
+		nb_thread : number of threads for bowtie2
+			NOTE : MUST MATCH CLUSTER CONFIG !!
+		index : index of reference genome
+
+    Author: Jeanne Chèneby
+    """
 	input:
-			# lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_filename}.fq.gz"), zip, trim_filename = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_forward"]),
-			# lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_filename}.fq.gz"), zip, trim_filename = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_list"]),
 			forward = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_filename_forward}.fq.gz"), zip, trim_filename_forward = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_forward"]),
-			# reverse = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_filename_reverse}.fq.gz"), zip, trim_filename_reverse = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_reverse"]),
-			# check = os.path.join( PREPROCESSING_DIR, "trim_fastq", "check_files", "{replicat_name}.ok")
 	output:
 			temp( os.path.join( PREPROCESSING_DIR, "sam", "{replicat_name}.sam"))
 	singularity:
 			config[ "singularity"][ "bowtie2"]
 	conda:
 			config[ "conda"][ "bowtie2"]
-	# benchmark:
-				# os.path.join( PREPROCESSING_DIR, "sam", "bench", "{replicat_name}.bench")
 	resources:
 			res=1
 	log:
@@ -20,7 +26,7 @@ rule bowtie2:
 	params:
 			forward_trim_name = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_basename}"), zip, trim_basename = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_forward"]),
 			reverse_trim_name = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_basename}"), zip, trim_basename = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_reverse"]),
-			bowtie2 = config[ "bowtie2"][ "other"],
+			bowtie2 = config[ "bowtie2"][ "parameters"],
 			nb_thread = config[ "bowtie2"][ "nb_thread"],
 			index = config[ "genome"][ "index"],
 			library_type = lambda wildcards : dict_replicat_trim_filename[wildcards.replicat_name][ 'run_type']

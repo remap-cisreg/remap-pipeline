@@ -1,4 +1,14 @@
 rule aria2:
+    """
+    This rule downloads from an url a fastq.gz file and checks the md5
+    It does not check the date stamp of the input file
+
+    Required parameters:
+        None
+
+    Author: Jeanne Chèneby
+    """
+
 	input:
 			lambda wildcards : ancient(expand( os.path.join( TAB_DIR,  "{tab_filename}"), tab_filename = dict_fastq_info[ wildcards.fastq_name][ "experimentName"]))
 	output:
@@ -7,8 +17,6 @@ rule aria2:
 			config[ "singularity"][ "aria2"]
 	conda:
 			config[ "conda"][ "aria2"]
-	# benchmark:
-	# 		os.path.join( PREPROCESSING_DIR, "raw_fastq", "bench", "{fastq_name}.bench")
 	resources:
 			res=12
 	log:
@@ -17,4 +25,3 @@ rule aria2:
 			url = lambda wildcards : dict_fastq_info[ wildcards.fastq_name][ 'url'],
 			md5 = lambda wildcards : dict_fastq_info[ wildcards.fastq_name][ 'md5']
 	shell: """aria2c  --out={output} --checksum=md5={params.md5} {params.url}"""
-	# shell: """touch {output}"""

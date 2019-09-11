@@ -1,4 +1,12 @@
 rule cell_allPeaks:
+    """
+    This rule get all peaks for a specific biotype
+
+    Required parameters:
+        NONE
+
+    Author: Jeanne Chèneby
+    """
     input:
             ancient( ALL_PEAKS)
     output:

@@ -1,4 +1,14 @@
 rule bedgraph_to_bigwig:
+    """
+    This rule converts bedgraph from MACS2 to bigwigs
+
+    Required parameters:
+        chrom_size : file containing chromosome size of species (must match
+		mapping genome)
+		MD5 : file MD5
+
+    Author: Jeanne Chèneby
+    """
 	input:
 	 		os.path.join( PEAKCALLING_DIR, "{experiment_name}", "clip_bedgraph", "{experiment_name}.bedgraph")
 	output:
@@ -10,6 +20,5 @@ rule bedgraph_to_bigwig:
 	log:
 			os.path.join( BIGWIG_DIR, "{experiment_name}", "log", "{experiment_name}.bedgraph")
 	params:
-			chrom_size = config["genome"]["chromosome_size"],
-			other =  config["bedgraph_to_bigwig"][ "other"]
+			chrom_size = config["genome"]["chromosome_size"]
 	shell: """bedGraphToBigWig {input} {params.chrom_size} {output} 2>{log}"""

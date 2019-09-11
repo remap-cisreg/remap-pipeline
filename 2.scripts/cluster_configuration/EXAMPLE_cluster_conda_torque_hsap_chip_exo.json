@@ -4,6 +4,7 @@
 		"queue" : "queue_name_1",
 		"node" : "1",
 		"thread" : "1",
+		"job-name" : "{rule}",
 		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.replicat_name}_qsub.out",
 		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.replicat_name}_qsub.err"
 	},

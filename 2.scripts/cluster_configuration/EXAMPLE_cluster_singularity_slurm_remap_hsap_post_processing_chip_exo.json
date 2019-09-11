@@ -12,7 +12,7 @@
 	"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.out",
 	"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.err",
 	"mail-type":"BEGIN,END",
-	"mail-user":"benoit.ballester@inserm.fr"
+	"mail-user":"first.last@mail.com"
 	},
 
 
