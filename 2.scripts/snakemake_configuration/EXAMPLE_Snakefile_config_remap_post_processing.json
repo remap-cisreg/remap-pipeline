@@ -1,0 +1,75 @@
+{
+    "working_dir" :
+    {
+        "base_dir" : "/absolute/path/to/remap-pipeline",
+        "tab_dir" : "1.metadata/tab",
+        "preprocessing" : "4.preprocessing",
+        "bam_dir" : "5.bam",
+        "outdir" : "6.peakcalling",
+        "quality" : "8.quality",
+        "rule_dir" : "2.scripts/rules/current"
+    },
+
+    "info" :
+    {
+      "peakcaller" : "macs2"
+    },
+
+
+    "header" :
+    {
+        "control" : "isControl",
+        "filename" : "filename",
+        "library" : "library_type",
+        "url" : "url",
+        "md5" : "md5"
+    },
+
+
+		"extention":
+		{
+			"peak" : "_peaks.narrowPeak"
+		},
+
+
+    "merge_bam" :
+    {
+        "samtools-merge" : ""
+    },
+
+    "quality_NSC_RSC" :
+    {
+        "run_spp" : ""
+    },
+
+    "quality_FRiP" :
+    {
+        "bedtools-intersect" : ""
+    },
+
+    "creating_remap_catalogue_bed" :
+
+    {
+      "color_file" : "/absolute/path/to/remap-pipelinee/1.metadata/color_tf.tab"
+    },
+
+
+
+    "singularity" :
+    {
+      "samtools" : "/absolute/path/to/remap-pipeline/singularity/remap_samtools.img",
+      "ucsc_apps" : "/absolute/path/to/remap-pipeline/singularity/remap_ucsc_apps.img",
+      "bedtools" : "/absolute/path/to/remap-pipeline/singularity/remap_bedtools225.img",
+      "phantompeak" : "/absolute/path/to/remap-pipeline/singularity/phantompeakqualtools.img"
+    },
+
+		"conda" :
+		{
+			"samtools" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/samtools.yaml",
+			"bedClip" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/bedClip.yaml",
+      "quality_FRiP" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/quality_FRiP.yaml",
+      "bedtools" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/bedtools.yaml",
+      "phantompeak" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/phantompeak.yaml",
+      "R_quality" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/r_quality.yaml"
+		}
+}

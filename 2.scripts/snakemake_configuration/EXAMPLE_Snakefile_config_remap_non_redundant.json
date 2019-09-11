@@ -1,0 +1,64 @@
+{
+    "working_dir" :
+    {
+        "base_dir" : "/absolute/path/to/remap-pipeline",
+        "preprocessing" : "4.preprocessing",
+        "bed_dir" : "9.bed",
+        "fasta_dir" : "10.fasta",
+        "rule_dir" : "/absolute/path/to/remap-pipeline/2.scripts/rules/current"
+    },
+
+    "file" :
+    {
+      "all_peaks" : "/absolute/path/to/remap-pipeline/remapLike_catalog.bed"
+    },
+
+    "genome" :
+    {
+      "fasta" : "/absolute/path/to/remap-pipeline/3.genome/Homo_sapiens/UCSC/hg38/Sequence/WholeGenomeFasta/genome.fa"
+    },
+
+    "info" :
+    {
+    "species" : "hsap",
+    "assembly" : "hg38",
+    "peakcaller" : "macs2",
+    "remap_version" : "2020",
+    "update_version" : "1",
+    "patch_version" : "0",
+    "nb_cell_info" : "1"
+  },
+
+  "tf_allPeaks" :
+  {
+    "other" : ""
+  },
+
+  "tf_nrPeaks" :
+  {
+    "perc_overlap" : "25"
+  },
+
+  "cell_allPeaks" :
+  {
+    "other" : ""
+  },
+
+  "cell_nrPeaks" :
+  {
+    "perc_overlap" : "25"
+  },
+
+
+  "singularity" :
+  {
+
+    "bedtools" : "/absolute/path/to/remap-pipeline/singularity/remap_bedtools225.img"
+
+  },
+
+	"conda" :
+	{
+    "bedtools" : "/absolute/path/to/remap-pipeline/conda_envirronment/bedtools.yaml"
+	}
+}

@@ -1,7 +1,7 @@
 {
     "working_dir" :
     {
-        "base" : "/scratch/bballester/projects/tagc-remap3/src/jeanne",
+        "base" : "/absolute/path/to/remap-pipeline",
         "tab" : "1.metadata/tab_GOOD_MERGE",
         "preprocessing" : "4.preprocessing_GOOD_MERGE",
         "bam" : "5.bam_GOOD_MERGE",
@@ -13,16 +13,16 @@
 
     "file" :
     {
-        "tsv_all_metadata" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/1.metadata/remap3_prod_genome_occupancy_TR_run_GOOD_MERGE.tsv",
-        "tsv_modification" : "1.metadata/diff_name_hsap.csv",
-        "bed_all" : "remap2020_all_macs2_hg38_v1_0.bed",
-        "list_exp_bed_all" : "1.metadata/list_exp_all_raw_name.txt"
+        "tsv_all_metadata" : "/absolute/path/to/remap-pipeline/1.metadata/big_annotation_file.tsv",
+        "tsv_modification" : "1.metadata/modication_to_do.tsv",
+        "bed_all" : "remapLike_catalog.bed",
+        "list_exp_bed_all" : "1.metadata/list_current_experiment_name.txt"
     },
 
     "info" :
     {
       "tsv_all_metadata_tf_column" : "1",
-      "tsv_all_metadata_cell_column" : "2"
+      "tsv_all_metadata_cell_column" : "1"
     },
 
     "extention" :
