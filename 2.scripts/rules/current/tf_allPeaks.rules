@@ -1,6 +1,6 @@
 rule tf_allPeaks:
     input:
-            ALL_PEAKS
+            ancient( ALL_PEAKS)
     output:
             os.path.join( BED_DIR, "TF", "{tf}" , PREFIX + "_{tf}_all_" + SUFFIX + ".bed")
     params:

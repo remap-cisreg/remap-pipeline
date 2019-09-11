@@ -1,6 +1,6 @@
 rule cell_allPeaks:
     input:
-            ALL_PEAKS
+            ancient( ALL_PEAKS)
     output:
             os.path.join( BED_DIR, "CELL", "{cell}", PREFIX + "_{cell}_all_" + SUFFIX + ".bed")
     params:
