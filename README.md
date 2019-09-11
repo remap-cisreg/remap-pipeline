@@ -1,53 +1,41 @@
 # remap-pipeline
 
-## Introduction
-
-## Quick start guide
-
-### Prepare the meta-data (the datasets)
- - See README.md in 1.metadata/
+## Description
+ReMap is a project which goal is to provide the largest catalogue of high-quality regulatory regions resulting from a large-scale integrative analysis of hundreds of transcription factors and general components of the transcriptional machinery from DNA-binding experiments.
+This git contain all files necessary to run analysis ReMap style from annotaion files to the final product !
 
 
-### Download Genome
- - From Illumina for Human (See README.md in 3.genome/)
- - From Illumina/NCBI/Ensembl for Thaliana (See README.md in 3.genome/)
+## Installation
+### Requirements
+ - Python 3
+ - Snakemake >= 5.5.1
+ - Recommended : Conda/Docker/Singularity
+### Step by step
+ 1. Pull the git
+ 2. That's all !
+ 
+## Usage
+More in depth info are in the wiki.
 
-## Compute clusters specificities
+### General
 
-### Conda environement
+ 1. repare the metadata from your annotation file by extracting downloading info (See README.md in 1.metadata/)
+ 2. Create cluster config and snakemake config to match your set up (See example in 2.scripts/cluster_configuration)
+ 3. Get necessary files such as reference genome (See README.md in 3.genome/)
+ 4. Create a launch bash script (See example in root directory)
+ 5. Run launch script
+ 
+### Compute clusters specificities
+remap-pipeline can be run with Conda or Docker/Singularity and Torque and Slurm.
+Examples are in launch scipts.
 
-### Singularity environement
+## Contributing
 
-
-#### Homo sapiens example using Singularity
-`snakemake   --use-singularity --singularity-args "-B /scratch/bballester:/scratch/bballester" --snakefile 2.scripts/snakefiles_workflow/Snakefile_remap_v4.py --cores 100  --printshellcmds --cluster-config 2.scripts/snakemake_configuration/Snakefile_config_remap_hsap_meso.json --cluster "sbatch  -A {cluster.project-name}  --job-name {cluster.job-name} -p {cluster.partition}  --ntasks {cluster.ntasks} --cpus-per-task={cluster.thread}  -o {cluster.stdout} -e {cluster.stderr}  --time {cluster.time}  --mem-per-cpu={cluster.memory} " --keep-going --configfile cluster_configuration/cluster_singularity_slurm_hsap.json --rerun-incomplete --resources res=100  `
-
-#### Thaliana example using Singularity
-`snakemake   --use-singularity --singularity-args "-B /scratch/bballester:/scratch/bballester" --snakefile 2.scripts/snakefiles_workflow/Snakefile_remap_v4.py --cores 100  --printshellcmds --cluster-config 2.scripts/snakemake_configuration/Snakefile_config_remap_thaliana_meso.json --cluster "sbatch  -A {cluster.project-name}  --job-name {cluster.job-name} -p {cluster.partition}  --ntasks {cluster.ntasks} --cpus-per-task={cluster.thread}  -o {cluster.stdout} -e {cluster.stderr}  --time {cluster.time}  --mem-per-cpu={cluster.memory} " --keep-going --configfile cluster_configuration/cluster_singularity_slurm_thaliana.json --rerun-incomplete --resources res=100  `
-
-
-
-### Slurm workload manager
-
-### PBS (Torque) workload manager 
-
-#### Make a BED file from all narrowpeaks
-```
-cd 6.peakcalling/
-ls -1  > ../list_experiments.txt 
-
-#-- Exec script
-2.scripts/utils/bash/coloring_tf_bed.sh  |  sort -k1,1n -k2,2n  > at_macs2_nomodel.bed
-```
-
-
-
-## People involved
 - Jeanne Cheneby
 - Lionel Spinelli
 - Benoit Ballester
 
-## Contact information
-
+## License
+Under GNU GPLv3 licence.
 
 ## References
