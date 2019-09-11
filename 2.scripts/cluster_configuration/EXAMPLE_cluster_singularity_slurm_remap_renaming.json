@@ -1,0 +1,60 @@
+{
+	"__default__":
+	{
+		"project-name":"TMTC",
+		"job-name" : "{rule}",
+		"partition" : "queue_name",
+		"node" : "1",
+		"thread" : "1",
+		"ntasks" : "1",
+		"time" : "2:30:00",
+		"memory" : "5G",
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.err",
+		"mail-type":"BEGIN,END",
+		"mail-user":"first.last@mail.com"
+	},
+
+	"renaming_big_TSV" :
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+	},
+
+	"renaming_macs2_quality_all_passed" :
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+	},
+
+	"renaming_macs2_quality_all_failed" :
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+	},
+
+	"renaming_macs2_quality_all" :
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+	},
+
+	"renaming_macs2_bed_all" :
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+	},
+
+	"renaming_bam" :
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{new_bam_name}_slurm.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{new_bam_name}_slurm.err"
+	},
+
+
+	"renaming_trim" :
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{new_bam_name}_slurm.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{new_bam_name}_slurm.err"
+	}
+}

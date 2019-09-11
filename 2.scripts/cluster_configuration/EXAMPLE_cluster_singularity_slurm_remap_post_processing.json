@@ -1,0 +1,75 @@
+{
+	"__default__":
+	{
+  "project-name":"TMTC",
+	"job-name" : "{rule}",
+	"partition" : "queue_name_1",
+	"node" : "1",
+	"thread" : "1",
+	"ntasks" : "1",
+	"time" : "2:30:00",
+	"memory" : "5G",
+	"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.out",
+	"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.err",
+	"mail-type":"BEGIN,END",
+	"mail-user":"first.last@mail.com"
+	},
+
+
+    "merge_bam" :
+    {
+			"partition" : "queue_name_2"
+	},
+
+    "quality_FRiP" :
+    {
+			"partition" : "queue_name_3"
+	},
+
+    "quality_NSC_RSC" :
+    {
+			"partition" : "queue_name_4",
+	    "thread" : "2",
+	},
+
+  "quality_all" :
+    {
+			"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+			"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+	},
+
+	"quality_all_experiments" :
+	{
+		"partition" : "queue_name_5"
+	},
+
+
+	"filtering_quality_all" :
+	{
+		"time" : "02:00:00",
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+},
+
+	"graph_quality_all" :
+	{
+		"time" : "02:00:00",
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+},
+
+"creating_remap_catalogue_bed" :
+{
+	"time" : "02:00:00",
+	"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+	"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+},
+
+	"sort_remap_bed" :
+{
+	"time" : "05:00:00",
+	"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+	"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+}
+
+}

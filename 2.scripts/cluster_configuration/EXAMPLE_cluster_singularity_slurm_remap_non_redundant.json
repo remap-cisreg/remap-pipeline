@@ -1,0 +1,48 @@
+{
+	"__default__":
+	{
+		"project-name":"TMTC",
+		"job-name" : "{rule}",
+		"partition" : "queue_name",
+		"node" : "1",
+		"thread" : "1",
+		"ntasks" : "1",
+		"time" : "2:30:00",
+		"memory" : "5G",
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.tf}_slurm.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.tf}_slurm.err",
+		"mail-type":"BEGIN,END",
+		"mail-user":"first.last@mail.com"
+	},
+
+	"cell_allPeaks":
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.cell}_qsub.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.cell}_qsub.err"
+	},
+
+	"cell_nrPeaks_median_size_peak":
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.cell}_qsub.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.cell}_qsub.err"
+	},
+
+	"cell_nrPeaks_merge":
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.cell}_qsub.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.cell}_qsub.err"
+	},
+
+	"cell_nrPeaks_cleaning":
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.cell}_qsub.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.cell}_qsub.err"
+	},
+
+	"cell_nrPeaks":
+	{
+		"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.cell}_qsub.out",
+		"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.cell}_qsub.err"
+	}
+
+}
