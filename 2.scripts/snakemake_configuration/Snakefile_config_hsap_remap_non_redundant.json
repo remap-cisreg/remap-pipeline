@@ -2,14 +2,20 @@
     "working_dir" :
     {
         "base_dir" : "/scratch/bballester/projects/tagc-remap3/src/jeanne",
-        "preprocessing" : "4.preprocessing",
-        "bed_dir" : "9.bed",
+        "preprocessing" : "4.preprocessing_GOOD_MERGE",
+        "bed_dir" : "9.bed_GOOD_MERGE",
+        "fasta_dir" : "10.fasta_GOOD_MERGE",
         "rule_dir" : "/scratch/bballester/thaliana/remap-thaliana-tf/2.scripts/rules/current"
     },
 
     "file" :
     {
-      "all_peaks" : "/scratch/bballester/thaliana/remap-thaliana-tf/remap2020_all_macs2_TAIR10_v1_0.bed"
+      "all_peaks" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/remap2020_all_macs2_hg38_v1_0.bed"
+    },
+
+    "genome" :
+    {
+      "fasta" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/3.genome/Homo_sapiens/UCSC/hg38/Sequence/WholeGenomeFasta/genome.fa"
     },
 
     "info" :

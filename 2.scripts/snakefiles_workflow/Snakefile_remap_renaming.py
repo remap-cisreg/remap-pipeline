@@ -53,6 +53,7 @@ PATH_FILE_MODIF = config["file"]["tsv_modification"]
 PATH_FILE_ALL_BED = config["file"]["bed_all"]
 
 FILE_ALL_TSV_NAME = os.path.basename( PATH_FILE_ALL_TSV)
+PEAK_EXTENTION = config["extention"]["peak"]
 
 
 #================================================================#
@@ -161,7 +162,7 @@ rule all:
         expand( os.path.join( MODIF_DIR, BAM_DIR, "{new_bam_name}.bam"), new_bam_name = dict_bam_modif),
         # expand( os.path.join( MODIF_DIR, PREPROCESSING_DIR, "trim_fastq", "{new_bam_name}", "{new_bam_name}_del.ok") , new_bam_name = dict_bam_modif),
         # expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_model.r"), experiment_name = dict_exp_modif),
-        expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak"), experiment_name = dict_exp_modif),
+        expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + PEAK_EXTENTION), experiment_name = dict_exp_modif),
         expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.xls"), experiment_name = dict_exp_modif),
         # expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_summit.bed"), experiment_name = dict_exp_modif),
         expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}.log"), experiment_name = dict_exp_modif),
@@ -274,9 +275,9 @@ rule renaming_trim:
 
 rule renaming_macs2_narrowPeak:
     input:
-            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "{old_experiment_name}_peaks.narrowPeak"), old_experiment_name = dict_exp_modif[ wildcards.experiment_name][ "old_name"])
+            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "{old_experiment_name}" + PEAK_EXTENTION), old_experiment_name = dict_exp_modif[ wildcards.experiment_name][ "old_name"])
     output:
-            file = os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak")
+            file = os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + PEAK_EXTENTION)
     resources:
             res=1
     run:

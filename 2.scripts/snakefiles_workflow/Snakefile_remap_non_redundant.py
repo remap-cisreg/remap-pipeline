@@ -37,6 +37,7 @@ workdir: BASE_DIR
 # Directories
 PREPROCESSING_DIR = config["working_dir"]["preprocessing"]
 BED_DIR = config["working_dir"]["bed_dir"]
+FASTA_DIR = config["working_dir"]["fasta_dir"]
 RULE_DIR = config["working_dir"]["rule_dir"]
 
 # Files
@@ -123,6 +124,7 @@ rule all:
             # expand( os.path.join( BED_DIR, "{tf}" , PREFIX + "_{tf}_nr_" + SUFFIX + "_part2.bed"), tf = set_tf)
             expand( os.path.join( BED_DIR, "TF", "{tf}" , PREFIX + "_{tf}_nr_" + SUFFIX + ".bed"), tf = set_tf),
             expand( os.path.join( BED_DIR, "TF", "{tf}" , PREFIX + "_{tf}_all_" + SUFFIX + ".bed"), tf = set_tf),
+            expand( os.path.join( FASTA_DIR, "{tf}" , PREFIX + "_{tf}_nr_" + SUFFIX + ".fasta"), tf = set_tf),
             # expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_all_" + SUFFIX + ".bed"), cell = set_cell)
             expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_nr_" + SUFFIX + ".bed"), cell = set_cell),
             expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_all_" + SUFFIX + ".bed"), cell = set_cell),
@@ -133,7 +135,18 @@ rule all:
 
 
 
-
+rule tf_nrPeaks_fasta:
+    input:
+            os.path.join( BED_DIR, "TF", "{tf}" , PREFIX + "_{tf}_nr_" + SUFFIX + ".bed")
+    output:
+            os.path.join( FASTA_DIR, "{tf}" , PREFIX + "_{tf}_nr_" + SUFFIX + ".fasta")
+    singularity:
+            config[ "singularity"][ "bedtools"]
+    conda:
+            config[ "conda"][ "bedtools"]
+    params:
+            genome_fasta = config["genome"]["fasta"]
+    shell: """bedtools getfasta -fi {params.genome_fasta} -bed {input} -fo {output}"""
 
 
 # rule cell_nrPeaks_separate_tf:

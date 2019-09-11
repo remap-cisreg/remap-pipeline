@@ -12,6 +12,11 @@
       "all_peaks" : "/gpfs/tagc/home/cheneby/ReMap2/human/final/9.correction/v2/remap2018_all_macs2_hg38_v1_2.bed"
     },
 
+    "genome" :
+    {
+      "fasta" : "/gpfs/tagc/home/cheneby/ReMap2/human/final/3.genome/Homo_sapiens/UCSC/hg38/Sequence/WholeGenomeFasta/genome.fa"
+    },
+
     "info" :
     {
     "species" : "hsap",
@@ -20,7 +25,7 @@
     "remap_version" : "2018",
     "update_version" : "1",
     "patch_version" : "2",
-    "nb_cell_info" : "2"
+    "nb_cell_info" : "1"
   },
 
   "tf_allPeaks" :

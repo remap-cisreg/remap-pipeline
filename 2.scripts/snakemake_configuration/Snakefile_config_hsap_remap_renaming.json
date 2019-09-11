@@ -5,7 +5,7 @@
         "tab" : "1.metadata/tab_GOOD_MERGE",
         "preprocessing" : "4.preprocessing_GOOD_MERGE",
         "bam" : "5.bam_GOOD_MERGE",
-        "outdir" : "6.peakcalling_GOOD_MERGE",
+        "outdir" : "11.datasets2018",
         "quality" : "8.quality_GOOD_MERGE",
         "modif" : "0.correction",
         "rule" : "/scratch/bballester/thaliana/remap-thaliana-tf"
@@ -15,8 +15,8 @@
     {
         "tsv_all_metadata" : "/scratch/bballester/projects/tagc-remap3/src/jeanne/1.metadata/remap3_prod_genome_occupancy_TR_run_GOOD_MERGE.tsv",
         "tsv_modification" : "1.metadata/diff_name_hsap.csv",
-        "bed_all" : "remap2020_2018_exo_all_macs2_hg38_v1_0.bed_without_peak",
-        "list_exp_bed_all" : "1.metadata/list_exp_current.txt"
+        "bed_all" : "remap2020_all_macs2_hg38_v1_0.bed",
+        "list_exp_bed_all" : "1.metadata/list_exp_all_raw_name.txt"
     },
 
     "info" :

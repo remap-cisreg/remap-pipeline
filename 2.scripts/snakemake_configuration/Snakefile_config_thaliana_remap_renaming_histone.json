@@ -1,7 +1,7 @@
 {
     "working_dir" :
     {
-        "base" : "/scratch/bballester/thaliana/remap-thaliana-tf",
+        "base" : "/scratch/bballester/thaliana/remap-histones-at",
         "tab" : "1.metadata/tab",
         "preprocessing" : "4.preprocessing",
         "bam" : "5.bam",

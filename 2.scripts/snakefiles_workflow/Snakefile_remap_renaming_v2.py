@@ -197,9 +197,13 @@ file_log_renaming_bam.close()
 
 file_list_exp_all_bed = open( PATH_FILE_LIST_EXP_ALL_BED, 'r')
 dict_exp_modif_reverse = {}
+dict_exp_modif_plus = {}
+
+file_list_exp_all_modif = open( os.path.join( MODIF_DIR, "log", "list_exp_modif_from_file.txt"), 'w')
+
 
 for line in file_list_exp_all_bed:
-    experiment_name = line
+    experiment_name = line.strip()
     new_experiment_name = ""
 
     old_tf = experiment_name.split( ".", 2)[ 1]
@@ -233,9 +237,37 @@ for line in file_list_exp_all_bed:
     if new_experiment_name != experiment_name:
         # print( experiment_name)
         # print( new_experiment_name)
-        dict_exp_modif_reverse[ experiment_name] = new_experiment_name
+        dict_exp_modif_reverse[ experiment_name.strip()] = new_experiment_name.strip()
+        dict_exp_modif_plus[ new_experiment_name.strip()] = experiment_name.strip()
+
+        file_list_exp_all_modif.write( experiment_name.strip() + "\t" + new_experiment_name.strip() + "\n")
 
 file_list_exp_all_bed.close()
+file_list_exp_all_modif.close()
+
+# file_list_exp_all_bed = open( PATH_FILE_LIST_EXP_ALL_BED, 'r')
+#
+#
+# # parse all line if experiment in tab
+# for line in file_list_exp_all_bed:
+#     split_line = line.split( "\t")
+#     print( split_line)
+#     experiment_name = split_line[ 3].strip()
+#
+#     print( "before: ", experiment_name)
+#     if experiment_name in dict_exp_modif_reverse:
+#         new_experiment_name = dict_exp_modif_reverse[ experiment_name]
+#         print( "after: ", experiment_name)
+#         print( "new: ", new_experiment_name)
+#         print(  "\t".join( split_line[ 0:3] + [ new_experiment_name] + split_line[ 4:]) + "\n")
+#     # if experiement not in tab
+#     else:
+#         file_output.write( line)
+#
+# file_list_exp_all_bed.close()
+
+
+# pprint.pprint( dict_exp_modif_reverse)
 
 #================================================================#
 #                         Workflow                               #
@@ -243,19 +275,19 @@ file_list_exp_all_bed.close()
 
 rule all:
     input:
-        os.path.join( MODIF_DIR, "1.metadata", FILE_ALL_TSV_NAME),
+        # os.path.join( MODIF_DIR, "1.metadata", FILE_ALL_TSV_NAME),
         # expand( os.path.join( MODIF_DIR, TAB_DIR, "{experiment_name}_summary.tab"), experiment_name = dict_exp_modif),
         # expand( os.path.join( MODIF_DIR, BAM_DIR, "{new_bam_name}.bam"), new_bam_name = dict_bam_modif),
         # expand( os.path.join( MODIF_DIR, PREPROCESSING_DIR, "trim_fastq", "{new_bam_name}", "{new_bam_name}_del.ok") , new_bam_name = dict_bam_modif),
         # expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_model.r"), experiment_name = dict_exp_modif),
-        # expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak"), experiment_name = dict_exp_modif),
-        # expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.xls"), experiment_name = dict_exp_modif),
+        expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak"), experiment_name = dict_exp_modif_plus),
+        expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.xls"), experiment_name = dict_exp_modif_plus),
         # expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_summit.bed"), experiment_name = dict_exp_modif),
         # expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}.log"), experiment_name = dict_exp_modif),
         # os.path.join( MODIF_DIR, QUALITY_DIR, "results", "macs2_passed.quality_all"),
         # os.path.join( MODIF_DIR, QUALITY_DIR, "results", "macs2_failed.quality_all"),
         # os.path.join( MODIF_DIR, QUALITY_DIR, "results", "macs2.quality_all"),
-        os.path.join( MODIF_DIR, PATH_FILE_ALL_BED)
+        # os.path.join( MODIF_DIR, PATH_FILE_ALL_BED)
 
 
 
@@ -393,7 +425,7 @@ rule renaming_trim:
 
 rule renaming_macs2_narrowPeak:
     input:
-            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "{old_experiment_name}_peaks.narrowPeak"), old_experiment_name = dict_exp_modif[ wildcards.experiment_name][ "old_name"])
+            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "{old_experiment_name}_peaks.narrowPeak"), old_experiment_name = dict_exp_modif_plus[ wildcards.experiment_name])
     output:
             file = os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak")
     resources:
@@ -403,7 +435,7 @@ rule renaming_macs2_narrowPeak:
         file_tab_output = open( output.file, 'w')
 
         for line in file_tab_input:
-            file_tab_output.write( line.replace( dict_exp_modif[ wildcards.experiment_name][ "old_name"], wildcards.experiment_name))
+            file_tab_output.write( line.replace( dict_exp_modif_plus[ wildcards.experiment_name], wildcards.experiment_name))
 
         file_tab_input.close()
         file_tab_output.close()
@@ -411,7 +443,7 @@ rule renaming_macs2_narrowPeak:
 
 rule renaming_macs2_model:
     input:
-            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "{old_experiment_name}_model.r"), old_experiment_name = dict_exp_modif[ wildcards.experiment_name][ "old_name"])
+            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "{old_experiment_name}_model.r"), old_experiment_name = dict_exp_modif_plus[ wildcards.experiment_name])
     output:
             file = os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_model.r")
     resources:
@@ -421,7 +453,7 @@ rule renaming_macs2_model:
         file_tab_output = open( output.file, 'w')
 
         for line in file_tab_input:
-            file_tab_output.write( line.replace( dict_exp_modif[ wildcards.experiment_name][ "old_name"], wildcards.experiment_name))
+            file_tab_output.write( line.replace( dict_exp_modif_plus[ wildcards.experiment_name], wildcards.experiment_name))
 
         file_tab_input.close()
         file_tab_output.close()
@@ -429,7 +461,7 @@ rule renaming_macs2_model:
 
 rule renaming_macs2_xls:
     input:
-            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "{old_experiment_name}_peaks.xls"), old_experiment_name = dict_exp_modif[ wildcards.experiment_name][ "old_name"])
+            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "{old_experiment_name}_peaks.xls"), old_experiment_name = dict_exp_modif_plus[ wildcards.experiment_name])
     output:
             file = os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.xls")
     resources:
@@ -439,7 +471,7 @@ rule renaming_macs2_xls:
         file_tab_output = open( output.file, 'w')
 
         for line in file_tab_input:
-            file_tab_output.write( line.replace( dict_exp_modif[ wildcards.experiment_name][ "old_name"], wildcards.experiment_name))
+            file_tab_output.write( line.replace( dict_exp_modif_plus[ wildcards.experiment_name], wildcards.experiment_name))
 
         file_tab_input.close()
         file_tab_output.close()
@@ -447,7 +479,7 @@ rule renaming_macs2_xls:
 
 rule renaming_macs2_summits:
     input:
-            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "{old_experiment_name}_summits.bed"), old_experiment_name = dict_exp_modif[ wildcards.experiment_name][ "old_name"])
+            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "{old_experiment_name}_summits.bed"), old_experiment_name = dict_exp_modif_plus[ wildcards.experiment_name])
     output:
             file = os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_summits.bed")
     resources:
@@ -457,7 +489,7 @@ rule renaming_macs2_summits:
         file_tab_output = open( output.file, 'w')
 
         for line in file_tab_input:
-            file_tab_output.write( line.replace( dict_exp_modif[ wildcards.experiment_name][ "old_name"], wildcards.experiment_name))
+            file_tab_output.write( line.replace( dict_exp_modif_plus[ wildcards.experiment_name], wildcards.experiment_name))
 
         file_tab_input.close()
         file_tab_output.close()
@@ -465,7 +497,7 @@ rule renaming_macs2_summits:
 
 rule renaming_macs2_log:
     input:
-            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "log","{old_experiment_name}.log"), old_experiment_name = dict_exp_modif[ wildcards.experiment_name][ "old_name"])
+            file = lambda wildcards : expand( os.path.join( PEAKCALLING_DIR, "{old_experiment_name}", "macs2", "log","{old_experiment_name}.log"), old_experiment_name = dict_exp_modif_plus[ wildcards.experiment_name])
     output:
             file = os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}.log")
     resources:
@@ -475,7 +507,7 @@ rule renaming_macs2_log:
         file_tab_output = open( output.file, 'w')
 
         for line in file_tab_input:
-            file_tab_output.write( line.replace( dict_exp_modif[ wildcards.experiment_name][ "old_name"], wildcards.experiment_name))
+            file_tab_output.write( line.replace( dict_exp_modif_plus[ wildcards.experiment_name], wildcards.experiment_name))
 
         file_tab_input.close()
         file_tab_output.close()
@@ -500,13 +532,13 @@ rule renaming_macs2_quality_all_passed:
         for line in file_input:
 
             # only try to replace line containing at list one value to change
-            if any(current_key in line for current_key in dict_renaming):
+            if any(current_key in line for current_key in dict_exp_modif_reverse):
                 new_line = line.strip()
 
-                for current_key in dict_renaming:
+                for current_key in dict_exp_modif_reverse:
                     if new_line.find( current_key) >= 0:
 
-                        new_line = new_line.replace( current_key, dict_renaming[ current_key])
+                        new_line = new_line.replace( current_key, dict_exp_modif_reverse[ current_key])
                 file_output.write( new_line + "\n")
 
 
@@ -533,13 +565,13 @@ rule renaming_macs2_quality_all_failed:
         for line in file_input:
 
             # only try to replace line containing at list one value to change
-            if any(current_key in line for current_key in dict_renaming):
+            if any(current_key in line for current_key in dict_exp_modif_reverse):
                 new_line = line.strip()
 
-                for current_key in dict_renaming:
+                for current_key in dict_exp_modif_reverse:
                     if new_line.find( current_key) >= 0:
 
-                        new_line = new_line.replace( current_key, dict_renaming[ current_key])
+                        new_line = new_line.replace( current_key, dict_exp_modif_reverse[ current_key])
                 file_output.write( new_line + "\n")
 
 
@@ -567,13 +599,13 @@ rule renaming_macs2_quality_all:
         for line in file_input:
 
             # only try to replace line containing at list one value to change
-            if any(current_key in line for current_key in dict_renaming):
+            if any(current_key in line for current_key in dict_exp_modif_reverse):
                 new_line = line.strip()
 
-                for current_key in dict_renaming:
+                for current_key in dict_exp_modif_reverse:
                     if new_line.find( current_key) >= 0:
 
-                        new_line = new_line.replace( current_key, dict_renaming[ current_key])
+                        new_line = new_line.replace( current_key, dict_exp_modif_reverse[ current_key])
                 file_output.write( new_line + "\n")
 
 
@@ -603,11 +635,12 @@ rule renaming_macs2_bed_all:
         # parse all line if experiment in tab
         for line in file_input:
             split_line = line.split( "\t")
-            experiment_name = split_line[ 3]
+            experiment_name = split_line[ 3].strip()
+
 
             if experiment_name in dict_exp_modif_reverse:
                 new_experiment_name = dict_exp_modif_reverse[ experiment_name]
-                file_output.write( "\t".join( split_line[ 0:3] + [ new_experiment_name] + split_line[ 4:-1]) + "\n")
+                file_output.write( "\t".join( split_line[ 0:3] + [ new_experiment_name] + split_line[ 4:]))
                 file_log.write( experiment_name + "\t" + new_experiment_name + "\n")
             # if experiement not in tab
             else:

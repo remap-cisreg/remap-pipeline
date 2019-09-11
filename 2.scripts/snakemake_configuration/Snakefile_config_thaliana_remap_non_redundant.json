@@ -4,12 +4,18 @@
         "base_dir" : "/scratch/bballester/thaliana/remap-thaliana-tf",
         "preprocessing" : "4.preprocessing",
         "bed_dir" : "9.bed",
+        "fasta_dir" : "10.fasta",
         "rule_dir" : "/scratch/bballester/thaliana/remap-thaliana-tf/2.scripts/rules/current"
     },
 
     "file" :
     {
       "all_peaks" : "/scratch/bballester/thaliana/remap-thaliana-tf/remap2020_all_macs2_TAIR10_v1_0.bed"
+    },
+
+    "genome" :
+    {
+      "fasta" : "/scratch/bballester/thaliana/remap-thaliana/3.genome/Arabidopsis_thaliana/Ensembl/TAIR10/Sequence/WholeGenomeFasta/genome.fa"
     },
 
     "info" :
@@ -20,7 +26,7 @@
     "remap_version" : "2020",
     "update_version" : "1",
     "patch_version" : "0",
-    "nb_cell_info" : "1"
+    "nb_cell_info" : "2"
   },
 
   "tf_allPeaks" :
