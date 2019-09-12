@@ -39,3 +39,4 @@ Examples are in launch scipts.
 Under GNU GPLv3 licence.
 
 ## References
+Manuscrit in preparation
