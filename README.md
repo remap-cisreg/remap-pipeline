@@ -15,7 +15,7 @@ This git contain all files necessary to run analysis ReMap style from annotaion 
  2. That's all !
  
 ## Usage
-More in depth info are in the [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki).
+More in depth info are in the [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki) (Under constuction).
 
 ### General
 
