@@ -29,6 +29,8 @@ Please follow the [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki) pa
 
 The worklow (see [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki)) will create the necessary folders for most of the main processing steps.
 
+Folder in **bold** will be created by the workflow. 
+
 - 1.metadata/
 - 2.scripts/
 - 3.genome/
