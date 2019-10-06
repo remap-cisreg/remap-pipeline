@@ -29,14 +29,21 @@ Please follow the [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki) pa
 
 The worklow (see [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki)) will create the necessary folders for most of the main processing steps.
 
-- 1.metadata
-- 2.scripts
-- 3.genome
-- **4.preprocessing**
-- **5.bam**
-- **6.peakcalling**
-- **8.quality**
-- **9.bed**
+- 1.metadata/
+- 2.scripts/
+- 3.genome/
+- **4.preprocessing/**
+-- log/
+-- raw_bam/
+-- raw_fastq/
+-- rm_mismatch_bam/
+-- sam/
+-- sort_bam/
+-- trim_fastq/
+- **5.bam/**
+- **6.peakcalling/**
+- **8.quality/**
+- **9.bed/**
 
  
  
