@@ -1,20 +1,7 @@
 """
 Author: Jeanne Chèneby
 Affiliation: TAGC
-Aim: Workflow ReMap human
-Date: 01-12-16
-last update: 13-09-2018
-Run : snakemake --snakefile 2.scripts/snakefiles_workflow/Snakefile_remap_non_redundant.py --printshellcmds --cores 10 --cluster-config 2.scripts/cluster_configuration/cluster_conda_torque_remap_non_redundant.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile 2.scripts/snakemake_configuration/Snakefile_config_remap_non_redundant.json --use-conda
-
-dag: snakemake --snakefile 2.scripts/snakefiles_workflow/Snakefile_remap_post_processing.py --printshellcmds --cores 10 --cluster-config config/sacapus.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --dag 2> /dev/null | dot -T svg > dag.svg
-rulegraph: snakemake --snakefile Snakefile_remap_v4.py --printshellcmds --cores 10 --cluster-config config/sacapus.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --rulegraph 2> /dev/null | dot -T svg > rulegraph.svg
-
-
-Run (meso): snakemake --snakefile Snakefile_remap_v4.py --printshellcmds --cores 99 --cluster-config config/mesocentre.json --cluster "srun -p {cluster.partition} -N {cluster.node} -n {cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap.json
-
-
-Latest modification:
-  - todo
+Aim: Workflow renaming files after runing core
 """
 
 #================================================================#
@@ -86,12 +73,6 @@ for line in file_modif:
 
 
 file_modif.close()
-
-# pprint.pprint( dict_renaming_tf)
-# pprint.pprint( dict_renaming_cell)
-
-
-
 # Get all experiments
 
 dict_exp_modif = {}
@@ -119,13 +100,7 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
             if re.match( current_regex, old_tf):
                 old_tf = dict_renaming_tf[ current_key]
-                # print( old_tf)
-                # print( current_regex)
-                #
-                #
-                # print( current_key)
-                # print( "yeah !!!!!!!!!!!!", dict_renaming_tf[ current_key])
-                # print("-------------")
+
             elif re.match( current_regex_modify, old_tf):
                 old_tf = re.sub( current_regex_modify, dict_renaming_tf[ current_key] + "_", old_tf)
 
@@ -138,32 +113,13 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
             if re.match( current_regex_pure, old_cell):
                 old_cell = dict_renaming_cell[ current_key]
 
-                # print("----- CAS 1 ------")
-                # print( old_cell)
-                # print( current_regex_pure)
-                #
-                #
-                # print( current_key)
-                # print( "yeah !!!!!!!!!!!!", dict_renaming_cell[ current_key])
-                # print("-------------")
-
 
             elif re.match( current_regex_modify, old_cell):
                 old_cell = re.sub( current_regex_modify, dict_renaming_cell[ current_key] + "_", old_cell)
 
-        #         print("----- CAS 2 ------")
-        #         print( old_cell)
-        #         print( current_regex_modify)
-        #         print( current_key)
-        #         print( "yeah !!!!!!!!!!!!", old_cell)
-        #         print("-------------")
-        #
-
         new_experiment_name = ".".join( [ experiment_name.split( ".", 1)[ 0], old_tf, old_cell])
 
         if new_experiment_name != experiment_name:
-            # print( experiment_name)
-            # print( new_experiment_name)
             dict_exp_modif[ new_experiment_name] = {}
             dict_exp_modif[ new_experiment_name][ "old_name"] = experiment_name
 
@@ -192,8 +148,7 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
 file_log_renaming_exp.close()
 file_log_renaming_bam.close()
-# pprint.pprint( dict_exp_modif)
-# pprint.pprint( dict_bam_modif)
+
 
 file_list_exp_all_bed = open( PATH_FILE_LIST_EXP_ALL_BED, 'r')
 dict_exp_modif_reverse = {}
@@ -235,8 +190,7 @@ for line in file_list_exp_all_bed:
     new_experiment_name = ".".join( [ experiment_name.split( ".", 1)[ 0], old_tf, old_cell])
 
     if new_experiment_name != experiment_name:
-        # print( experiment_name)
-        # print( new_experiment_name)
+
         dict_exp_modif_reverse[ experiment_name.strip()] = new_experiment_name.strip()
         dict_exp_modif_plus[ new_experiment_name.strip()] = experiment_name.strip()
 
@@ -245,29 +199,6 @@ for line in file_list_exp_all_bed:
 file_list_exp_all_bed.close()
 file_list_exp_all_modif.close()
 
-# file_list_exp_all_bed = open( PATH_FILE_LIST_EXP_ALL_BED, 'r')
-#
-#
-# # parse all line if experiment in tab
-# for line in file_list_exp_all_bed:
-#     split_line = line.split( "\t")
-#     print( split_line)
-#     experiment_name = split_line[ 3].strip()
-#
-#     print( "before: ", experiment_name)
-#     if experiment_name in dict_exp_modif_reverse:
-#         new_experiment_name = dict_exp_modif_reverse[ experiment_name]
-#         print( "after: ", experiment_name)
-#         print( "new: ", new_experiment_name)
-#         print(  "\t".join( split_line[ 0:3] + [ new_experiment_name] + split_line[ 4:]) + "\n")
-#     # if experiement not in tab
-#     else:
-#         file_output.write( line)
-#
-# file_list_exp_all_bed.close()
-
-
-# pprint.pprint( dict_exp_modif_reverse)
 
 #================================================================#
 #                         Workflow                               #
@@ -275,19 +206,19 @@ file_list_exp_all_modif.close()
 
 rule all:
     input:
-        # os.path.join( MODIF_DIR, "1.metadata", FILE_ALL_TSV_NAME),
-        # expand( os.path.join( MODIF_DIR, TAB_DIR, "{experiment_name}_summary.tab"), experiment_name = dict_exp_modif),
-        # expand( os.path.join( MODIF_DIR, BAM_DIR, "{new_bam_name}.bam"), new_bam_name = dict_bam_modif),
-        # expand( os.path.join( MODIF_DIR, PREPROCESSING_DIR, "trim_fastq", "{new_bam_name}", "{new_bam_name}_del.ok") , new_bam_name = dict_bam_modif),
-        # expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_model.r"), experiment_name = dict_exp_modif),
+        os.path.join( MODIF_DIR, "1.metadata", FILE_ALL_TSV_NAME),
+        expand( os.path.join( MODIF_DIR, TAB_DIR, "{experiment_name}_summary.tab"), experiment_name = dict_exp_modif),
+        expand( os.path.join( MODIF_DIR, BAM_DIR, "{new_bam_name}.bam"), new_bam_name = dict_bam_modif),
+        expand( os.path.join( MODIF_DIR, PREPROCESSING_DIR, "trim_fastq", "{new_bam_name}", "{new_bam_name}_del.ok") , new_bam_name = dict_bam_modif),
+        expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_model.r"), experiment_name = dict_exp_modif),
         expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak"), experiment_name = dict_exp_modif_plus),
         expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.xls"), experiment_name = dict_exp_modif_plus),
-        # expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_summit.bed"), experiment_name = dict_exp_modif),
-        # expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}.log"), experiment_name = dict_exp_modif),
-        # os.path.join( MODIF_DIR, QUALITY_DIR, "results", "macs2_passed.quality_all"),
-        # os.path.join( MODIF_DIR, QUALITY_DIR, "results", "macs2_failed.quality_all"),
-        # os.path.join( MODIF_DIR, QUALITY_DIR, "results", "macs2.quality_all"),
-        # os.path.join( MODIF_DIR, PATH_FILE_ALL_BED)
+        expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_summit.bed"), experiment_name = dict_exp_modif),
+        expand( os.path.join( MODIF_DIR, PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}.log"), experiment_name = dict_exp_modif),
+        os.path.join( MODIF_DIR, QUALITY_DIR, "results", "macs2_passed.quality_all"),
+        os.path.join( MODIF_DIR, QUALITY_DIR, "results", "macs2_failed.quality_all"),
+        os.path.join( MODIF_DIR, QUALITY_DIR, "results", "macs2.quality_all"),
+        os.path.join( MODIF_DIR, PATH_FILE_ALL_BED)
 
 
 
@@ -299,8 +230,6 @@ rule renaming_big_TSV:
             file = os.path.join( MODIF_DIR, "1.metadata", FILE_ALL_TSV_NAME)
     resources:
             res=1
-    # log:
-    #     os.path.join( MODIF_DIR, "log", "list_exp_modification_tsv_metadata.tab")
     params:
         column_tf = int( config["info"]["tsv_all_metadata_tf_column"]),
         column_cell = int( config["info"]["tsv_all_metadata_cell_column"])
@@ -368,7 +297,6 @@ rule renaming_tab:
 
         for line in file_tab_input:
 
-            # if line.startswith( ):
             split_line = line.split( "\t")
             # only try to replace line containing at list one value to change
             if any(current_key in line for current_key in dict_renaming):

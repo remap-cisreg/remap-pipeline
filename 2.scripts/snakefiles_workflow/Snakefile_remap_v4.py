@@ -1,20 +1,7 @@
 """
 Author: Jeanne Chèneby
 Affiliation: TAGC
-Aim: Workflow ReMap human
-Date: 01-12-16
-last update: 13-09-2018
-Run:snakemake --snakefile Snakefile_remap_v4.py --printshellcmds --cores 10 --cluster-config config/sacapus.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --use-conda
-
-dag: snakemake --snakefile Snakefile_remap_v4.py --printshellcmds --cores 10 --cluster-config config/sacapus.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --dag 2> /dev/null | dot -T svg > dag.svg
-rulegraph: snakemake --snakefile Snakefile_remap_v4.py --printshellcmds --cores 10 --cluster-config config/sacapus.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --rulegraph 2> /dev/null | dot -T svg > rulegraph.svg
-
-
-Run (meso): snakemake --snakefile Snakefile_remap_v4.py --printshellcmds --cores 99 --cluster-config config/mesocentre.json --cluster "srun -p {cluster.partition} -N {cluster.node} -n {cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap.json
-
-
-Latest modification:
-  - todo
+Aim: Workflow ReMap core
 """
 
 #================================================================#
@@ -94,7 +81,6 @@ dict_trim_fastq_filename = {}
 dict_fastq_info = {}
 
 for objects_indir in list_objects_indir: # loop through all the files and folders
-    # if os.path.isfile( os.path.join( TAB_DIR, objects_indir)): # check whether the current object is a folder or not
     if objects_indir.endswith( "_summary.tab"): # check whether the current object is a folder or not
 
         experiment_name = objects_indir.rsplit( "_", 1)[ 0]
@@ -191,10 +177,6 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
 
                     # Dealing with trim-galore annoying waus to name output
-
-                    # list_trim_filename = []
-                    # list_trim_filename = [ forward_trim_filename, reverse_trim_filename]
-                    # list_trim_filename = [ forward_trim_filename]
                     dict_replicat_trim_filename[ current_filename][ 'trim_filename_forward'] = [ forward_trim_filename]
                     dict_replicat_trim_filename[ current_filename][ 'trim_filename_reverse'] = [ reverse_trim_filename]
                     dict_replicat_trim_filename[ current_filename][ 'trim_filename_list'] = [ forward_trim_filename, reverse_trim_filename]
@@ -213,19 +195,12 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
                     dict_replicat_trim_filename[ current_filename][ 'fastq_filename_reverse'] = [ reverse_filename]
 
 
-
-
-
                 else:
                     raise ValueError(  'abnormal library type value in ', objects_indir, current_filename)
 
 
 
                 dict_all_files[ current_filename] = dict_exp_info
-
-
-
-
 
                 # Is file a control
                 if row[ CONTROL_HEADER] == "0":
@@ -247,7 +222,7 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
         dict_experiment_chip_filename_alt[ experiment_name] = {}
         dict_experiment_chip_filename_alt[ experiment_name][ 'chip'] = {}
-        dict_experiment_chip_filename_alt[ experiment_name][ 'chip'] = [ experiment_name]# = dict_type[ 'chip']
+        dict_experiment_chip_filename_alt[ experiment_name][ 'chip'] = [ experiment_name]
         dict_experiment_chip_filename_alt[ 'all'][ experiment_name] = dict_type[ 'chip']
 
         dict_experiment_chip_filename_alt[ experiment_name][ 'control'] = [ ]
@@ -282,6 +257,5 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
 
 rule all:
-    # input:  expand( os.path.join( QUALITY_DIR, "macs2_{experiment_name}.FRiP_NSC_RSC"), experiment_name = list_exp),
 	input:	expand( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + EXTENSION_PEAK), experiment_name = list_exp),
             expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", "{replicat_name_paired}", "{replicat_name_paired}_del.ok"), zip, replicat_name_paired = list_paired_trim_file)

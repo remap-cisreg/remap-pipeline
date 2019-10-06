@@ -1,20 +1,7 @@
 """
 Author: Jeanne Chèneby
 Affiliation: TAGC
-Aim: Workflow ReMap human
-Date: 01-12-16
-last update: 13-09-2018
-Run:snakemake --snakefile Snakefile_remap_v4_bigwig.py --printshellcmds --cores 10 --cluster-config config/sacapus_conda_torque.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus_bigwig.json --use-conda
-
-dag: snakemake --snakefile Snakefile_remap_v4_bigwig.py --printshellcmds --cores 10 --cluster-config config/sacapus.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --dag 2> /dev/null | dot -T svg > dag.svg
-rulegraph: snakemake --snakefile Snakefile_remap_v4_bigwig.py --printshellcmds --cores 10 --cluster-config config/sacapus.json --cluster "qsub -V -q {cluster.queue} -l nodes={cluster.node}:ppn={cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap_saccapus.json --rulegraph 2> /dev/null | dot -T svg > rulegraph.svg
-
-
-Run (meso): snakemake --snakefile Snakefile_remap_v4_bigwig.py --printshellcmds --cores 99 --cluster-config config/mesocentre.json --cluster "srun -p {cluster.partition} -N {cluster.node} -n {cluster.thread} -o {cluster.stdout} -e {cluster.stderr}" --keep-going --configfile config/Snakefile_config_remap.json
-
-
-Latest modification:
-  - todo
+Aim: Workflow ReMap core + bigwig
 """
 
 #================================================================#
@@ -92,7 +79,6 @@ dict_trim_fastq_filename = {}
 dict_fastq_info = {}
 
 for objects_indir in list_objects_indir: # loop through all the files and folders
-	# if os.path.isfile( os.path.join( TAB_DIR, objects_indir)): # check whether the current object is a folder or not
 	if objects_indir.endswith( "_summary.tab"): # check whether the current object is a folder or not
 
 		experiment_name = objects_indir.rsplit( "_", 1)[ 0]
@@ -157,7 +143,6 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
 				# If replicat is paired
 				elif row[ LIBRARY_HEADER] == 'PAIRED':
-					# dict_exp_info[ 'library_type'] = 'PE'
 					dict_replicat_trim_filename[ current_filename][ 'run_type'] = 'PE'
 
 					list_current_filename = current_filename.split( ".", 1)
@@ -189,10 +174,6 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
 
 					# Dealing with trim-galore annoying waus to name output
-
-					# list_trim_filename = []
-					# list_trim_filename = [ forward_trim_filename, reverse_trim_filename]
-					# list_trim_filename = [ forward_trim_filename]
 					dict_replicat_trim_filename[ current_filename][ 'trim_filename_forward'] = [ forward_trim_filename]
 					dict_replicat_trim_filename[ current_filename][ 'trim_filename_reverse'] = [ reverse_trim_filename]
 					dict_replicat_trim_filename[ current_filename][ 'trim_filename_list'] = [ forward_trim_filename, reverse_trim_filename]
@@ -211,19 +192,12 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 					dict_replicat_trim_filename[ current_filename][ 'fastq_filename_reverse'] = [ reverse_filename]
 
 
-
-
-
 				else:
 					raise ValueError(  'abnormal library type value in ', objects_indir, current_filename)
 
 
 
 				dict_all_files[ current_filename] = dict_exp_info
-
-
-
-
 
 				# Is file a control
 				if row[ CONTROL_HEADER] == "0":
@@ -245,7 +219,7 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
 		dict_experiment_chip_filename_alt[ experiment_name] = {}
 		dict_experiment_chip_filename_alt[ experiment_name][ 'chip'] = {}
-		dict_experiment_chip_filename_alt[ experiment_name][ 'chip'] = [ experiment_name]# = dict_type[ 'chip']
+		dict_experiment_chip_filename_alt[ experiment_name][ 'chip'] = [ experiment_name]
 		dict_experiment_chip_filename_alt[ 'all'][ experiment_name] = dict_type[ 'chip']
 
 		dict_experiment_chip_filename_alt[ experiment_name][ 'control'] = [ ]
@@ -274,18 +248,6 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
 
 
-# vallider dictionaire et liste expérience
-# print( list_exp)
-# print( list_replicats)
-# pprint.pprint( dict_experiment_chip_filename)
-# print( dict_experiment_chip_filename)
-# pprint.pprint( dict_replicat_trim_filename)
-# pprint.pprint( dict_fastq_info)
-# pprint.pprint( dict_experiment_chip_filename_alt)
-# print( list_replicats)
-# print( list_paired_trim_file)
-# print( list_reverse_trim)
-# print( list_forward_trim)
 #================================================================#
 #                         Workflow                               #
 #================================================================#
@@ -293,82 +255,4 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
 rule all:
 	input:	expand( os.path.join( BIGWIG_DIR, "{experiment_name}", "{experiment_name}.bigwig"), experiment_name = list_exp),
-			# expand( os.path.join( PEAKCALLING_ALT_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak"), experiment_name = list_exp)
-	 # input: expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = list_replicats),
 	 		expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", "{replicat_name_paired}", "{replicat_name_paired}_del.ok"), zip, replicat_name_paired = list_paired_trim_file)
-	# input: expand(  os.path.join( PREPROCESSING_DIR, "sort_bam", "{replicat_name}.bam"), replicat_name = list_replicats)
-
-#
-# rule samtools_merge:
-# 	input:
-# 			lambda wildcards : expand( os.path.join( BAM_DIR, "{list_bam}.bam"), list_bam = dict_experiment_chip_filename_alt[ 'all'][wildcards.merge_name])
-# 	output:
-# 			os.path.join( PREPROCESSING_DIR, "merge_bam", "{merge_name}.bam")
-# 	singularity:
-# 			config[ "singularity"][ "samtools"]
-# 	conda:
-# 			config[ "conda"][ "samtools"]
-# 	benchmark:
-# 				os.path.join( PREPROCESSING_DIR, "merge_bam", "bench", "{merge_name}.bench")
-# 	resources:
-# 			res=1
-# 	log:
-# 			os.path.join( PREPROCESSING_DIR, "merge_bam", "log", "{merge_name}.log")
-# 	params:
-# 			# fasta = config[ "genome"]["fasta"],
-# 			samtools = config[ "samtools_sort"][ "other"]
-# 	shell: "samtools merge {output} {input}"
-#
-#
-# rule samtools_merge_sort:
-# 	input:
-# 			os.path.join( PREPROCESSING_DIR, "merge_bam", "{merge_name}.bam")
-# 	output:
-# 			os.path.join( BAM_MERGE_DIR, "{merge_name}.bam")
-# 	singularity:
-# 			config[ "singularity"][ "samtools"]
-# 	conda:
-# 			config[ "conda"][ "samtools"]
-# 	benchmark:
-# 				os.path.join( BAM_MERGE_DIR, "bench", "{merge_name}.bench")
-# 	resources:
-# 			res=1
-# 	log:
-# 			os.path.join( BAM_MERGE_DIR, "log", "{merge_name}.log")
-# 	params:
-# 			outname = os.path.join( BAM_MERGE_DIR, "{merge_name}"),
-# 			samtools = config[ "samtools_sort"][ "other"]
-# 	shell: "samtools sort -T {params.outname} {input} > {output}"
-#
-#
-# rule macs2_test:
-# 	input:
-# 			chip = lambda wildcards : expand( os.path.join( BAM_MERGE_DIR, "{merge_name}.bam"), merge_name = dict_experiment_chip_filename_alt[wildcards.experiment_name][ 'chip']),
-# 			control = lambda wildcards : expand( os.path.join( BAM_MERGE_DIR, "{merge_name}.bam"), merge_name = dict_experiment_chip_filename_alt[wildcards.experiment_name][ 'control'])
-# 	output:
-# 			os.path.join( PEAKCALLING_ALT_DIR, "{experiment_name}", "macs2", "{experiment_name}_peaks.narrowPeak")
-# 	singularity:
-# 			config[ "singularity"][ "macs2"]
-# 	conda:
-# 			config[ "conda"][ "macs2"]
-# 	benchmark:
-# 				os.path.join( PEAKCALLING_ALT_DIR, "{experiment_name}", "macs2", "bench", "{experiment_name}.bench")
-# 	resources:
-# 			res=1
-# 	log:
-# 			os.path.join( PEAKCALLING_ALT_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}.log")
-# 	params:
-# 			outdir = os.path.join( PEAKCALLING_ALT_DIR, "{experiment_name}", "macs2"),
-# 			outfile_name = "{experiment_name}",
-# 			# chip = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["chip"]),
-# 			# control = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename[wildcards.experiment_name]["control"]),
-# 			macs2 = config["macs2"][ "other"]
-#
-# 	shell: 	"""
-# if [ -n "{input.control}" ]
-# then
-# 	macs2 callpeak -t {input.chip} -c {input.control} --outdir {params.outdir} --name {params.outfile_name} 2> {log}
-# else
-# 	macs2 callpeak -t {input.chip} --outdir {params.outdir} --name {params.outfile_name} 2> {log}
-# fi
-# """
