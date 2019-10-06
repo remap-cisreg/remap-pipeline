@@ -4,7 +4,7 @@
 This folder contains the meta-data (annotated GSEs) which will be processed by the pipeline
 
 ## Formating the meta-data
-Use the script `extract_info_download_v3.py` or `extract_info_download_encode_v3.py` located in 2.scripts/utils/python2/ to parse your annotated file and this generate the necessary files.
+Use the script `extract_info_download_v3.py` or `extract_info_download_encode_v3.py` located in `2.scripts/utils/python2/` to parse your annotated file and this generate the necessary files.
 
 ### Input:  
 Give a TAB/Space formated (TSV) file which contains : 
