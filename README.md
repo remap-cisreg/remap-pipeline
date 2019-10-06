@@ -31,9 +31,9 @@ Examples are in launch scipts.
 
 ## Contributing
 
-- Jeanne Cheneby
-- Lionel Spinelli
-- Benoit Ballester
+- Jeanne Cheneby - [jCHENEBY](https://github.com/jCHENEBY)
+- Lionel Spinelli - [lionel-spinelli](https://github.com/lionel-spinelli)
+- Benoit Ballester - [benoitballester](https://github.com/benoitballester)
 
 ## License
 Under GNU GPLv3 licence.
