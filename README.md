@@ -27,7 +27,7 @@ Please follow the [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki) pa
 
 ### Folder organisation 
 
-The worklow see ([wiki](https://github.com/remap-cisreg/remap-pipeline/wiki)) will create the necessary folders for most of the main processing steps.
+The worklow (see [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki)) will create the necessary folders for most of the main processing steps.
 
 - 1.metadata
 - 2.scripts
