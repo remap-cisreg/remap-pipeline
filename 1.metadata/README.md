@@ -15,7 +15,19 @@ Give a TAB/Space formated (TSV) file which contains :
 - control(s) ID separate bu ",",   (GSMxxx IDs) 
 - ENA ID (SRPXXXX) 
 
-This input is the result of your curation and annotation process. Annotation and curation should be done with care, using the right Gene names and Biotype names. We use HGNC for human genes, and Ensembl gene names for other species. Please use the [EMBL-EBI Ontology Lookup Service](https://www.ebi.ac.uk/ols/index) or the [ExPASy Cellosaurus](https://web.expasy.org/cellosaurus/) from the SIB - Swiss Institute of Bioinformatics  for annotating biotypes. 
+Just like this:
+
+```
+GSE104399	ESR1	Breast-tumor_Male_8	GSM2797097	GSM2797159	SRP119087
+GSE104399	ESR1	Breast-tumor_Male_9	GSM2797098	GSM2797159	SRP119087
+GSE104399	FOXA1	Breast-tumor_Female_1	GSM2797077	GSM2797157	SRP119087
+GSE104399	FOXA1	Breast-tumor_Female_2	GSM2797078	GSM2797157	SRP119087
+```
+
+This input is the result of your curation and annotation process. 
+Annotation and curation should be done with extreme care, using the correction conventions, the right Gene names and Biotype names.
+
+We use HGNC for human genes, and Ensembl gene names for other species. Please use the [EMBL-EBI Ontology Lookup Service](https://www.ebi.ac.uk/ols/index) or the [ExPASy Cellosaurus](https://web.expasy.org/cellosaurus/) from the SIB - Swiss Institute of Bioinformatics  for annotating biotypes. 
 
 ### Output:
 - A TSV by experiment containing : 
