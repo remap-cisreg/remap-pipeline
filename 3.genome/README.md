@@ -1,6 +1,9 @@
 
-# Folder which contain all Indexs for Bowtie2 and the genome in FASTA format
+# Indexs for Bowtie2 and the genome in FASTA format
 
+This folder will contain the Bowtie Indexes and genomes in FASTA format. 
+
+We download them from igenome. 
 
 ## H. sapiens, NCBI GRCh38
 
