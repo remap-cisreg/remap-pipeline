@@ -12,15 +12,15 @@ This git contain all files necessary to run analysis ReMap style from annotaion 
  - Recommended : Conda/Docker/Singularity
 ### Step by step
  1. Pull the git
- 2. That's all !
+ 2. That's all
  
 ## Usage
-More in depth info are in the [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki) (Under constuction).
+Please follow the [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki) page for step by step inforamtions.
 
 ### General
 
- 1. repare the metadata from your annotation file by extracting downloading info (See README.md in 1.metadata/)
- 2. Create cluster config and snakemake config to match your set up (See example in 2.scripts/cluster_configuration)
+ 1. Prepare the metadata from your annotation file by extracting downloading info (See README.md in 1.metadata/)
+ 2. Create cluster config and snakemake config to match your set up (See example in [2.scripts/cluster_configuration](2.scripts/cluster_configuration))
  3. Get necessary files such as reference genome (See README.md in 3.genome/)
  4. Create a launch bash script (See example in root directory)
  5. Run launch script
