@@ -10,7 +10,7 @@ Use the script `extract_info_download_v3.py` or `extract_info_download_encode_v3
 Give a TAB/Space formated (TSV) file which contains : 
 - Experiment ID (GSExxxx)
 - Target Name (FOXA1) use HGNC to use offical name convention
-- full biotype (MCF-7) use conventianla names
+- full biotype+treatment (if needed) (MCF-7) use convention names
 - replicate(s) ID separated by ",",  (GSMxxx IDs) 
 - control(s) ID separate bu ",",   (GSMxxx IDs) 
 - ENA ID (SRPXXXX) 
@@ -25,7 +25,7 @@ GSE104399	FOXA1	Breast-tumor_Female_2	GSM2797078	GSM2797157	SRP119087
 ```
 
 This input is the result of your curation and annotation process. 
-Annotation and curation should be done with extreme care, using the correction conventions, the right Gene names and Biotype names.
+Annotation and curation should be done with extreme care, using the correct naming conventions, the right Gene names and Biotype names. Regarding cell line treatment, we tend to summarize the information `HUVEC-C_VEGF_12h`, as it just need to be unique from another experiment. We use underscore `_` as a convention to delimit the main biotype `HUVEC-C_VEGF-12h` to the the treatment.
 
 We use HGNC for human genes, and Ensembl gene names for other species. Please use the [EMBL-EBI Ontology Lookup Service](https://www.ebi.ac.uk/ols/index) or the [ExPASy Cellosaurus](https://web.expasy.org/cellosaurus/) from the SIB - Swiss Institute of Bioinformatics  for annotating biotypes. 
 
