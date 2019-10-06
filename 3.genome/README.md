@@ -1,57 +1,57 @@
-#-----------------------------------------------------------------------
-#-- This will contain all Indexs for Bowtie2 and the genome in FASTA format
-#-----------------------------------------------------------------------
 
-#--------------------------------------------------------
-#-- H. sapiens, NCBI GRCh38
-#--------------------------------------------------------
-# Bowtie 2 Genome - H. sapiens, NCBI GRCh38
+# Folder which contain all Indexs for Bowtie2 and the genome in FASTA format
+
+
+## H. sapiens, NCBI GRCh38
+
+### Bowtie 2 Genome - H. sapiens, NCBI GRCh38
 - http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml
 
-#-- This will contain all Indexs for Bowtie2 and the genome in FASTA format
+### This will contain all Indexs for Bowtie2 and the genome in FASTA format
 wget ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Homo_sapiens/UCSC/hg38/Homo_sapiens_UCSC_hg38.tar.gz
 
-#-- Need to tar -zxvf AND remove some folders (BWA, etc...) to save som space
+### Need to tar -zxvf AND remove some folders (BWA, etc...) to save som space
 tar -zxvf Homo_sapiens_UCSC_hg38.tar.gz
 
-#-- Remove annotation folder
+### Remove annotation folder
 cd Homo_sapiens/UCSC/hg38/
 rm -rf Annotation/
 
-#-- Remove unnecessary Indexes
+### Remove unnecessary Indexes
 cd Sequence/
 rm -rf BowtieIndex/ BWAIndex/ Chromosomes/
 cd ../../../../
 
-#-- Remove TAR.GZ file
+### Remove TAR.GZ file
+```
 cd /scratch/bballester/projects/tagc-remap3/src/jeanne/3.genome/
-# rm -f Homo_sapiens_UCSC_hg38.tar.gz
-# rm README.txt  #-- Ilumina README
+rm -f Homo_sapiens_UCSC_hg38.tar.gz #-- Clean if you wabt
+rm README.txt  #-- Ilumina README
+```
 
 
 
-#--------------------------------------------------------
-#-- A. thaliana, TAIR10
-#--------------------------------------------------------
-# Bowtie 2 Genome - Arabidopsis thaliana TAIR10
+# A. thaliana, TAIR10
+
+## Bowtie 2 Genome - Arabidopsis thaliana TAIR10
 - http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml
 
-#-- This will contain all Indexs for Bowtie2 and the genome in FASTA format
-#wget ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Arabidopsis_thaliana/Ensembl/TAIR10/Arabidopsis_thaliana_Ensembl_TAIR10.tar.gz 
- wget ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Arabidopsis_thaliana/NCBI/TAIR10/Arabidopsis_thaliana_NCBI_TAIR10.tar.gz
+### This will contain all Indexs for Bowtie2 and the genome in FASTA format
+wget ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Arabidopsis_thaliana/Ensembl/TAIR10/Arabidopsis_thaliana_Ensembl_TAIR10.tar.gz 
+wget ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Arabidopsis_thaliana/NCBI/TAIR10/Arabidopsis_thaliana_NCBI_TAIR10.tar.gz
 
-#-- Need to tar -zxvf AND remove some folders (BWA, etc...) to save som space
+### Need to tar -zxvf AND remove some folders (BWA, etc...) to save som space
 tar -zxvf Arabidopsis_thaliana_NCBI_TAIR10.tar.gz
 
-#-- Remove annotation folder
+### Remove annotation folder
 cd Arabidopsis_thaliana/NCBI/TAIR10/
 rm -rf Annotation/
 
-#-- Remove unnecessary Indexes
+### Remove unnecessary Indexes
 cd Sequence/
 rm -rf BowtieIndex/ BWAIndex/ Chromosomes/
 cd ../../../../
 
-#-- Remove TAR.GZ file
-# rm Arabidopsis_thaliana_Ensembl_TAIR10.tar.gz Arabidopsis_thaliana_NCBI_TAIR10.tar.gz
-# rm README.txt  #-- Ilumina README
+### Remove TAR.GZ file
+rm Arabidopsis_thaliana_Ensembl_TAIR10.tar.gz Arabidopsis_thaliana_NCBI_TAIR10.tar.gz
+rm README.txt  #-- Ilumina README
