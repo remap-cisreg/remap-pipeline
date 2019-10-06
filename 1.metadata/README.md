@@ -18,7 +18,13 @@ Give a TAB/Space formated (TSV) file which contains :
 for this experiment's serie.
 
 ### Output:
-A TSV by experiment containing : Replicat name, Short description found on ENA, Library type, if control, Download URL, md5.
+- A TSV by experiment containing : 
+- Replicate name
+- Short description found on ENA
+- Library type
+- if control
+- Download URL
+- md5
 
 ### Command line:
 ```
