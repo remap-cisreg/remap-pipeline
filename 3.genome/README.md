@@ -1,5 +1,5 @@
 
-# Indexs for Bowtie2 and the genome in FASTA format
+# Indexes for Bowtie2 and genome in FASTA format
 
 This folder will contain the Bowtie Indexes and genomes in FASTA format. 
 
