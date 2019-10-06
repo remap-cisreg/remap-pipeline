@@ -15,7 +15,7 @@ Give a TAB/Space formated (TSV) file which contains :
 - control(s) ID separate bu ",",   (GSMxxx IDs) 
 - ENA ID (SRPXXXX) 
 
-for this experiment's serie.
+This input is the result of your curation and annotation process. Annotation and curation should be done with care, using the right Gene names and Biotype names. We use HGNC for human genes, and Ensembl gene names for other species. Please use the [EMBL-EBI Ontology Lookup Service](https://www.ebi.ac.uk/ols/index) or the [ExPASy Cellosaurus](https://web.expasy.org/cellosaurus/) from the SIB - Swiss Institute of Bioinformatics  for annotating biotypes. 
 
 ### Output:
 - A TSV by experiment containing : 
