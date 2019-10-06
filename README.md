@@ -24,6 +24,21 @@ Please follow the [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki) pa
  3. Get necessary files such as reference genome (See README.md in [3.genome/](3.genome/))
  4. Create a launch bash script (See example in root directory)
  5. Run launch script
+
+### Folder organisation 
+
+The worklow see ([wiki](https://github.com/remap-cisreg/remap-pipeline/wiki)) will create the necessary folders for most of the main processing steps.
+
+- 1.metadata
+- 2.scripts
+- 3.genome
+- **4.preprocessing**
+- **5.bam**
+- **6.peakcalling**
+- **8.quality**
+- **9.bed**
+
+ 
  
 ### Compute clusters specificities
 remap-pipeline can be run with Conda or Docker/Singularity and Torque and Slurm.
