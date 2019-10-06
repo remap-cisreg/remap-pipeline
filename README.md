@@ -33,13 +33,13 @@ The worklow (see [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki)) wi
 - 2.scripts/
 - 3.genome/
 - **4.preprocessing/**
--- log/
--- raw_bam/
--- raw_fastq/
--- rm_mismatch_bam/
--- sam/
--- sort_bam/
--- trim_fastq/
+  - log/
+  - raw_bam/
+  - raw_fastq/
+  - rm_mismatch_bam/
+  - sam/
+  - sort_bam/
+  - trim_fastq/
 - **5.bam/**
 - **6.peakcalling/**
 - **8.quality/**
