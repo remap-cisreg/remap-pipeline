@@ -42,6 +42,7 @@ The worklow (see [wiki](https://github.com/remap-cisreg/remap-pipeline/wiki)) wi
  
 ### Compute clusters specificities
 remap-pipeline can be run with Conda or Docker/Singularity and Torque and Slurm.
+
 Examples are in launch scipts.
 
 ## Contributing
