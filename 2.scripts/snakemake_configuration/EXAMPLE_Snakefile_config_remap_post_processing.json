@@ -12,8 +12,15 @@
 
     "info" :
     {
-      "peakcaller" : "macs2"
-    },
+    "species" : "hsap",
+    "assembly" : "hg38",
+    "peakcaller" : "macs2",
+    "remap_version" : "2020",
+    "update_version" : "1",
+    "patch_version" : "0",
+    "nb_cell_info" : "1",
+    "remap_fullname" : "remap2020"
+  },
 
 
     "header" :
@@ -39,7 +46,7 @@
 
     "quality_NSC_RSC" :
     {
-        "run_spp" : ""
+        "run_spp" : "/gpfs/tagc/home/hammal/anaconda3/envs/phantompeakqualtools/bin/run_spp.R"
     },
 
     "quality_FRiP" :
