@@ -2,7 +2,7 @@ rule creating_remap_catalogue_bed:
     input:
             os.path.join( QUALITY_DIR,  "results", "macs2_passed.quality_all")
     output:
-            temp( os.path.join( REMAP_FULLANME + "_unsort.bed"))
+            os.path.join( REMAP_FULLNAME + "_unsorted.bed")
     resources:
             res=1
     log:
@@ -10,20 +10,13 @@ rule creating_remap_catalogue_bed:
     params:
                path_to_peaks = PEAKCALLING_DIR,
                peakcaller = PEAKCALLER,
-               path_file_color_tf = config[ "creating_remap_catalogue_bed"][ "color_file"],
-               extension_peak = config["extention"]["peak_output"]
+               path_file_color_tf = "/gpfs/tagc/home/hammal/remap-pipeline/1.metadata/color_tf.tab"
     run:
+        file_outfile = open( output[ 0], 'w')
 
         # create dicrionary with color by tf
         dict_tf_color = {}
-        file_color_tf = open(  params.path_file_color_tf, 'r')
-
-        for line in file_color_tf:
-            split_line = line.strip().split( "\t")
-            if split_line[ 0] not in dict_tf_color:
-                dict_tf_color[ split_line[ 0]] = str( split_line[ 1])
-        file_color_tf.close()
-
+        file_color_tf = open(params.path_file_color_tf, 'r')
 
         # Puting in a list all experiement passing filtering
         list_experiment_pass = []
@@ -33,18 +26,24 @@ rule creating_remap_catalogue_bed:
             if not line.startswith( "experiment_name"):
                 list_experiment_pass.append( line.split( "\t")[ 0].strip())
         file_experiment_pass.close()
+        list_TF = [line.rstrip().rsplit("\t")[0] for line in file_color_tf.readlines() if len(line.rstrip().rsplit("\t")) == 2]
+        file_color_tf.close()
+        file_color_tf = open(params.path_file_color_tf, 'r')
+        list_colors = [line.rstrip().rsplit("\t")[1] for line in file_color_tf.readlines() if len(line.rstrip().rsplit("\t")) == 2]
+
+        dict_tf_color = dict(zip(list_TF,list_colors))
+        file_color_tf.close()
 
         # writing results
-        file_outfile = open( output[ 0], 'w')
-
+        #for k, v in dict_tf_color.items():
+        #    file_outfile.write(str(k) + ' >>> '+ str(v) + '\n\n')
         for experiment in list_experiment_pass:
-
             # getting correct color for tf
             tf = experiment.split( ".")[ 1]
-            color_tf = dict_tf_color[ tf]
+            color_tf = dict_tf_color[tf]
 
             # formating narrowPeak ReMap style
-            path_file_experiment_peak =  os.path.join( params.path_to_peaks, experiment, params.peakcaller, experiment + params.extension_peak)
+            path_file_experiment_peak =  os.path.join( params.path_to_peaks, experiment, params.peakcaller, experiment + "_peaks.narrowPeak")
 
             file_experiment_peak = open( path_file_experiment_peak, 'r')
 
@@ -54,4 +53,3 @@ rule creating_remap_catalogue_bed:
                 correct_line = split_line[ 0:4] + split_line[ 8:9] + split_line[ 5:6] + [  str( summit_position)] + [ str( summit_position + 1)] + [ color_tf]
                 file_outfile.write( "\t".join(correct_line) + "\n")
 
-        file_outfile.close()
