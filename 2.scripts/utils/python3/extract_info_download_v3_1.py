@@ -278,7 +278,7 @@ if __name__ == "__main__":
 
 		# info to get
 	url_experiment_temp_end_1 = "&result=read_run&fields="
-	url_experiment_temp_end_2 = "&download=txt"
+	url_experiment_temp_end_2 = "&download=1"
 
 
 	list_info_ena = [
@@ -476,7 +476,7 @@ if __name__ == "__main__":
 			# parse line
 			for line_ena_resp in iter_line_ena_resp:
 
-				list_info_ena = str( line_ena_resp).split( '\t')
+				list_info_ena = str( line_ena_resp).split( '\t')[1:]
 
 				try:
 					# add only relevant line
