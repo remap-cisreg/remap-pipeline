@@ -83,24 +83,24 @@ if __name__ == "__main__":
 
 	dict_experiment = {}
 	column_file_accession = 0
-	column_experiment_accession = 3
-	column_biosample_term_id = 5 #EFO/BTO/...
-	column_biosample_term_name = 6
-	column_biosample_treatment = 9
-	column_biosample_treatment_amount = 10
-	column_biosample_treatment_duration = 11
-	column_experiment_target = 12
-	column_biological_replicate = 24
-	column_technical_replicate = 25
-	column_run_type = 28
-	column_pair_with = 30
-	column_md5 = 34
-	column_url_download = 36
-	column_controlled_by = 39
-	column_file_status = 40
-	column_audit_warning = 42
-	column_audit_internal_action = 43
-	column_audit_not_compliant = 44
+	column_experiment_accession = 6
+	column_biosample_term_id = 8 #EFO/BTO/...
+	column_biosample_term_name = 9
+	column_biosample_treatment = 12
+	column_biosample_treatment_amount = 13
+	column_biosample_treatment_duration = 14
+	column_experiment_target = 18
+	column_biological_replicate = 30
+	column_technical_replicate = 31
+	column_run_type = 34
+	column_pair_with = 36
+	column_md5 = 41
+	column_url_download = 43
+	column_controlled_by = 46
+	column_file_status = 47
+	column_audit_warning = 49
+	column_audit_internal_action = 51
+	column_audit_not_compliant = 50
 
 
 	#================================================================#
