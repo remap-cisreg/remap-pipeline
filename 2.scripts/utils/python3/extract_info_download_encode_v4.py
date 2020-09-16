@@ -230,7 +230,7 @@ if __name__ == "__main__":
 		# print( url_control)
 
 		# get json from encode
-		url_control_encode = "https://www.encodeproject.org" + url_control.strip()
+		url_control_encode = url_control.strip().split('@')[0]
 		url_control_encode_json = url_control_encode + "?format=json"
 		# print( url_control_encode_json)
 		with urllib.request.urlopen( url_control_encode_json) as url:
