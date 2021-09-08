@@ -57,6 +57,7 @@ Examples are in launch scipts.
 ## Contributing
 
 - Jeanne Cheneby - [jCHENEBY](https://github.com/jCHENEBY)
+- Fayrouz Hammal - [fayrouzhammal](https://github.com/fayrouzhammal)
 - Lionel Spinelli - [lionel-spinelli](https://github.com/lionel-spinelli)
 - Benoit Ballester - [benoitballester](https://github.com/benoitballester)
 
@@ -64,4 +65,6 @@ Examples are in launch scipts.
 Under GNU GPLv3 licence.
 
 ## References
-Manuscrit in preparation
+
+**ReMap 2020: a database of regulatory regions from an integrative analysis of Human and Arabidopsis DNA-binding sequencing experiments**
+*Jeanne Chèneby, Zacharie Ménétrier, Martin Mestdagh, Thomas Rosnet, Allyssa Douida, Wassim Rhalloussi, Aurélie Bergon, Fabrice Lopez, Benoit Ballester*. Nucleic Acids Research, 29 October 2019, https://doi.org/10.1093/nar/gkz945
