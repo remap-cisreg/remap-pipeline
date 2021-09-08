@@ -4,6 +4,9 @@ Affiliation: TAGC
 Aim: Workflow ReMap core
 """
 
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 #================================================================#
 #                        Imports/Configuration file              #
 #================================================================#
@@ -53,7 +56,6 @@ include: os.path.join(BASE_DIR, RULE_DIR, "samtools_sort.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "samtools_remove_pcr_duplicate.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "macs2.rules")
 include: os.path.join(BASE_DIR, RULE_DIR, "delete_trim.rules")
-
 #================================================================#
 #                     Defining dataset                           #
 #================================================================#
