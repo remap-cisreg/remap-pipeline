@@ -23,7 +23,7 @@
     "species" : "hsap",
     "assembly" : "hg38",
     "peakcaller" : "macs2",
-    "remap_version" : "2020",
+    "remap_version" : "2022",
     "update_version" : "1",
     "patch_version" : "0",
     "nb_cell_info" : "1"
@@ -49,7 +49,11 @@
     "perc_overlap" : "25"
   },
 
-
+  "merge_all_nr_bed" :
+  {
+    "other" : ""
+  },
+	
   "singularity" :
   {
 
