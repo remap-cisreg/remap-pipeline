@@ -48,6 +48,11 @@
         "min_length" : "30",
         "other" : "--phred33 --illumina"
     },
+    "delete_trim.rules" :
+    {
+        "other" : ""
+
+    },
 
     "bowtie2" :
     {
@@ -58,6 +63,10 @@
     "sam_to_bam" :
     {
         "other" : "-b -S"
+    },
+    "merge_bam" :
+    {
+        "samtools-merge" : ""
     },
 
     "remove_mismatch" :
