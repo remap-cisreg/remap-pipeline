@@ -15,11 +15,11 @@
     "species" : "hsap",
     "assembly" : "hg38",
     "peakcaller" : "macs2",
-    "remap_version" : "2020",
+    "remap_version" : "2022",
     "update_version" : "1",
     "patch_version" : "0",
     "nb_cell_info" : "1",
-    "remap_fullname" : "remap2020"
+    "remap_fullname" : "remap2022"
   },
 
 
@@ -33,10 +33,10 @@
     },
 
 
-		"extention":
-		{
-			"peak" : "_peaks.narrowPeak"
-		},
+    "extention":
+    {
+        "peak" : "_peaks.narrowPeak"
+    },
 
 
     "merge_bam" :
@@ -46,7 +46,7 @@
 
     "quality_NSC_RSC" :
     {
-        "run_spp" : "/gpfs/tagc/home/hammal/anaconda3/envs/phantompeakqualtools/bin/run_spp.R"
+        "run_spp" : "/path/to/env/anaconda3/envs/phantompeakqualtools/bin/run_spp.R"
     },
 
     "quality_FRiP" :
