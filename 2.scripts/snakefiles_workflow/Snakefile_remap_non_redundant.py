@@ -41,6 +41,7 @@ PATCH_VERSION = config["info"]["patch_version"]
 PREFIX = "remap" + REMAP_VERSION
 SUFFIX =  PEAKCALLER + "_" + ASSEMBLY + "_v" + UPDATE_VERSION + "_" + PATCH_VERSION
 NB_CELL_INFO = int( config["info"]["nb_cell_info"])
+NR_NAME = os.path.join(PREFIX + "_nr_" + SUFFIX + ".bed")
 
 #================================================================#
 #                         Includes                               #
@@ -104,6 +105,7 @@ rule all:
             expand( os.path.join( FASTA_DIR, "{tf}" , PREFIX + "_{tf}_nr_" + SUFFIX + ".fasta"), tf = set_tf),
             expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_nr_" + SUFFIX + ".bed"), cell = set_cell),
             expand( os.path.join( BED_DIR, "CELL","{cell}" , PREFIX + "_{cell}_all_" + SUFFIX + ".bed"), cell = set_cell),
+            NR_NAME
 
 
 
@@ -120,3 +122,15 @@ rule tf_nrPeaks_fasta:
     params:
             genome_fasta = config["genome"]["fasta"]
     shell: """bedtools getfasta -fi {params.genome_fasta} -bed {input} -fo {output}"""
+        
+
+rule merge_all_nr_bed:
+    input:
+            expand( os.path.join( BED_DIR, "TF", "{tf}" , PREFIX + "_{tf}_nr_" + SUFFIX + ".bed"), tf = set_tf)
+    output:
+            os.path.join(PREFIX + "_nr_" + SUFFIX + ".bed")	
+    params:
+            unsort_bed = temp(os.path.join(PREFIX + "_nr_" + SUFFIX + "_unsort.bed"))
+            
+    shell: """cat  {input} > {params.unsort_bed}
+              sort -k1,1 -k2,2n {params.unsort_bed} > {output}"""
