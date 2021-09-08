@@ -117,7 +117,7 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
 
 rule all:
     input:  
-            os.path.join( "remap2020.bed")
+            os.path.join( "remap2022.bed")
 
 
 
