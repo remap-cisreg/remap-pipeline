@@ -1,0 +1,74 @@
+{
+"__default__":
+{
+"project-name":"project_name",
+"job-name" : "{rule}",
+"partition" : "queue_name",
+"node" : "1",
+"thread" : "1",
+"ntasks" : "1",
+"time" : "2:30:00",
+"memory" : "5G",
+"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.out",
+"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.err",
+"mail-type":"BEGIN,END",
+"mail-user":"first.last@mail.com"
+},
+
+"merge_bam" :
+{
+"partition" : "skylake"
+},
+
+"quality_FRiP" :
+{
+"partition" : "skylake"
+},
+
+"quality_NSC_RSC" :
+{
+"partition" : "skylake",
+"thread" : "2",
+"memory" : "15G"
+},
+
+"quality_all" :
+{
+"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+},
+
+"quality_all_experiments" :
+{
+"partition" : "skylake"
+},
+
+"filtering_quality_all" :
+{
+"time" : "03:00:00",
+"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+},
+
+"graph_quality_all" :
+{
+"time" : "03:00:00",
+"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+},
+
+"creating_remap_catalogue_bed" :
+{
+"time" : "03:00:00",
+"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+},
+
+"sort_remap_bed" :
+{
+"time" : "06:00:00",
+"stdout" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.out",
+"stderr" : "/absolute/path/to/remap-pipeline/4.preprocessing/log/{rule}_slurm.err"
+}
+
+}
