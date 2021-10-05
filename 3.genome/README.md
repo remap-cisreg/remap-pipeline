@@ -34,7 +34,7 @@ cd ../../../../
 
 ### Remove TAR.GZ file
 ```
-cd /scratch/bballester/projects/tagc-remap3/src/jeanne/3.genome/
+cd /absolute/path/to/remap-pipeline/3.genome/
 rm -f Homo_sapiens_UCSC_hg38.tar.gz #-- Clean if you wabt
 rm README.txt  #-- Ilumina README
 ```
