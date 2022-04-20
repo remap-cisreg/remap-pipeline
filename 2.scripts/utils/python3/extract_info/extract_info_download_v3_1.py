@@ -267,7 +267,7 @@ if __name__ == "__main__":
 	col_ID_serie = 0
 	col_TF = 1
 	col_cell = 2
-	col_SRP = 6
+	col_SRP = 5
 	col_GSM_chip = 3
 	col_GSM_control = 4
 
