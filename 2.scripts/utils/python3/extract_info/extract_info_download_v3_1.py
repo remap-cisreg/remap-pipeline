@@ -260,21 +260,29 @@ if __name__ == "__main__":
 	general_error = []
 
 
+#     path_file_remap_metadata="/home/souville/Documents/Programmation/Repo/remap-annotation/2022/hsap2022/annotation/remap_hsap2022_genome_occupancy_clean.csv"
+#     path_file_remap_metadata="/home/souville/Documents/Projets/Remap/sample_pipeline/short_remap_mmus2022_final.csv"
 
-
+# 	col_ID_serie = 0
+# 	col_TF = 2
+# 	col_cell = 3
+# 	col_SRP = 20
+# 	col_GSM_chip = 7
+# 	col_GSM_control = 8
 
 	# setting column of interest (start from 0)
+    
 	col_ID_serie = 0
-	col_TF = 1
-	col_cell = 2
-	col_SRP = 5
-	col_GSM_chip = 3
-	col_GSM_control = 4
+	col_TF = 2
+	col_cell = 3
+	col_SRP = 15
+	col_GSM_chip = 10
+	col_GSM_control = 11
 
 
 	# setting rest info
-	url_experiment_srt = "https://www.ebi.ac.uk/ena/data/warehouse/filereport?accession="
-
+ 	#url_experiment_srt = "https://www.ebi.ac.uk/ena/data/warehouse/filereport?accession="
+	url_experiment_srt = 'https://www.ebi.ac.uk/ena/portal/api/filereport?accession='
 
 		# info to get
 	url_experiment_temp_end_1 = "&result=read_run&fields="
@@ -476,8 +484,10 @@ if __name__ == "__main__":
 			# parse line
 			for line_ena_resp in iter_line_ena_resp:
 
-				list_info_ena = str( line_ena_resp).split( '\t')[1:]
-
+				#list_info_ena = str( line_ena_resp).split( '\t')[1:]
+				list_info_ena = str( line_ena_resp).split( '\t') #mauvais emplacement GSM?
+				print(list_info_ena)
+				print(list_info_ena[4])
 				try:
 					# add only relevant line
 					if list_info_ena[ 4] in list_chip_GSM:
@@ -487,7 +497,7 @@ if __name__ == "__main__":
 						list_line_control_ena.append( list_info_ena)
 						list_found_GSM.append( list_info_ena[ 4])
 
-					maybe_gsm = list_info_ena[ 9].split( "_")[ 0].strip()
+					maybe_gsm = list_info_ena[ 9].split( "_")[ 0].strip() # CHECK POUR LE R2 SI C'EST UN PAIRED END (je crois)
 					if maybe_gsm in list_chip_GSM:
 						list_info_ena[ 4] = maybe_gsm
 						list_line_chip_ena_alt.append( list_info_ena)
