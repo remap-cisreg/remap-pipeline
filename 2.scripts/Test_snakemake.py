@@ -1,70 +1,57 @@
-"""
-Author: Jeanne Chèneby
-Affiliation: TAGC
-Aim: Workflow ReMap core
-"""
-
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+Test initialisation fichier snakemake
 
-#================================================================#
-#                        Imports/Configuration file              #
-#================================================================#
+Created on Thu Mar  6 09:08:58 2025
 
+@author: souville
+"""
 import os
-import csv
-import pprint
+# BASE_DIR = config["working_dir"]["base_dir"]
+# workdir: BASE_DIR
 
+# # Directories
+# TAB_DIR = config["working_dir"]["tab_dir"]
+# PREPROCESSING_DIR = config["working_dir"]["preprocessing"]
+# PEAKCALLING_DIR = config["working_dir"]["outdir"]
+# QUALITY_DIR = config["working_dir"]["quality"]
+# BAM_DIR = config["working_dir"]["bam_dir"]
+# RULE_DIR = config["working_dir"]["rule_dir"]
 
+# # Header CSV
+# CONTROL_HEADER = config["header"]["control"]
+# FILENAME_HEADER = config["header"]["filename"]
+# LIBRARY_HEADER = config["header"]["library"]
+# LIBRARY_URL = config["header"]["url"]
+# LIBRARY_MD5 = config["header"]["md5"]
 
-#================================================================#
-#     Global variables                                           #
-#================================================================#
+# # Extension peakcaller
+# EXTENSION_PEAK = config[ "extention"][ "peak"]
 
-BASE_DIR = config["working_dir"]["base_dir"]
+BASE_DIR = "/run/user/1001/gvfs/sftp:host=core.cluster.france-bioinformatique.fr,user=souvillel/shared/projects/remap/remap-pipeline/2025/Minimum_slurm_fonctionnel"
 workdir: BASE_DIR
 
 # Directories
-TAB_DIR = config["working_dir"]["tab_dir"]
-PREPROCESSING_DIR = config["working_dir"]["preprocessing"]
-PEAKCALLING_DIR = config["working_dir"]["outdir"]
-QUALITY_DIR = config["working_dir"]["quality"]
-BAM_DIR = config["working_dir"]["bam_dir"]
+TAB_DIR = "1.metadata/tab"
+PREPROCESSING_DIR = "4.preprocessing"
+PEAKCALLING_DIR = "6.peakcalling"
+QUALITY_DIR = "8.quality"
+BAM_DIR = "5.bam"
 RULE_DIR = config["working_dir"]["rule_dir"]
 
 # Header CSV
-CONTROL_HEADER = config["header"]["control"]
-FILENAME_HEADER = config["header"]["filename"]
-LIBRARY_HEADER = config["header"]["library"]
-LIBRARY_URL = config["header"]["url"]
-LIBRARY_MD5 = config["header"]["md5"]
+CONTROL_HEADER = "isControl"
+FILENAME_HEADER = "filename"
+LIBRARY_HEADER = "library_type"
+LIBRARY_URL = "url"
+LIBRARY_MD5 = "md5"
 
 # Extension peakcaller
-EXTENSION_PEAK = config[ "extention"][ "peak"]
+EXTENSION_PEAK = "_peaks.narrowPeak"
 
 
-#================================================================#
-#                         Includes                               #
-#================================================================#
-
-include: os.path.join(BASE_DIR, RULE_DIR, "aria2.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "trim_galore.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "bowtie2.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "sam_to_bam.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "remove_mismatch.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "samtools_sort.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "samtools_remove_pcr_duplicate.rules")
-include: os.path.join(BASE_DIR, RULE_DIR, "macs2.rules.backup_LS")
-include: os.path.join(BASE_DIR, RULE_DIR, "delete_trim.rules")
-#================================================================#
-#                     Defining dataset                           #
-#================================================================#
-print(os.path.join(BASE_DIR, RULE_DIR, "aria2.rules"))
-
-# Get all experiments
 list_objects_indir = os.listdir( TAB_DIR) # get all files' and folders' names in the current directory
-EXPERIMENTS, = glob_wildcards(TAB_DIR + "{experiment}_summary.tab")
-
 list_exp = []
 list_replicats = []
 list_forward_trim = []
@@ -78,6 +65,7 @@ dict_replicat_trim_filename = {}
 dict_fastq_info = {}
 dict_trim_fastq_filename = {}
 dict_fastq_info = {}
+
 
 for objects_indir in list_objects_indir: # loop through all the files and folders
     if objects_indir.endswith( "_summary.tab"): # check whether the current object is a folder or not
@@ -109,7 +97,7 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
                 # If replicat is single
                 if row[ LIBRARY_HEADER] == 'SINGLE':
                     # dict_exp_info[ 'library_type'] = 'SE'
-                    dict_replicat_trim_filename[ current_filename][ 'run_type'] = 'SE'
+                    dict_replicat_trim_filename[ current_filename][ 'run_type'] = 'SE'<
 
 
 
@@ -206,56 +194,45 @@ for objects_indir in list_objects_indir: # loop through all the files and folder
                 else:
                     raise ValueError(  'abnormal control type value in ', objects_indir, current_filename)
 
-            dict_type[ 'all'] = list( dict_all_files.keys())
-            dict_experiment_chip_filename[ experiment_name] = dict_type
-dict_experiment_chip_filename_alt =dict_experiment_chip_filename
-        #dict_experiment_chip_filename_alt[ experiment_name] = {}
-        #dict_experiment_chip_filename_alt[ experiment_name][ 'chip'] = {}
-        #dict_experiment_chip_filename_alt[ experiment_name][ 'chip'] = [ experiment_name]
-        #dict_experiment_chip_filename_alt[ 'all'][ experiment_name] = dict_type[ 'chip']
 
-        #dict_experiment_chip_filename_alt[ experiment_name][ 'control'] = [ ]
 
-        #if len( dict_type[ 'control']) > 0:
-        #   dict_experiment_chip_filename_alt[ experiment_name][ 'control'] = {}
 
-        #   ID_input = sorted( dict_type[ 'control'])[ 0].split( ".", 1)[ 0]
-        #   biosample_input = ".".join( dict_type[ 'control'][ 0].split( ".")[ 1:3])
-        #   uniq_input_name_temp = ".".join( [ ID_input, biosample_input])
 
-        #   if uniq_input_name_temp in dict_experiment_chip_filename_alt[ experiment_name][ 'control']:
-        #       for i in range( len( dict_type[ 'control'])):
+        dict_type[ 'all'] = list( dict_all_files.keys())
 
-        #           ID_input = sorted( dict_type[ 'control'])[ i].split( ".", 1)[ 0]
-        #           biosample_input = ".".join( dict_type[ 'control'][ 0].split( ".")[ 1:3])
-        #           if sorted( dict_type[ 'control']) != sorted( dict_experiment_chip_filename_alt[ experiment_name][ 'control'][ uniq_input_name_temp]):
-        #               break
-        #       dict_experiment_chip_filename_alt[ experiment_name][ 'control'][ uniq_input_name_temp] = dict_type[ 'control']
-        #       dict_experiment_chip_filename_alt[ 'all'][ uniq_input_name_temp] = dict_type[ 'control']
+        dict_experiment_chip_filename[ experiment_name] = dict_type
 
-        #   else:
-        #       dict_experiment_chip_filename_alt[ experiment_name][ 'control'] = [ uniq_input_name_temp]
-        #       dict_experiment_chip_filename_alt[ 'all'][ uniq_input_name_temp] = dict_type[ 'control']
+        dict_experiment_chip_filename_alt[ experiment_name] = {}
+        dict_experiment_chip_filename_alt[ experiment_name][ 'chip'] = {}
+        dict_experiment_chip_filename_alt[ experiment_name][ 'chip'] = [ experiment_name]
+        dict_experiment_chip_filename_alt[ 'all'][ experiment_name] = dict_type[ 'chip']
+
+        dict_experiment_chip_filename_alt[ experiment_name][ 'control'] = [ ]
+
+        if len( dict_type[ 'control']) > 0:
+            dict_experiment_chip_filename_alt[ experiment_name][ 'control'] = {}
+
+            ID_input = sorted( dict_type[ 'control'])[ 0].split( ".", 1)[ 0]
+            biosample_input = ".".join( dict_type[ 'control'][ 0].split( ".")[ 1:3])
+            uniq_input_name_temp = ".".join( [ ID_input, biosample_input])
+
+            if uniq_input_name_temp in dict_experiment_chip_filename_alt[ experiment_name][ 'control']:
+                for i in range( len( dict_type[ 'control'])):
+
+                    ID_input = sorted( dict_type[ 'control'])[ i].split( ".", 1)[ 0]
+                    biosample_input = ".".join( dict_type[ 'control'][ 0].split( ".")[ 1:3])
+                    if sorted( dict_type[ 'control']) != sorted( dict_experiment_chip_filename_alt[ experiment_name][ 'control'][ uniq_input_name_temp]):
+                        break
+                dict_experiment_chip_filename_alt[ experiment_name][ 'control'][ uniq_input_name_temp] = dict_type[ 'control']
+                dict_experiment_chip_filename_alt[ 'all'][ uniq_input_name_temp] = dict_type[ 'control']
+
+            else:
+                dict_experiment_chip_filename_alt[ experiment_name][ 'control'] = [ uniq_input_name_temp]
+                dict_experiment_chip_filename_alt[ 'all'][ uniq_input_name_temp] = dict_type[ 'control']
 
 #print(dict_experiment_chip_filename.values())
 print("alt one \n")
-print(dict_experiment_chip_filename)
-print("alt one \n")
-print(dict_experiment_chip_filename["GSE98092.SOX2.NSC_1M"][ "chip"])
+print(dict_experiment_chip_filename_alt.values())
 print("fastq \n")
-print(dict_type)
-
-#================================================================#
-#                         Workflow                               #
-#================================================================#
-onstart:
-	print("##### Creating profile pipeline #### \n") 
-	print("\t Creating log output subfolders...\n")
-	#shell("mkdir 4.preprocessing/")
-	#shell("mkdir 4.preprocessing/log")
-rule all:
-	input:
-		expand( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + EXTENSION_PEAK), experiment_name = list_exp),
-        expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", "{replicat_name_paired}", "{replicat_name_paired}_del.ok"), zip, replicat_name_paired = list_paired_trim_file)
-
+print(dict_fastq_info)
 
