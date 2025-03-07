@@ -1,0 +1,10 @@
+rule removing_weird_chromosome:
+	input:
+			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_treat_pileup.bdg")
+	output:
+			temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "clean_bedgraph", "{experiment_name}.bedgraph"))
+	log:
+			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "clean_bedgraph", "log", "{experiment_name}")
+	params:
+			other = config["removing_weird_chromosome"][ "other"]
+	shell: """grep  _ {input} -v > {output}"""

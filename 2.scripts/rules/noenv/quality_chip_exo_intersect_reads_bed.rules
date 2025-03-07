@@ -1,0 +1,19 @@
+rule quality_chip_exo_intersect_reads_bed:
+    input:
+            peak = os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + EXTENSION_PEAK_INPUT),
+            bam = lambda wildcards : expand( os.path.join( BAM_DIR, "{replicat_name}.bam"), replicat_name = dict_experiment_chip_filename[wildcards.experiment_name])
+    output:
+            temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}_intersect_bam.bed" ))
+    singularity:
+            config[ "singularity"][ "bedtools"]
+    conda:
+            config[ "conda"][ "bedtools"]
+    resources:
+            res=1
+    log:
+            os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "log", "{experiment_name}_intersect.log")
+    params:
+            other = ""
+    shell: 	"""
+    bedtools intersect -bed -wo -abam {input.bam} -b {input.peak} > {output}
+    """

@@ -1,0 +1,10 @@
+rule sort_bedgraph:
+	input:
+			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "clean_bedgraph", "{experiment_name}.bedgraph")
+	output:
+			temp( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "sort_bedgraph", "{experiment_name}.bedgraph"))
+	log:
+			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "sort_bedgraph", "log", "{experiment_name}")
+	params:
+			sort = config["sort_bedgraph"][ "other"]
+	shell: """sort -k1,1 -k2,2n {input} > {output}"""

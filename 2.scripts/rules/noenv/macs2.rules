@@ -1,0 +1,54 @@
+rule macs2:
+    """
+    This rule maps fq.gz to reference genome.
+	NOTE : For paired-end data it only check if forward file is here !
+
+    Required parameters:
+        bowtie2 : parameters of bowtie2
+		nb_thread : number of threads for bowtie2
+			NOTE : MUST MATCH CLUSTER CONFIG !!
+		index : index of reference genome
+
+    Author: Jeanne Chèneby
+    """
+	input:
+			#dict_experiment = dict_experiment_chip_filename_alt,
+			#bam_input = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename_alt[{experiment_name}]["chip"]),
+			#bam_control = lambda wildcards : expand( os.path.join( BAM_DIR, "sort_bam", "{chip_name}.bam"), chip_name = dict_experiment_chip_filename_alt[{experiment_name}]["control"])
+			# bam_input = expand( os.path.join( BAM_DIR,  "{chip_name}.bam"),chip_name=dict_experiment_chip_filename_alt[{chip_name}]["chip"]),
+			# bam_control = expand( os.path.join( BAM_DIR, "{chip_name}.bam"),chip_name=dict_experiment_chip_filename_alt[{experiment_name}]["control"]),
+			# forward_trim_name = lambda wildcards : expand( os.path.join( PREPROCESSING_DIR, "trim_fastq", wildcards.replicat_name, "{trim_basename}"), zip, trim_basename = dict_replicat_trim_filename[ wildcards.replicat_name][ "trim_filename_forward"]),
+			#bam_input = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename_alt[wildcards.experiment_name][ "chip"])
+			chip = lambda wildcards : expand(os.path.join( BAM_DIR, "{experiment}.bam"), experiment= dict_experiment_chip_filename_alt[EXPERIMENTS]["chip"]), 
+			control = lambda wildcards : expand(os.path.join( BAM_DIR, "{experiment}.bam"), experiment= dict_experiment_chip_filename_alt[EXPERIMENTS]["control"])
+	output:
+			# os.path.join( PEAKCALLING_DIR, "{experiment}", "macs2", "{experiment}" + EXTENSION_PEAK)
+			os.path.join( PEAKCALLING_DIR, "macs2", "{experiment}" + EXTENSION_PEAK)
+	# singularity:
+			# config[ "singularity"][ "macs2"]
+	# benchmark:
+	# 			os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "bench", "{experiment_name}.bench")
+	resources:
+			res=1
+	log:
+			os.path.join( PEAKCALLING_DIR, "{experiment}", "macs2", "log", "{experiment}.log")
+	params:
+			# outdir = os.path.join( PEAKCALLING_DIR, "{experiment}", "macs2"),
+			# outfile_name = "{experiment}",
+
+			# chip = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename_alt[{experiment_name}]["chip"]) if config[ "workflow_step"][ "remove_duplicate"] == "True" else expand( os.path.join( PREPROCESSING_DIR, "sort_bam", "{chip_name}.bam"), chip_name = dict_experiment_chip_filename_alt[{experiment_name}]["chip"]),
+			# control = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name = dict_experiment_chip_filename_alt[{experiment_name}]["control"]) if config[ "workflow_step"][ "remove_duplicate"] == "True" else expand( os.path.join( PREPROCESSING_DIR, "sort_bam", "{chip_name}.bam"), chip_name = dict_experiment_chip_filename_alt[{experiment_name}]["control"]),
+
+			# chip = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name=dict_experiment_chip_filename_alt[{experiment_name}]["chip"]),
+			# control = lambda wildcards : expand( os.path.join( BAM_DIR, "{chip_name}.bam"), chip_name=dict_experiment_chip_filename_alt[{experiment_name}]["control"]),
+			# macs2 = config["macs2"][ "other"]
+
+	shell: 	"""
+# if [ -n "{params.control}" ]
+# then
+# 	macs2 callpeak -t {input.chip} -c {input.control} --outdir {params.outdir} --name {params.outfile_name} {params.macs2} 2> {log}
+# else
+# 	macs2 callpeak -t {input.chip} --outdir {params.outdir} --name {params.outfile_name} {params.macs2} 2> {log}
+# fi
+"""
+	# shell : """touch {output}"""

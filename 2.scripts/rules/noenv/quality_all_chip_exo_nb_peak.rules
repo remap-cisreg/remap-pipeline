@@ -1,0 +1,57 @@
+list_objects_indir = os.listdir( TAB_DIR) # get all files' and folders' names in the current directory
+list_exp = []
+
+
+for objects_indir in list_objects_indir: # loop through all the files and folders
+    # if os.path.isfile( os.path.join( TAB_DIR, objects_indir)): # check whether the current object is a folder or not
+    if objects_indir.endswith( "_summary.tab"): # check whether the current object is a folder or not
+
+        experiment_name = objects_indir.rsplit( "_", 1)[ 0]
+        list_exp.append( experiment_name)
+
+
+rule quality_all_chip_exo_nb_peak:
+    input:
+        raw_peak = expand ( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + EXTENSION_PEAK_INPUT), experiment_name = list_exp),
+        filtered_peak = expand( os.path.join( PEAKCALLING_DIR, "{experiment_name}", "macs2", "{experiment_name}" + EXTENSION_PEAK_OUTPUT ), experiment_name = list_exp)
+    output:
+        passed = os.path.join( QUALITY_DIR,  "results", "macs2_passed.quality_all"),
+        failed = os.path.join( QUALITY_DIR,  "results", "macs2_failed.quality_all")
+
+    run:
+        dict_nb_peaks = {}
+
+        for i in range( len( input.raw_peak)):
+            curent_experiment_name = input.raw_peak[ i].split( "/")[ 1]
+            if not curent_experiment_name in dict_nb_peaks:
+                dict_nb_peaks[ curent_experiment_name] = {}
+
+            # Get number of line in raw input
+            file_raw_input = open( input.raw_peak[ i], 'r')
+            dict_nb_peaks[ curent_experiment_name][ 'before_filtering'] = len( file_raw_input.readlines())
+            file_raw_input.close()
+
+            # Get number of line in filter input
+            file_filtered_input = open( input.filtered_peak[ i], 'r')
+            dict_nb_peaks[ curent_experiment_name][ 'after_filtering'] = len( file_filtered_input.readlines())
+            file_filtered_input.close()
+
+        print( )
+        file_output_passed = open( output.passed, 'w')
+        file_output_failed = open( output.failed, 'w')
+
+        for current_experiment in dict_nb_peaks:
+            if dict_nb_peaks[ current_experiment][ 'after_filtering'] < 1:
+                file_output_failed.write( "\t".join( [ current_experiment,
+                                                        str( dict_nb_peaks[ current_experiment][ 'before_filtering']),
+                                                        str( dict_nb_peaks[ current_experiment][ 'after_filtering'])]
+                                                    ) + "\n"
+                                        )
+            else:
+                file_output_passed.write( "\t".join( [ current_experiment,
+                                                        str( dict_nb_peaks[ current_experiment][ 'before_filtering']),
+                                                        str( dict_nb_peaks[ current_experiment][ 'after_filtering'])]
+                                                    ) + "\n"
+                                        )
+        file_output_passed.close()
+        file_output_failed.close()

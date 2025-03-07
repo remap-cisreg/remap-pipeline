@@ -1,0 +1,14 @@
+rule sort_remap_bed:
+    input:
+            os.path.join( REMAP_FULLNAME + "_unsort.bed")
+    output:
+            # temp( os.path.join( PREPROCESSING_DIR,  "merge_bam", "{experiment_name}.bam"))
+            os.path.join( REMAP_FULLNAME +".bed")
+    resources:
+            res=1
+    log:
+            os.path.join( QUALITY_DIR, "log", "sort_remap_bed.log")
+    params:
+            other = ""
+
+    shell:"""sort -k1,1 -k2,2n {input} > {output}"""

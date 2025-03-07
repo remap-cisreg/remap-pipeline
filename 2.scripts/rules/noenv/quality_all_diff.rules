@@ -1,0 +1,12 @@
+rule quality_all_diff:
+    input:
+            exp_in_tab = os.path.join( QUALITY_DIR,  "results", "macs2.list_tab_experiment"),
+            exp_in_quality_all = os.path.join( QUALITY_DIR,  "results", "macs2.quality_all")
+    output:
+            os.path.join( QUALITY_DIR,  "results", "macs2.quality_all_diff")
+    resources:
+            res=1
+    params:
+               indir = QUALITY_DIR,
+               outdir = os.path.join( QUALITY_DIR, "results")
+    shell:"""sort {input.exp_in_quality_all}| diff {input.exp_in_tab} - > {output}   """

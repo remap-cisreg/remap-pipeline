@@ -1,0 +1,15 @@
+rule quality_list_tab:
+    input:
+            os.path.join( QUALITY_DIR, "macs2_{experiment_name}.quality_all")
+    output:
+            os.path.join( QUALITY_DIR,  "results", "macs2.list_tab_experiment")
+    resources:
+            res=1
+    params:
+               indir = QUALITY_DIR,
+               outdir = os.path.join( QUALITY_DIR, "results")
+    run:
+        file_outfile = open( input[ 0], 'w')
+        for exp in sorted( wildcards.experiment_name):
+            file_outfile.write( exp + "\n")
+        file_outfile.close()

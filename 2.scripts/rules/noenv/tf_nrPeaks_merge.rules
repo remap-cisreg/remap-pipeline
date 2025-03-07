@@ -1,0 +1,22 @@
+rule tf_nrPeaks_merge:
+    input:
+            part_1 = os.path.join( BED_DIR, "TF", "{tf}", PREFIX + "_{tf}_nr_" + SUFFIX + "_part1.bed"),
+            nt_overlap = os.path.join( BED_DIR, "TF", "{tf}", PREFIX + "_{tf}_nr_" + SUFFIX + "_nb_nucleotide.txt")
+    output:
+            temp( os.path.join( BED_DIR, "TF", "{tf}", PREFIX + "_{tf}_nr_" + SUFFIX + "_part_1_merge.bed"))
+    singularity:
+            config[ "singularity"][ "bedtools"]
+    shell:
+    """
+    NT_OVERLAP=$(cat {input.nt_overlap})
+    bedtools merge -d -$NT_OVERLAP -c 4,7,9 -o collapse,mean,distinct -i {input.part_1} > {output}
+    """
+
+rule tf_nrPeaks_cleaning:
+    input:
+            os.path.join( BED_DIR, "TF", "{tf}", PREFIX + "_{tf}_nr_" + SUFFIX + "_part_1_merge.bed")
+    output:
+            temp( os.path.join( BED_DIR, "TF", "{tf}", PREFIX + "_{tf}_nr_" + SUFFIX + "_part2.bed"))
+    shell: """
+    awk -F"\t"  '{{print $1"\t"$2"\t"$3"\t"$4"\t"int($5)"\t"$6}}' {input} > {output}
+    """
