@@ -52,7 +52,7 @@ LIBRARY_MD5 = config["header"]["md5"]
 PEAKCALLER = config[ "info"][ "peakcaller"]
 
 # cluster info
-REMAP_FULLNAME = config['info']['remap_fullname']
+REMAP_FULLNAME = config[ "info"]["remap_fullname"]
 
 
 #================================================================#
@@ -138,9 +138,7 @@ rule quality_all:
                indir = QUALITY_DIR,
                outdir = os.path.join( QUALITY_DIR, "results")
     shell:"""
-        mkdir -p {params.outdir}
-
-        cat {input} | awk "NR%2==0" | awk -F" " 'BEGIN {{print "experiment_name\tNSC\tRSC\tFRiP\tnb_peaks\tscore_NSC\tscore_RSC\tscore_FRiP\tscore_total" }}
+        find {params.indir} -type f -maxdepth 1 -name "*.quality_all" -exec cat {{}} \; | awk "NR%2==0" | awk -F" " 'BEGIN {{print "experiment_name\tNSC\tRSC\tFRiP\tnb_peaks\tscore_NSC\tscore_RSC\tscore_FRiP\tscore_total" }}
                                                   {{
                                                     if( $2>=1.10) nsc=2; else if( $2>=1.05) nsc=1; else nsc=0;
                                                     if( $3>=1) rsc=2; else if( $3>=0.8) rsc=1; else rsc=0;
