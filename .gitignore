@@ -11,6 +11,7 @@
 8.quality/*
 9.bed/*
 10.fasta/*
+
 # Don't ignore those files
 !1.metadata/*.md
 !1.metadata/*.tsv
@@ -24,3 +25,4 @@
 !9.bed/*.md
 !10.fasta/*.md
 2.scripts/utils/r/remap2022.bed
+
