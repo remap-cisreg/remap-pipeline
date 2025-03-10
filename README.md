@@ -7,9 +7,9 @@ This git contain all the workflow necessary to run an analysis ReMap style from 
 
 ## Installation
 ### Requirements
- - Python 3
- - Snakemake >= 5.5.1
- - Recommended : Conda/Docker/Singularity
+ - Python > 3.11
+ - Snakemake > 8
+ - Recommended : Singularity
 ### Step by step
  1. Pull the git
  2. That's all
