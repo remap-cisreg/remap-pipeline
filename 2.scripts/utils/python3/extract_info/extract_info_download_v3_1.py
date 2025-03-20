@@ -94,9 +94,9 @@ def process_list_experiment( list_exp, name_experiment):
 
 
 		if sample[ 7] == 'SINGLE':
-			final_name = sample[ 5] + "." + name_experiment.split( ".", 1)[1]
+			final_name = sample[ 2] + "." + name_experiment.split( ".", 1)[1]
 		else:
-			final_name = sample[ 5] + "r1-" + sample[ 5] + "r2." + name_experiment.split( ".", 1)[1]
+			final_name = sample[ 2] + "r1-" + sample[ 2] + "r2." + name_experiment.split( ".", 1)[1]
 
 		# Adding name
 		# final_name = name_experiment + "." + sample[ 0] + "-" + sample[ 1]
@@ -272,13 +272,20 @@ if __name__ == "__main__":
 
 	# setting column of interest (start from 0)
     
+# 	col_ID_serie = 0
+# 	col_TF = 2
+# 	col_cell = 3
+# 	col_SRP = 15
+# 	col_GSM_chip = 10
+# 	col_GSM_control = 11
+    
+    # Test exemple_hsap_TF.tsv
 	col_ID_serie = 0
-	col_TF = 2
-	col_cell = 3
-	col_SRP = 15
-	col_GSM_chip = 10
-	col_GSM_control = 11
-
+	col_TF = 1
+	col_cell = 2
+	col_SRP = 5
+	col_GSM_chip = 3
+	col_GSM_control = 4
 
 	# setting rest info
  	#url_experiment_srt = "https://www.ebi.ac.uk/ena/data/warehouse/filereport?accession="
@@ -486,8 +493,8 @@ if __name__ == "__main__":
 
 				#list_info_ena = str( line_ena_resp).split( '\t')[1:]
 				list_info_ena = str( line_ena_resp).split( '\t') #mauvais emplacement GSM?
-				print(list_info_ena)
-				print(list_info_ena[4])
+# 				print(list_info_ena)
+# 				print(list_info_ena[4])
 				try:
 					# add only relevant line
 					if list_info_ena[ 4] in list_chip_GSM:
