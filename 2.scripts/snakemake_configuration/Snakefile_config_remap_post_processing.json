@@ -1,0 +1,82 @@
+{
+    "working_dir" :
+    {
+        "base_dir" : "/scratch/bballester/hsap2022",
+        "tab_dir" : "1.metadata/tab",
+        "preprocessing" : "4.preprocessing",
+        "bam_dir" : "5.bam",
+        "outdir" : "6.peakcalling",
+        "quality" : "8.quality",
+        "rule_dir" : "2.scripts/rules/current"
+    },
+
+    "info" :
+    {
+    "species" : "hsap",
+    "assembly" : "hg38",
+    "peakcaller" : "macs2",
+    "remap_version" : "2022",
+    "update_version" : "1",
+    "patch_version" : "0",
+    "nb_cell_info" : "1",
+    "remap_fullname" : "remap2022"
+  },
+
+
+    "header" :
+    {
+        "control" : "isControl",
+        "filename" : "filename",
+        "library" : "library_type",
+        "url" : "url",
+        "md5" : "md5"
+    },
+
+
+		"extention":
+		{
+			"peak" : "_peaks.narrowPeak"
+		},
+
+
+    "merge_bam" :
+    {
+        "samtools-merge" : ""
+    },
+
+    "quality_NSC_RSC" :
+    {
+        "run_spp" : ""
+    },
+
+    "quality_FRiP" :
+    {
+        "bedtools-intersect" : ""
+    },
+
+    "creating_remap_catalogue_bed" :
+
+    {
+      "color_file" : "/scratch/bballester/hsap2022/human_RGB.tsv"
+    },
+
+
+
+    "singularity" :
+    {
+      "samtools" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_samtools.img",
+      "ucsc_apps" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_ucsc_apps.img",
+      "bedtools" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_bedtools225.img",
+      "phantompeak" : "/scratch/bballester/projects/tagc-remap3/singularity/phantompeakqualtools.img"
+    },
+
+		"conda" :
+		{
+			"samtools" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/samtools.yaml",
+			"bedClip" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/bedClip.yaml",
+      "quality_FRiP" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/quality_FRiP.yaml",
+      "bedtools" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/bedtools.yaml",
+      "phantompeak" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/phantompeak.yaml",
+      "R_quality" : "/absolute/path/to/remap-pipeline/2.scripts/conda_envirronment/r_quality.yaml"
+		}
+}

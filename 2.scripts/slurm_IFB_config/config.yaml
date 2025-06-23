@@ -1,0 +1,35 @@
+---
+snakefile: 2.scripts/snakefiles_workflow/Snakefile_remap_v4.py
+#local-storage-prefix: /scratch/lsouville/
+#jobname: "{rule}.{jobid}"
+show-failed-logs: true
+keep-going: true
+printshellcmds: true
+jobs: 20
+max-jobs-per-second: 10 
+default-resources:
+    slurm_account: "remap"
+    slurm_partition: "fast" 
+    mem_mb: 5000 
+    cpu_per_task: 20
+    runtime: 120
+    nodes: 2
+    task: 2
+
+set-resources:
+    - bowtie2:
+        runtime=400
+        mem_mb_per_cpu=2000
+        threads=12
+    - samtools_sort:
+        runtime=200
+        memory=5000
+        threads=12
+    - samtools_remove_pcr_duplicate:
+        runtime= 200
+        mem_mb_per_cpu=5000
+        threads=12
+    - macs2_bigwig:
+        runtime=500
+        mem_mb_per_cpu=10000
+        threads=2

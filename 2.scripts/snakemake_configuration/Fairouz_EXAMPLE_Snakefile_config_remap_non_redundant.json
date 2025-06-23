@@ -1,0 +1,69 @@
+{
+    "working_dir" :
+    {
+        "base_dir" : "/scratch/bballester/hsap2022",
+        "preprocessing" : "4.preprocessing",
+        "bed_dir" : "9.bed",
+        "fasta_dir" : "10.fasta",
+        "rule_dir" : "/scratch/bballester/hsap2022/2.scripts/rules/current"
+    },
+
+    "file" :
+    {
+      "all_peaks" : "/scratch/bballester/hsap2022/remap2022_all_macs2_hg38_v1_0.bed"
+    },
+
+    "genome" :
+    {
+      "fasta" : "/scratch/bballester/hsap2022/3.genome/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome.fa"
+    },
+
+    "info" :
+    {
+    "species" : "hsap",
+    "assembly" : "hg38",
+    "peakcaller" : "macs2",
+    "remap_version" : "2022",
+    "update_version" : "1",
+    "patch_version" : "0",
+    "nb_cell_info" : "1"
+  },
+
+  "tf_allPeaks" :
+  {
+    "other" : ""
+  },
+
+  "tf_nrPeaks" :
+  {
+    "perc_overlap" : "25"
+  },
+
+  "cell_allPeaks" :
+  {
+    "other" : ""
+  },
+
+  "cell_nrPeaks" :
+  {
+    "perc_overlap" : "25"
+  },
+  "merge_all_nr_bed" :
+  {
+    "other" : ""
+  },
+
+
+
+  "singularity" :
+  {
+
+    "bedtools" : "/scratch/bballester/projects/tagc-remap3/singularity/remap_bedtools225.img"
+
+  },
+
+	"conda" :
+	{
+    "bedtools" : "/absolute/path/to/remap-pipeline/conda_envirronment/bedtools.yaml"
+	}
+}

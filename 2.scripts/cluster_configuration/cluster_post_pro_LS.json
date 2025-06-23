@@ -1,0 +1,76 @@
+{
+	"__default__":
+	{
+	"project-name":"b169",
+	"job-name" : "{rule}",
+	"partition" : "skylake",
+	"node" : "1",
+	"thread" : "1",
+	"ntasks" : "1",
+	"time" : "2:30:00",
+	"memory" : "5G",
+	"stdout" : "/scratch/lsouville/test/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.out",
+	"stderr" : "/scratch/bballester/test/4.preprocessing/log/{rule}_{wildcards.experiment_name}_slurm.err",
+	"mail-type":"BEGIN,END",
+	"mail-user":"louis.souville@univ-amu.fr"
+	},
+
+
+    "merge_bam" :
+    {
+			"partition" : "skylake"
+	},
+
+    "quality_FRiP" :
+    {
+			"partition" : "skylake"
+	},
+
+    "quality_NSC_RSC" :
+    {
+			"partition" : "skylake",
+			"thread" : "2",
+			"memory" : "15G"
+	},
+
+  "quality_all" :
+    {
+			"stdout" : "/scratch/lsouville/test/4.preprocessing/log/{rule}_slurm.out",
+			"stderr" : "/scratch/lsouville/test/4.preprocessing/log/{rule}_slurm.err"
+	},
+
+	"quality_all_experiments" :
+	{
+		"partition" : "skylake"
+	},
+
+
+	"filtering_quality_all" :
+	{
+		"time" : "03:00:00",
+		"stdout" : "/scratch/lsouville/test/4.preprocessing/log/{rule}_slurm.out",
+		"stderr" : "/scratch/lsouville/test/4.preprocessing/log/{rule}_slurm.err"
+},
+
+	"graph_quality_all" :
+	{
+		"time" : "03:00:00",
+		"stdout" : "/scratch/lsouville/test/4.preprocessing/log/{rule}_slurm.out",
+		"stderr" : "/scratch/lsouville/test/4.preprocessing/log/{rule}_slurm.err"
+},
+
+"creating_remap_catalogue_bed" :
+{
+	"time" : "03:00:00",
+	"stdout" : "/scratch/lsouville/test/4.preprocessing/log/{rule}_slurm.out",
+	"stderr" : "/scratch/lsouville/test/4.preprocessing/log/{rule}_slurm.err"
+},
+
+	"sort_remap_bed" :
+{
+	"time" : "06:00:00",
+	"stdout" : "/scratch/lsouville/test/4.preprocessing/log/{rule}_slurm.out",
+	"stderr" : "/scratch/lsouville/test/4.preprocessing/log/{rule}_slurm.err"
+}
+
+}
